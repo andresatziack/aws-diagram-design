@@ -32,6 +32,12 @@ Kinesis → Lambda → S3 데이터 레이크로 이어지는 스트리밍 수�
 
 ![Multi-Region Network Backbone 아키텍처 다이어그램](docs/samples/multi-region-network.svg)
 
+### AWS Data Pipeline Flow
+
+역할 스코프 데이터 플로(Data flow 타입). Data Admin이 Lake Formation으로 레이크를 거버넌스하고(트리거 점선), Data Engineer가 Kinesis·DMS로 수집해 S3 데이터 레이크에 적재 후 Glue로 ETL·카탈로그화하며, Analytics Engineer가 Redshift DW에 스타 스키마를 적재(포컬 핸드오프)하고 큐레이션한 뷰를 Data Consumer가 QuickSight로 소비합니다. 각 노드 하단 칩이 입·출력 페이로드 타입(스트림→데이터셋→테이블→리포트)의 변환 궤적을 보여줍니다. ([HTML](docs/samples/data-pipeline-flow.html))
+
+![AWS Data Pipeline Flow 다이어그램](docs/samples/data-pipeline-flow.svg)
+
 > SVG는 Geist Mono를 Google Fonts에서 불러오도록 되어 있으나, GitHub 이미지 렌더링은 외부 폰트를 차단하므로 시스템 모노 폰트로 대체 표시됩니다. 정확한 타이포그래피는 HTML 원본을 브라우저에서 여세요.
 
 ## 지원 환경

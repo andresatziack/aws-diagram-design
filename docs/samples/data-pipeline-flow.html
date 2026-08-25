@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AWS Data Pipeline Flow</title>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --paper: #ffffff; --ink: #232F3E; --muted: #545B64; --soft: #7D8998;
+      --accent: #EC7211; --link: #0972D3;
+      --sans: 'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --mono: 'Geist Mono', 'Amazon Ember Mono', ui-monospace, monospace;
+    }
+    body { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 3rem 2rem; background: var(--paper); color: var(--ink); font-family: var(--sans); }
+    .frame { width: 100%; max-width: 1200px; overflow-x: auto; }
+    .eyebrow { margin-bottom: 0.5rem; color: var(--muted); font: 500 0.66rem var(--mono); letter-spacing: 0.18em; text-transform: uppercase; }
+    h1 { margin-bottom: 1.5rem; color: var(--ink); font: 700 clamp(1.5rem, 2.4vw + 0.75rem, 2rem)/1.15 var(--sans); letter-spacing: -0.02em; }
+    svg { display: block; width: 100%; min-width: 728px; }
+  </style>
+</head>
+<body>
+  <main class="frame">
+    <p class="eyebrow">Data flow · AWS Diagram Design</p>
+    <h1>AWS Data Pipeline Flow</h1>
+
+    <svg viewBox="0 0 728 456" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="aws-pipeline-flow-title aws-pipeline-flow-desc">
+      <title id="aws-pipeline-flow-title">Role-scoped AWS data pipeline flow</title>
+      <desc id="aws-pipeline-flow-desc">A data admin governs the lake with Lake Formation, data engineers ingest events through Kinesis and DMS into an S3 data lake and transform them with Glue, an analytics engineer loads a Redshift warehouse and curates views, and consumers read QuickSight dashboards.</desc>
+      <defs>
+        <style>
+          .step-number, .step-label, .lane-label, .role-text, .chip-text, .legend-label { font-family: 'Geist Mono', 'Amazon Ember Mono', ui-monospace, monospace; text-anchor: middle; }
+          .step-number { fill: #232F3E; font-size: 7px; font-weight: 600; }
+          .step-label { fill: #545B64; font-size: 7px; font-weight: 500; letter-spacing: 0.12em; }
+          .lane-label { fill: #545B64; font-size: 8px; font-weight: 500; letter-spacing: 0.14em; }
+          .role-text { fill: #232F3E; font-size: 6px; font-weight: 600; }
+          .node-title { fill: #232F3E; font: 600 9px 'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif; text-anchor: middle; }
+          .node-sub { fill: #545B64; font: 400 6.5px 'Geist Mono', 'Amazon Ember Mono', ui-monospace, monospace; text-anchor: middle; }
+          .node-tool { fill: #7D8998; font: 400 6.5px 'Geist Mono', 'Amazon Ember Mono', ui-monospace, monospace; text-anchor: middle; }
+          .chip-text { fill: #fff; font-size: 5px; font-weight: 700; }
+          .focal-text { fill: #EC7211; }
+          .gov-text { fill: #b85450; }
+          .legend-label { fill: #545B64; font-size: 7px; font-weight: 500; letter-spacing: 0.12em; text-anchor: end; }
+          .legend-text { fill: #545B64; font: 400 7px 'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        </style>
+        <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="11" cy="11" r="0.8" fill="rgba(35,47,62,0.10)"/></pattern>
+        <marker id="arr-muted" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="#545B64"/></marker>
+        <marker id="arr-accent" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="#EC7211"/></marker>
+        <marker id="arr-link" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="#0972D3"/></marker>
+      </defs>
+      <rect width="728" height="456" fill="#ffffff"/>
+      <rect width="728" height="456" fill="url(#dots)"/>
+      <rect x="0" y="36" width="728" height="80" fill="rgba(35,47,62,0.018)"/>
+      <rect x="0" y="196" width="728" height="80" fill="rgba(35,47,62,0.018)"/>
+
+      <!-- Header and lane structure -->
+      <line x1="0" y1="36" x2="728" y2="36" stroke="rgba(35,47,62,0.12)" stroke-width="0.8"/>
+      <line x1="0" y1="116" x2="728" y2="116" stroke="rgba(35,47,62,0.12)" stroke-width="0.8"/>
+      <line x1="0" y1="196" x2="728" y2="196" stroke="rgba(35,47,62,0.12)" stroke-width="0.8"/>
+      <line x1="0" y1="276" x2="728" y2="276" stroke="rgba(35,47,62,0.12)" stroke-width="0.8"/>
+      <line x1="0" y1="356" x2="728" y2="356" stroke="rgba(35,47,62,0.12)" stroke-width="0.8"/>
+      <line x1="140" y1="36" x2="140" y2="356" stroke="rgba(35,47,62,0.12)" stroke-width="0.8"/>
+
+      <g aria-label="Pipeline steps">
+        <rect x="180" y="6" width="32" height="16" rx="8" fill="rgba(35,47,62,0.12)"/><text x="196" y="14" class="step-number">01</text><text x="196" y="29" class="step-label">INGEST</text>
+        <rect x="292" y="6" width="32" height="16" rx="8" fill="rgba(35,47,62,0.12)"/><text x="308" y="14" class="step-number">02</text><text x="308" y="29" class="step-label">STORE</text>
+        <rect x="404" y="6" width="32" height="16" rx="8" fill="rgba(35,47,62,0.12)"/><text x="420" y="14" class="step-number">03</text><text x="420" y="29" class="step-label">TRANSFORM</text>
+        <rect x="516" y="6" width="32" height="16" rx="8" fill="rgba(236,114,17,0.20)"/><text x="532" y="14" class="step-number focal-text">04</text><text x="532" y="29" class="step-label focal-text">WAREHOUSE</text>
+        <rect x="628" y="6" width="32" height="16" rx="8" fill="rgba(35,47,62,0.12)"/><text x="644" y="14" class="step-number">05</text><text x="644" y="29" class="step-label">SERVE</text>
+      </g>
+
+      <g aria-label="Role lanes">
+        <text x="70" y="72" class="lane-label">DATA</text><text x="70" y="84" class="lane-label">ADMIN</text>
+        <text x="70" y="152" class="lane-label">DATA</text><text x="70" y="164" class="lane-label">ENGINEER</text>
+        <text x="70" y="232" class="lane-label">ANALYTICS</text><text x="70" y="244" class="lane-label">ENGINEER</text>
+        <text x="70" y="312" class="lane-label">DATA</text><text x="70" y="324" class="lane-label">CONSUMER</text>
+      </g>
+
+      <!-- Connectors first (z-order: before all node rects) -->
+      <!-- ADM governance trigger, same-step vertical -->
+      <path d="M196 108 V124" fill="none" stroke="#545B64" stroke-dasharray="4,3" marker-end="url(#arr-muted)"/>
+      <!-- ENG lane hand-offs -->
+      <path d="M246 156 H258" fill="none" stroke="#545B64" marker-end="url(#arr-muted)"/>
+      <path d="M358 156 H370" fill="none" stroke="#545B64" marker-end="url(#arr-muted)"/>
+      <!-- Focal cross-role handoff: ETL -> Warehouse Load -->
+      <path d="M470 156 H524 Q532 156 532 164 V204" fill="none" stroke="#EC7211" stroke-width="1.2" marker-end="url(#arr-accent)"/>
+      <rect x="474" y="136" width="48" height="12" rx="2" fill="#ffffff"/>
+      <text x="498" y="145" fill="#EC7211" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">PARQUET</text>
+      <!-- Warehouse -> curated views -->
+      <path d="M582 236 H594" fill="none" stroke="#545B64" marker-end="url(#arr-muted)"/>
+      <!-- Published output, same-step vertical -->
+      <path d="M644 268 V284" fill="none" stroke="#0972D3" marker-end="url(#arr-link)"/>
+
+      <!-- Data Admin: Lake Governance (governance color) -->
+      <rect x="146" y="44" width="100" height="64" rx="6" fill="rgba(184,84,80,0.06)" stroke="rgba(184,84,80,0.35)" stroke-width="1"/>
+      <rect x="150" y="48" width="18" height="10" rx="3" fill="rgba(184,84,80,0.18)"/><text x="159" y="53" class="role-text gov-text">ADM</text>
+      <text x="196" y="67" class="node-title gov-text">Lake Governance</text><text x="196" y="79" class="node-sub">grants · audit</text><text x="196" y="91" class="node-tool">Lake Formation</text>
+
+      <!-- Data Engineer: Stream Ingest -->
+      <rect x="146" y="124" width="100" height="64" rx="6" fill="#ffffff" stroke="rgba(35,47,62,0.25)"/>
+      <rect x="150" y="128" width="18" height="10" rx="3" fill="rgba(35,47,62,0.12)"/><text x="159" y="133" class="role-text">ENG</text>
+      <text x="196" y="147" class="node-title">Stream Ingest</text><text x="196" y="159" class="node-sub">events · CDC</text><text x="196" y="171" class="node-tool">Kinesis · DMS</text>
+      <rect x="150" y="178" width="16" height="8" rx="3" fill="#4a7c59"/><text x="158" y="184" class="chip-text">LS</text>
+      <rect x="226" y="178" width="16" height="8" rx="3" fill="#5e7a9b"/><text x="234" y="184" class="chip-text">DB</text>
+
+      <!-- Data Engineer: Raw Landing -->
+      <rect x="258" y="124" width="100" height="64" rx="6" fill="#ffffff" stroke="rgba(35,47,62,0.25)"/>
+      <rect x="262" y="128" width="18" height="10" rx="3" fill="rgba(35,47,62,0.12)"/><text x="271" y="133" class="role-text">ENG</text>
+      <text x="308" y="147" class="node-title">Raw Landing</text><text x="308" y="159" class="node-sub">bronze · immutable</text><text x="308" y="171" class="node-tool">S3 data lake</text>
+      <rect x="262" y="178" width="16" height="8" rx="3" fill="#5e7a9b"/><text x="270" y="184" class="chip-text">DB</text>
+      <rect x="338" y="178" width="16" height="8" rx="3" fill="#5e7a9b"/><text x="346" y="184" class="chip-text">DB</text>
+
+      <!-- Data Engineer: ETL & Catalog -->
+      <rect x="370" y="124" width="100" height="64" rx="6" fill="#ffffff" stroke="rgba(35,47,62,0.25)"/>
+      <rect x="374" y="128" width="18" height="10" rx="3" fill="rgba(35,47,62,0.12)"/><text x="383" y="133" class="role-text">ENG</text>
+      <text x="420" y="147" class="node-title">ETL &amp; Catalog</text><text x="420" y="159" class="node-sub">clean · partition</text><text x="420" y="171" class="node-tool">Glue ETL · Catalog</text>
+      <rect x="374" y="178" width="16" height="8" rx="3" fill="#5e7a9b"/><text x="382" y="184" class="chip-text">DB</text>
+      <rect x="450" y="178" width="16" height="8" rx="3" fill="#b8915a"/><text x="458" y="184" class="chip-text">TB</text>
+
+      <!-- Analytics Engineer: Warehouse Load (focal) -->
+      <rect x="482" y="204" width="100" height="64" rx="6" fill="rgba(236,114,17,0.07)" stroke="#EC7211" stroke-width="1.2"/>
+      <rect x="486" y="208" width="18" height="10" rx="3" fill="rgba(236,114,17,0.20)"/><text x="495" y="213" class="role-text focal-text">ANE</text>
+      <text x="532" y="227" class="node-title">Warehouse Load</text><text x="532" y="239" class="node-sub">star schema · marts</text><text x="532" y="251" class="node-tool">Amazon Redshift</text>
+      <rect x="486" y="258" width="16" height="8" rx="3" fill="#b8915a"/><text x="494" y="264" class="chip-text">TB</text>
+      <rect x="562" y="258" width="16" height="8" rx="3" fill="#b8915a"/><text x="570" y="264" class="chip-text">TB</text>
+
+      <!-- Analytics Engineer: Curated Views -->
+      <rect x="594" y="204" width="100" height="64" rx="6" fill="#ffffff" stroke="rgba(35,47,62,0.25)"/>
+      <rect x="598" y="208" width="18" height="10" rx="3" fill="rgba(35,47,62,0.12)"/><text x="607" y="213" class="role-text">ANE</text>
+      <text x="644" y="227" class="node-title">Curated Views</text><text x="644" y="239" class="node-sub">KPIs · aggregates</text><text x="644" y="251" class="node-tool">Redshift · Athena</text>
+      <rect x="598" y="258" width="16" height="8" rx="3" fill="#b8915a"/><text x="606" y="264" class="chip-text">TB</text>
+      <rect x="674" y="258" width="16" height="8" rx="3" fill="#b8915a"/><text x="682" y="264" class="chip-text">TB</text>
+
+      <!-- Data Consumer: BI Dashboards -->
+      <rect x="594" y="284" width="100" height="64" rx="6" fill="#ffffff" stroke="rgba(35,47,62,0.25)"/>
+      <rect x="598" y="288" width="18" height="10" rx="3" fill="rgba(35,47,62,0.12)"/><text x="607" y="293" class="role-text">CON</text>
+      <text x="644" y="307" class="node-title">BI Dashboards</text><text x="644" y="319" class="node-sub">insights · alerts</text><text x="644" y="331" class="node-tool">QuickSight</text>
+      <rect x="598" y="338" width="16" height="8" rx="3" fill="#b8915a"/><text x="606" y="344" class="chip-text">TB</text>
+      <rect x="674" y="338" width="16" height="8" rx="3" fill="#9c6b50"/><text x="682" y="344" class="chip-text">FL</text>
+
+      <!-- Legend: steps -->
+      <text x="164" y="373" class="legend-label">STEPS</text>
+      <rect x="180" y="364" width="24" height="12" rx="6" fill="rgba(35,47,62,0.12)"/><text x="192" y="372" class="step-number">01</text><text x="212" y="373" class="legend-text">Ingest</text>
+      <rect x="268" y="364" width="24" height="12" rx="6" fill="rgba(35,47,62,0.12)"/><text x="280" y="372" class="step-number">02</text><text x="300" y="373" class="legend-text">Store</text>
+      <rect x="352" y="364" width="24" height="12" rx="6" fill="rgba(35,47,62,0.12)"/><text x="364" y="372" class="step-number">03</text><text x="384" y="373" class="legend-text">Transform</text>
+      <rect x="460" y="364" width="24" height="12" rx="6" fill="rgba(236,114,17,0.20)"/><text x="472" y="372" class="step-number focal-text">04</text><text x="492" y="373" class="legend-text">Warehouse</text>
+      <rect x="568" y="364" width="24" height="12" rx="6" fill="rgba(35,47,62,0.12)"/><text x="580" y="372" class="step-number">05</text><text x="600" y="373" class="legend-text">Serve</text>
+
+      <!-- Legend: data types -->
+      <text x="164" y="394" class="legend-label">DATA TYPE</text>
+      <rect x="180" y="385" width="16" height="8" rx="3" fill="#4a7c59"/><text x="188" y="391" class="chip-text">LS</text><text x="202" y="394" class="legend-text">Stream</text>
+      <rect x="256" y="385" width="16" height="8" rx="3" fill="#5e7a9b"/><text x="264" y="391" class="chip-text">DB</text><text x="278" y="394" class="legend-text">Dataset</text>
+      <rect x="332" y="385" width="16" height="8" rx="3" fill="#b8915a"/><text x="340" y="391" class="chip-text">TB</text><text x="354" y="394" class="legend-text">Table</text>
+      <rect x="404" y="385" width="16" height="8" rx="3" fill="#9c6b50"/><text x="412" y="391" class="chip-text">FL</text><text x="426" y="394" class="legend-text">Report</text>
+      <text x="490" y="394" class="legend-text">left chip = input · right chip = output</text>
+
+      <!-- Legend: concern colors -->
+      <text x="164" y="415" class="legend-label">CONCERN</text>
+      <rect x="180" y="406" width="16" height="8" rx="3" fill="rgba(184,84,80,0.18)" stroke="rgba(184,84,80,0.35)" stroke-width="1"/><text x="202" y="415" class="legend-text">Governance · Lake Formation</text>
+      <rect x="332" y="406" width="16" height="8" rx="3" fill="rgba(236,114,17,0.20)" stroke="#EC7211" stroke-width="1"/><text x="354" y="415" class="legend-text">Focal</text>
+
+      <!-- Legend: flow -->
+      <text x="164" y="436" class="legend-label">FLOW</text>
+      <line x1="180" y1="433" x2="204" y2="433" stroke="#545B64" marker-end="url(#arr-muted)"/><text x="212" y="436" class="legend-text">Standard handoff</text>
+      <line x1="296" y1="433" x2="320" y2="433" stroke="#545B64" stroke-dasharray="4,3" marker-end="url(#arr-muted)"/><text x="328" y="436" class="legend-text">Governance trigger</text>
+      <line x1="424" y1="433" x2="448" y2="433" stroke="#EC7211" stroke-width="1.2" marker-end="url(#arr-accent)"/><text x="456" y="436" class="legend-text">Focal handoff</text>
+      <line x1="528" y1="433" x2="552" y2="433" stroke="#0972D3" marker-end="url(#arr-link)"/><text x="560" y="436" class="legend-text">Published output</text>
+    </svg>
+  </main>
+</body>
+</html>
