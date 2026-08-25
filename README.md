@@ -58,10 +58,15 @@ Kinesis → Lambda → S3 데이터 레이크 스트리밍 수집과, Glue 카�
 
 ```
 /plugin marketplace add masangbeom/aws-diagram-design
+```
+```
 /plugin install aws-diagram-design@aws-diagram-design
 ```
+```
+/reload-plugins
+```
 
-로컬에 클론해 뒀다면 경로로 등록해도 됩니다: `/plugin marketplace add /path/to/aws-diagram-design`. 자세한 절차와 스킬 단독 설치는 [docs/guide-claude-code.md](docs/guide-claude-code.md) 참고.
+로컬에 클론해 뒀다면 경로로 등록해도 됩니다: `/plugin marketplace add /path/to/aws-diagram-design`.
 
 ### Kiro (IDE / CLI)
 
@@ -86,7 +91,7 @@ Amazon Ember는 [Amazon 공식 배포본](https://developer.amazon.com/en-US/ale
 ```
 "이 프로젝트 아키텍처 구성도 그려줘. EKS에 ArgoCD 배포, RDS는 Multi-AZ"
 "Transit Gateway 허브-스포크 네트워크 구성도, 계정 3개짜리로"
-"주문 처리 시퀀스 다이어그램 그려줘 — API Gateway, Lambda, SQS, DynamoDB"
+"AWS 주문 처리 시퀀스 다이어그램 그려줘 — API Gateway, Lambda, SQS, DynamoDB"
 "이 온보딩 프로세스를 스윔레인으로 정리해줘"
 ```
 
