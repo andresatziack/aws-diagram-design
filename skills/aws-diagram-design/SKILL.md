@@ -3,7 +3,7 @@ name: aws-diagram-design
 description: "Create branded architecture, IT current-state, flowchart, sequence, state machine, ER/data model, timeline, swimlane, quadrant, radar/spider, loop/flywheel, nested, tree, org chart, layer stack, Venn, pyramid/funnel, bar, line, Gantt and scatter charts, high-level, process, medallion, data flow, DP integration, or DP security matrix diagrams as standalone HTML/SVG/PNG. Default skin is the AWS brand (Amazon Ember, squid ink, smile orange) with the official AWS Architecture Icons (EC2, Lambda, S3, VPC zones, …) bundled. Redraw .drawio/.drawio.png/.drawio.svg or Mermaid .mmd sources at a chosen size/detail; onboard brand tokens from a website; add semantic patterns, callouts, accessible motion, or sketchy/hand-drawn styling. Korean triggers: AWS 아키텍처 다이어그램, 구성도, 아키텍처 그림, 흐름도, 순서도, 시퀀스 다이어그램, 다이어그램 그려줘/그리기."
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
   base: "cathrynlavery/diagram-design 2.3.2 + AWS brand skin"
 ---
 
