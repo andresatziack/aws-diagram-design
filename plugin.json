@@ -1,0 +1,21 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "aws-diagram-design",
+  "version": "1.0.0",
+  "description": "AWS-branded editorial diagrams as standalone HTML/SVG/PNG — Amazon Ember typography, squid ink + smile orange skin, official AWS Architecture Icons bundled. 27 visual types, draw.io and Mermaid import.",
+  "author": {
+    "name": "Sangbeom"
+  },
+  "keywords": [
+    "aws diagram",
+    "architecture diagram",
+    "cloud diagram",
+    "vpc diagram",
+    "aws icons",
+    "drawio",
+    "mermaid",
+    "flowchart",
+    "sequence diagram"
+  ],
+  "license": "MIT"
+}
