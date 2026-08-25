@@ -1,84 +1,130 @@
 # aws-diagram-design
 
-AWS 브랜드로 스킨된 에디토리얼 다이어그램 스킬. [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) 2.3.2를 기반으로 AWS 브랜드 커스터마이징(Amazon Ember 타이포그래피, squid ink `#232F3E` + smile orange `#EC7211`/`#FF9900` 팔레트, 공식 AWS Architecture Icons 812종 번들)을 적용해 독립 플러그인으로 재구성했습니다.
+**말로 설명하면, AWS 공식 스타일의 아키텍처 다이어그램이 나옵니다.**
 
-아키텍처, 플로차트, 시퀀스, 상태 머신, ER, 타임라인, 스윔레인, 쿼드런트, 레이더, 루프, 중첩, 트리, 조직도, 레이어 스택, 벤, 피라미드, 막대·선·간트·산점도, 하이레벨, 프로세스, 메달리온, 데이터 플로 등 27개 시각 타입을 자체 완결형 HTML/SVG/PNG로 생성하고, draw.io(.drawio)·Mermaid(.mmd) 원본을 지정한 크기·상세도로 다시 그립니다.
+draw.io를 열어 아이콘을 하나씩 끌어다 놓는 대신, Claude Code나 Kiro에게 이렇게 말해보세요.
 
-## 샘플
+> "ALB 뒤에 Fargate 서비스 두고, RDS Multi-AZ랑 ElastiCache 붙는 VPC 3-티어 구성도 그려줘"
 
-이 스킬로 생성한 아키텍처 다이어그램 예시입니다. 원본 HTML은 [docs/samples/](docs/samples/)에 있으며, 아래 SVG는 스킬의 export 절차로 추출한 것입니다.
+[공식 AWS Architecture Icons](https://aws.amazon.com/ko/architecture/icons/)와 Amazon Ember 타이포그래피, VPC·서브넷·계정 컨테이너 규약까지 적용된 다이어그램이 자체 완결형 HTML로 생성되고, 필요하면 SVG/PNG로 바로 내보낼 수 있습니다. 제안서, 위키, 발표 자료, 아키텍처 리뷰에 그대로 쓸 수 있는 품질을 목표로 합니다.
+
+## 이런 걸 그려줍니다
+
+- **아키텍처 구성도** — 서버리스, VPC 네트워크, 멀티 계정·멀티 리전, 하이브리드(Direct Connect·VPN)까지. VPC/서브넷/Region/계정 경계는 공식 그룹 컨테이너 색상·배지 규약을 따릅니다.
+- **운영·설계 문서에 쓰는 나머지 전부** — 플로차트, 시퀀스, 상태 머신, ER, 타임라인, 스윔레인, 간트, 조직도, 레이어 스택, 데이터 플로 등 총 27개 시각 타입.
+- **기존 다이어그램 재작도** — 갖고 있는 draw.io(.drawio)·Mermaid(.mmd) 파일을 읽어 내용은 유지한 채 지정한 크기·상세도(문서용/슬라이드용/요약본)로 다시 그립니다.
+
+AWS 서비스를 명명하는 노드에는 다이어그램 타입에 관계없이 공식 아이콘이 들어가고, 강조는 smile orange 포컬 1–2개로 절제하는 에디토리얼 디자인 시스템([cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) 기반)이 적용됩니다.
+
+## 미리보기
+
+아래는 모두 이 스킬로 생성한 결과물입니다. 원본 HTML은 [docs/samples/](docs/samples/)에 있습니다.
 
 ### Serverless Web Application
 
-CloudFront가 S3 정적 자산과 API Gateway → Lambda → DynamoDB 동적 경로를 분기하는 서버리스 웹 앱. ([HTML](docs/samples/serverless-web-app.html))
+가장 흔한 시작점. CloudFront가 S3 정적 자산과 API Gateway → Lambda → DynamoDB 동적 경로를 분기합니다. ([HTML](docs/samples/serverless-web-app.html))
 
 ![Serverless Web Application 아키텍처 다이어그램](docs/samples/serverless-web-app.svg)
 
 ### VPC Three-Tier Web Service
 
-퍼블릭 서브넷의 ALB가 프라이빗 서브넷의 ECS on Fargate로 전달하고, RDS·ElastiCache가 데이터 계층을 담당하는 VPC 3-티어 구성. 공식 AWS 그룹 컨테이너 규약(VPC·서브넷 배지)을 따릅니다. ([HTML](docs/samples/vpc-three-tier.html))
+퍼블릭 서브넷의 ALB → 프라이빗 서브넷의 ECS on Fargate → 데이터 서브넷의 RDS·ElastiCache. 서브넷 경계 색상과 배지가 공식 규약 그대로입니다. ([HTML](docs/samples/vpc-three-tier.html))
 
 ![VPC Three-Tier Web Service 아키텍처 다이어그램](docs/samples/vpc-three-tier.svg)
 
 ### Event-Driven Data Pipeline
 
-Kinesis → Lambda → S3 데이터 레이크로 이어지는 스트리밍 수집과, Glue 카탈로그를 거쳐 Athena가 S3를 직접 쿼리하는 분석 경로. 교차 커넥터의 bridge/hop 프리미티브를 보여줍니다. ([HTML](docs/samples/event-driven-pipeline.html))
+Kinesis → Lambda → S3 데이터 레이크 스트리밍 수집과, Glue 카탈로그를 거쳐 Athena가 S3를 직접 스캔하는 분석 경로. 교차하는 커넥터는 bridge/hop으로 처리됩니다. ([HTML](docs/samples/event-driven-pipeline.html))
 
 ![Event-Driven Data Pipeline 아키텍처 다이어그램](docs/samples/event-driven-pipeline.svg)
 
 ### Multi-Region Network Backbone
 
-멀티 계정·멀티 리전 네트워크 백본. us-east-1과 ap-northeast-2의 워크로드 VPC가 각 리전 Network account의 Transit Gateway에 attach되고, TGW가 AWS Cloud WAN 코어 네트워크로 피어링됩니다. 온프레미스 데이터센터는 Direct Connect(BGP)로 연결되며 Site-to-Site VPN이 백업 경로를 제공합니다. Region·Account·VPC·Corporate DC의 공식 그룹 컨테이너 규약을 모두 사용합니다. ([HTML](docs/samples/multi-region-network.html))
+멀티 계정·멀티 리전 네트워크의 전형적인 모양. 리전별 Network account의 Transit Gateway가 AWS Cloud WAN 코어로 피어링되고, 온프레미스는 Direct Connect(BGP) + Site-to-Site VPN 백업으로 연결됩니다. ([HTML](docs/samples/multi-region-network.html))
 
 ![Multi-Region Network Backbone 아키텍처 다이어그램](docs/samples/multi-region-network.svg)
 
 ### AWS Data Pipeline Flow
 
-역할 스코프 데이터 플로(Data flow 타입). Data Admin이 Lake Formation으로 레이크를 거버넌스하고(트리거 점선), Data Engineer가 Kinesis·DMS로 수집해 S3 데이터 레이크에 적재 후 Glue로 ETL·카탈로그화하며, Analytics Engineer가 Redshift DW에 스타 스키마를 적재(포컬 핸드오프)하고 큐레이션한 뷰를 Data Consumer가 QuickSight로 소비합니다. 각 노드 하단 칩이 입·출력 페이로드 타입(스트림→데이터셋→테이블→리포트)의 변환 궤적을 보여줍니다. ([HTML](docs/samples/data-pipeline-flow.html))
+"누가 어느 단계에서 무엇을 하는가"를 보여주는 역할 스코프 데이터 플로. Lake Formation 거버넌스 아래 Kinesis·DMS 수집 → S3 레이크 → Glue ETL → Redshift DW → Quick Suite 대시보드로 이어지고, 노드 하단 칩이 페이로드 타입 변환(스트림→데이터셋→테이블→리포트)을 추적합니다. ([HTML](docs/samples/data-pipeline-flow.html))
 
 ![AWS Data Pipeline Flow 다이어그램](docs/samples/data-pipeline-flow.svg)
 
-> Amazon Ember는 스킬에 번들되어 있습니다(`skills/aws-diagram-design/assets/fonts/`). 샘플 HTML은 `local('Amazon Ember')` → 번들 woff2 → Helvetica 순으로 로드하며, `./install.sh fonts`로 OS에 설치해 둘 수도 있습니다. 단, GitHub 이미지 렌더링은 외부 리소스를 차단하므로 아래 SVG의 폰트는 시스템 폰트로 대체 표시됩니다 — 정확한 타이포그래피는 HTML 원본을 브라우저에서 여세요.
+> GitHub은 이미지 렌더링 시 외부 폰트를 차단하므로 위 SVG는 시스템 폰트로 보입니다. Amazon Ember 타이포그래피 그대로 보려면 HTML 원본을 브라우저에서 여세요.
 
-## 지원 환경
+## 시작하기
 
-| 환경 | 설치 방식 | 가이드 |
-|------|-----------|--------|
-| Claude Code | 플러그인(마켓플레이스) 또는 스킬 단독 | [docs/guide-claude-code.md](docs/guide-claude-code.md) |
-| Kiro (IDE / CLI) | Agent Skill 폴더 또는 Power | [docs/guide-kiro.md](docs/guide-kiro.md) |
+### Claude Code
 
-두 환경 모두 `skills/aws-diagram-design/` 하나를 공유합니다. Kiro는 Anthropic 형식 Agent Skills를 그대로 읽으므로 별도 변형이 필요 없습니다.
+```
+/plugin marketplace add masangbeom/aws-diagram-design
+/plugin install aws-diagram-design@aws-diagram-design
+```
 
-## 빠른 설치
+로컬에 클론해 뒀다면 경로로 등록해도 됩니다: `/plugin marketplace add /path/to/aws-diagram-design`. 자세한 절차와 스킬 단독 설치는 [docs/guide-claude-code.md](docs/guide-claude-code.md) 참고.
+
+### Kiro (IDE / CLI)
 
 ```bash
-./install.sh claude-code     # Claude Code 설치 절차 안내 출력
-./install.sh kiro            # ~/.kiro/skills/ 에 복사 (--workspace: .kiro/skills/, --link: 심링크)
+./install.sh kiro            # ~/.kiro/skills/ 에 복사 (--workspace: 프로젝트 로컬, --link: 심링크)
+```
+
+Kiro는 Anthropic 형식 Agent Skills를 그대로 읽으므로 별도 변환이 없습니다. Power로 등록하는 방법은 [docs/guide-kiro.md](docs/guide-kiro.md) 참고.
+
+### 폰트 (선택)
+
+```bash
 ./install.sh fonts           # 번들된 Amazon Ember TTF를 OS 폰트 디렉터리에 설치
 ```
+
+Amazon Ember는 [Amazon 공식 배포본](https://developer.amazon.com/en-US/alexa/branding/echo-guidelines/identity-guidelines/typography)을 스킬에 번들해 두었습니다(`skills/aws-diagram-design/assets/fonts/`). 생성되는 다이어그램은 로컬 설치본 → 번들 woff2 → Helvetica 순으로 폰트를 찾으므로, 설치하지 않아도 동작에는 문제가 없습니다.
+
+## 이렇게 써보세요
+
+평소 쓰는 말로 요청하면 됩니다. 한국어 트리거(구성도, 아키텍처 다이어그램, 흐름도, 시퀀스 다이어그램 등)를 인식합니다.
+
+```
+"이 프로젝트 아키텍처 구성도 그려줘. EKS에 ArgoCD 배포, RDS는 Multi-AZ"
+"Transit Gateway 허브-스포크 네트워크 구성도, 계정 3개짜리로"
+"주문 처리 시퀀스 다이어그램 그려줘 — API Gateway, Lambda, SQS, DynamoDB"
+"이 온보딩 프로세스를 스윔레인으로 정리해줘"
+```
+
+기존 파일 재작도와 내보내기는 슬래시 커맨드로:
+
+```
+/aws-diagram-design:import-drawio legacy-arch.drawio     # draw.io 파일을 다시 그리기
+/aws-diagram-design:import-mermaid pipeline.mmd          # Mermaid 파일을 다시 그리기
+/aws-diagram-design:export-diagram my-diagram.html       # 생성된 HTML을 SVG/PNG로 내보내기
+```
+
+재작도 시 크기(문서 인라인/와이드/슬라이드 16:9/소셜 카드)·상세도(faithful/balanced/simplified)·독자(엔지니어/혼합/경영진)를 지정할 수 있고, 병합·생략된 요소는 fidelity ledger로 보고됩니다.
+
+## AWS 공식 리소스를 그대로 씁니다
+
+| 리소스 | 내용 |
+|---|---|
+| [AWS Architecture Icons](https://aws.amazon.com/ko/architecture/icons/) | 공식 아이콘 패키지(릴리스 07312026) **812종 번들** — 서비스 305, 리소스 466, 그룹 15, 카테고리 26. 변형·재채색 없이 원본 그대로 사용하며, 아키텍처 외 모든 다이어그램 타입에도 적용됩니다. 갤러리: `assets/aws-icons.html` |
+| 그룹 컨테이너 규약 | AWS Cloud·계정·Region·VPC·퍼블릭/프라이빗 서브넷·보안 그룹 등의 공식 경계 색상·배지·점선 규칙 |
+| [Amazon Ember](https://developer.amazon.com/en-US/alexa/branding/echo-guidelines/identity-guidelines/typography) | 공식 배포 폰트 번들(woff2 + TTF) — squid ink `#232F3E` + smile orange `#EC7211`/`#FF9900` 팔레트와 함께 AWS 브랜드 스킨을 구성 |
 
 ## 저장소 구조
 
 ```
 aws-diagram-design/
-├── plugin.json                     # Agent Plugins 1.0.0 매니페스트 (Kiro Power용, 루트 위치)
-├── .claude-plugin/
-│   ├── plugin.json                 # Claude Code 플러그인 매니페스트
-│   └── marketplace.json            # Claude Code 마켓플레이스 카탈로그
-├── commands/                       # Claude Code 슬래시 커맨드 3종
-│   ├── export-diagram.md           #   /aws-diagram-design:export-diagram
-│   ├── import-drawio.md            #   /aws-diagram-design:import-drawio
-│   └── import-mermaid.md           #   /aws-diagram-design:import-mermaid
-├── skills/aws-diagram-design/      # 정본 스킬 (세 환경 공용)
+├── .claude-plugin/                 # Claude Code 플러그인 매니페스트 + 마켓플레이스 카탈로그
+├── plugin.json                     # Agent Plugins 매니페스트 (Kiro Power용)
+├── commands/                       # 슬래시 커맨드 3종 (import-drawio / import-mermaid / export-diagram)
+├── skills/aws-diagram-design/      # 정본 스킬 (모든 환경 공용)
 │   ├── SKILL.md                    #   설계 시스템 + 27개 타입 라우팅
-│   ├── references/                 #   40개 레퍼런스 (style-guide, type-*, primitive-aws-icons 등)
-│   ├── assets/                     #   템플릿·예제 HTML, aws-icons/ 812 SVG, 아이콘 갤러리, fonts/ Amazon Ember
-│   └── scripts/                    #   self_check.py, verify-geometry.py, drawio/mermaid 추출기, 아이콘 빌더
-├── scripts/                        # 저장소 수준 검증 스크립트 (verify-geometry, verify-motion) + fixtures/
-├── docs/                           # 환경별 한글 가이드
-└── install.sh                      # 타깃별 설치 스크립트
+│   ├── references/                 #   타입별 스펙 40개 (style-guide, type-*, primitive-aws-icons 등)
+│   ├── assets/                     #   템플릿·예제, aws-icons/ 812 SVG, fonts/ Amazon Ember
+│   └── scripts/                    #   자체 검증(self_check, verify-geometry), drawio/mermaid 추출기
+├── scripts/                        # 저장소 수준 검증 스크립트 + 테스트 fixtures
+├── docs/                           # 환경별 한글 가이드 + samples/ 예제 다이어그램
+└── install.sh                      # claude-code · kiro · fonts 설치
 ```
 
 ## 라이선스
 
-MIT. 서드파티 고지는 [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md) 참고 — AWS Architecture Icons는 [AWS 아이콘 이용 약관](https://aws.amazon.com/architecture/icons/)을 따르며 변형·재채색이 금지됩니다.
+MIT. 서드파티 고지는 [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md) 참고 — AWS Architecture Icons는 [AWS 아이콘 이용 약관](https://aws.amazon.com/ko/architecture/icons/)을 따르며 변형·재채색이 금지되고, Amazon Ember는 동봉된 라이선스 가이드라인을 따릅니다.
