@@ -3,6 +3,7 @@
 #
 #   ./install.sh claude-code                  # print Claude Code plugin install steps
 #   ./install.sh kiro [--workspace] [--link]  # copy (or symlink) the skill for Kiro
+#   ./install.sh fonts                         # install bundled Amazon Ember TTFs to the OS font dir
 #
 # Add --force to overwrite an existing install of the same name.
 set -euo pipefail
@@ -79,8 +80,24 @@ To install as a Kiro Power instead (one-click install, keyword activation):
 EOF
     ;;
 
+  fonts)
+    FONT_SRC="$SKILL_SRC/assets/fonts/ttf"
+    [[ -d "$FONT_SRC" ]] || die "font directory not found: $FONT_SRC"
+    case "$(uname -s)" in
+      Darwin) FONT_DST="$HOME/Library/Fonts" ;;
+      *)      FONT_DST="$HOME/.local/share/fonts/amazon-ember" ;;
+    esac
+    mkdir -p "$FONT_DST"
+    cp "$FONT_SRC"/*.ttf "$FONT_DST/"
+    echo "installed Amazon Ember TTFs to: $FONT_DST"
+    if command -v fc-cache >/dev/null 2>&1; then
+      fc-cache -f "$FONT_DST" >/dev/null && echo "font cache refreshed (fc-cache)"
+    fi
+    echo "Diagrams declaring 'Amazon Ember' will now render with the real face in local browsers."
+    ;;
+
   *)
-    echo "usage: ./install.sh <claude-code|kiro> [--force] [--link] [--workspace]" >&2
+    echo "usage: ./install.sh <claude-code|kiro|fonts> [--force] [--link] [--workspace]" >&2
     exit 2
     ;;
 esac

@@ -21,13 +21,22 @@ content from the following third-party sources under their respective licenses.
 Provided by AWS for use in architecture diagrams per the terms above. The icons must not be
 altered, recolored, or used to imply AWS sponsorship of non-AWS products.
 
-## Amazon Ember (font — referenced, not bundled)
+## Amazon Ember (font — bundled)
 
-Amazon Ember is Amazon's corporate typeface and is **not redistributed in this repository**.
-Diagrams reference it by name with a full fallback stack
-(`'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif`); on machines without the
-font installed, the fallbacks render. Obtain Amazon Ember through Amazon's internal brand
-channels.
+- **License / terms:** Amazon Ember Licensing Guidelines — shipped alongside the fonts at
+  `skills/aws-diagram-design/assets/fonts/Amazon-Ember-Licensing-Guidelines.pdf`.
+- **Copyright:** © Amazon Technologies, Inc.
+- **Source:** Amazon's public typography download,
+  https://developer.amazon.com/en-US/alexa/branding/echo-guidelines/identity-guidelines/typography
+  (`Amazon_Typefaces_Complete_Font_Set_Mar2020.zip`), redistributed unmodified.
+- **Used in:** `skills/aws-diagram-design/assets/fonts/` — woff2 webfonts (Amazon Ember
+  300/400/400i/600/700/800, Amazon Ember Mono 400/700) referenced by generated diagrams via
+  `@font-face`, and desktop TTFs installable with `./install.sh fonts`.
+
+Diagrams always declare the full fallback stack
+(`'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif`); environments that cannot
+load the bundled files render the fallbacks. Review the licensing guidelines PDF before
+reusing the fonts outside this skill.
 
 ## Geist Mono
 

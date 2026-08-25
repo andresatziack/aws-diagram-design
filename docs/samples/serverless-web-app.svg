@@ -3,7 +3,16 @@
       <title id="serverless-web-title">Serverless Web Application</title>
       <desc id="serverless-web-desc">Users reach CloudFront, which serves static assets from S3 and routes dynamic requests through API Gateway to a Lambda function backed by DynamoDB.</desc>
       <defs>
-        <style>@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&amp;display=swap');</style>
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&amp;display=swap');
+          /* Amazon Ember — bundled with the skill (assets/fonts); local() wins when installed */
+          @font-face { font-family: 'Amazon Ember'; font-weight: 400; font-style: normal;
+            src: local('Amazon Ember'), url('../../skills/aws-diagram-design/assets/fonts/woff2/AmazonEmber_W_Rg.woff2') format('woff2'); }
+          @font-face { font-family: 'Amazon Ember'; font-weight: 600; font-style: normal;
+            src: local('Amazon Ember Medium'), local('Amazon Ember'), url('../../skills/aws-diagram-design/assets/fonts/woff2/AmazonEmber_W_SBd.woff2') format('woff2'); }
+          @font-face { font-family: 'Amazon Ember'; font-weight: 700; font-style: normal;
+            src: local('Amazon Ember Bold'), local('Amazon Ember'), url('../../skills/aws-diagram-design/assets/fonts/woff2/AmazonEmber_W_Bd.woff2') format('woff2'); }
+        </style>
         <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#545B64"/></marker>
         <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#EC7211"/></marker>
         <marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#0972D3"/></marker>

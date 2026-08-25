@@ -196,12 +196,13 @@ Type-specific anti-patterns live in each `references/type-*.md`.
 - **Arrow label** — Geist Mono, 8px — annotation on arrows
 - **Editorial aside** — Amazon Ember *italic*, 14px — callouts only
 
-**Mono is for technical content.** Names, titles, and callouts are Amazon Ember. Never JetBrains Mono as a blanket "dev" font. Amazon Ember is a local/corporate font, **not on Google Fonts** — always ship the fallback stack; only Geist Mono loads from Google Fonts:
+**Mono is for technical content.** Names, titles, and callouts are Amazon Ember. Never JetBrains Mono as a blanket "dev" font. Amazon Ember is **not on Google Fonts**, but this skill **bundles it** at [`assets/fonts/`](assets/fonts/) — include the `@font-face` block from [`assets/fonts/README.md`](assets/fonts/README.md) in generated HTML (with `local('Amazon Ember')` first, so installed copies win), or install the TTFs once via `./install.sh fonts`. Always ship the fallback stack; only Geist Mono loads from Google Fonts:
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <!-- sans: 'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif -->
 <!-- mono: 'Geist Mono', 'Amazon Ember Mono', ui-monospace, monospace -->
+<!-- Amazon Ember @font-face: see assets/fonts/README.md (bundled woff2, local() first) -->
 ```
 
 ---
@@ -212,7 +213,7 @@ Universal building blocks. Type-specialized primitives (lifeline, activation bar
 
 - Editorial callouts → [primitive-annotation.md](references/primitive-annotation.md)
 - Hand-drawn variant → [primitive-sketchy.md](references/primitive-sketchy.md)
-- **Official AWS Architecture Icons** (EC2, Lambda, S3, … + VPC/subnet/account zone conventions) → [primitive-aws-icons.md](references/primitive-aws-icons.md). **Use these whenever a diagram names specific AWS services.** Gallery: [`assets/aws-icons.html`](assets/aws-icons.html); index: [`assets/aws-icons/INDEX.md`](assets/aws-icons/INDEX.md).
+- **Official AWS Architecture Icons** (EC2, Lambda, S3, … + VPC/subnet/account zone conventions) → [primitive-aws-icons.md](references/primitive-aws-icons.md). **Use these whenever a diagram names specific AWS services — in every visual type, not just Architecture.** Data-flow cells, process steps, high-level components, sequence actors, swimlane steps, medallion tiers, DP-integration nodes: any element whose subject is a named AWS service carries its official icon. Types with the standard 56px node use the icon-left pattern; compact node types (data-flow, and any node too small for icon-left) use the 16px corner slot defined in [primitive-aws-icons.md § Compact nodes](references/primitive-aws-icons.md). Gallery: [`assets/aws-icons.html`](assets/aws-icons.html); index: [`assets/aws-icons/INDEX.md`](assets/aws-icons/INDEX.md).
 - Generic monochrome icon set (laptop, server, DB, K8s, Docker, …) → [primitive-icons.md](references/primitive-icons.md). Browse the gallery at [`assets/icons.html`](assets/icons.html). For generic/non-AWS infrastructure.
 - Terminal / CLI-window variant → [primitive-terminal.md](references/primitive-terminal.md)
 - Optional explanatory motion → [animation.md](references/animation.md)

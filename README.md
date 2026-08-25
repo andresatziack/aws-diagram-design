@@ -38,7 +38,7 @@ Kinesis → Lambda → S3 데이터 레이크로 이어지는 스트리밍 수�
 
 ![AWS Data Pipeline Flow 다이어그램](docs/samples/data-pipeline-flow.svg)
 
-> SVG는 Geist Mono를 Google Fonts에서 불러오도록 되어 있으나, GitHub 이미지 렌더링은 외부 폰트를 차단하므로 시스템 모노 폰트로 대체 표시됩니다. 정확한 타이포그래피는 HTML 원본을 브라우저에서 여세요.
+> Amazon Ember는 스킬에 번들되어 있습니다(`skills/aws-diagram-design/assets/fonts/`). 샘플 HTML은 `local('Amazon Ember')` → 번들 woff2 → Helvetica 순으로 로드하며, `./install.sh fonts`로 OS에 설치해 둘 수도 있습니다. 단, GitHub 이미지 렌더링은 외부 리소스를 차단하므로 아래 SVG의 폰트는 시스템 폰트로 대체 표시됩니다 — 정확한 타이포그래피는 HTML 원본을 브라우저에서 여세요.
 
 ## 지원 환경
 
@@ -54,6 +54,7 @@ Kinesis → Lambda → S3 데이터 레이크로 이어지는 스트리밍 수�
 ```bash
 ./install.sh claude-code     # Claude Code 설치 절차 안내 출력
 ./install.sh kiro            # ~/.kiro/skills/ 에 복사 (--workspace: .kiro/skills/, --link: 심링크)
+./install.sh fonts           # 번들된 Amazon Ember TTF를 OS 폰트 디렉터리에 설치
 ```
 
 ## 저장소 구조
@@ -71,7 +72,7 @@ aws-diagram-design/
 ├── skills/aws-diagram-design/      # 정본 스킬 (세 환경 공용)
 │   ├── SKILL.md                    #   설계 시스템 + 27개 타입 라우팅
 │   ├── references/                 #   40개 레퍼런스 (style-guide, type-*, primitive-aws-icons 등)
-│   ├── assets/                     #   템플릿·예제 HTML, aws-icons/ 812 SVG, 아이콘 갤러리
+│   ├── assets/                     #   템플릿·예제 HTML, aws-icons/ 812 SVG, 아이콘 갤러리, fonts/ Amazon Ember
 │   └── scripts/                    #   self_check.py, verify-geometry.py, drawio/mermaid 추출기, 아이콘 빌더
 ├── scripts/                        # 저장소 수준 검증 스크립트 (verify-geometry, verify-motion) + fixtures/
 ├── docs/                           # 환경별 한글 가이드

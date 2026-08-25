@@ -80,7 +80,13 @@ A self-contained palette for the terminal-window primitive (see [primitive-termi
 
 ### Font stack
 
-Amazon Ember is a corporate font — installed locally on Amazon-managed machines, **not on Google Fonts**. Always ship the fallback stack; only Geist Mono loads from Google Fonts.
+Amazon Ember is **not on Google Fonts**, but this skill **bundles it** at [`assets/fonts/`](../assets/fonts/) (woff2 webfonts + desktop TTFs, from Amazon's public typography download). Load it in this order:
+
+1. **`local('Amazon Ember')`** — present on Amazon-managed machines, or after running `./install.sh fonts` (repo root), which installs the bundled TTFs into the OS font directory.
+2. **Bundled woff2 via `@font-face`** — paste the canonical block from [`assets/fonts/README.md`](../assets/fonts/README.md) into the generated HTML, pointing `FONTS` at `<skill-dir>/assets/fonts/woff2` (relative path when the output lives near the skill; or copy the woff2 files next to the deliverable and use `./fonts/`).
+3. **Fallback stack** — always declared on `font-family`; sandboxed viewers (GitHub's SVG renderer, offline tools) fall back to Helvetica/Arial.
+
+Weight map for the bundled faces: 300 Lt · 400 Rg (+italic) · 600 SBd · 700 Bd · 800 He; `Amazon Ember Mono` 400/700 is also bundled and serves as the mono fallback behind Geist Mono. Only Geist Mono loads from Google Fonts:
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">

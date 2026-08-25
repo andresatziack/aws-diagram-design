@@ -65,6 +65,7 @@ dark: false
   - **Array form:** `["<INPUT_CODE>", "<OUTPUT_CODE>"]` — first item is input, second is output.
   - Codes from §8 (`WB`, `DB`, `TB`, `FL`, `LS`). Position is **fixed**: input chip on the node's bottom-**left**, output chip on the bottom-**right**.
 - `nodes[i].color` — optional **per-node color override**. Any valid `"#hex"` string is accepted; the §4 palette is recommended for cross-diagram consistency but not required. Every node can carry its own color independently of others.
+- `nodes[i].aws_icon` — official AWS Architecture Icon for the node's primary service (path under `assets/aws-icons/`). **Required whenever `tool` names a specific AWS service** (AWS-skin install) — see [primitive-aws-icons.md § Compact nodes](primitive-aws-icons.md). Rendered in the 16px top-right corner slot (§2.4); one icon per node, the dominant service when `tool` lists several.
 
 ---
 
@@ -148,13 +149,17 @@ Per-lane `color` override (§4): replaces the label fill with `C` and the lane t
 
 ```
 role_chip          rect 18×10 at (node_x+4, node_y+4),  rx=3
-role_chip_text     centered at (node_x+13, node_y+9), eyebrow role, font-size=6, weight=600
+aws_icon           16×16 at (node_x+80, node_y+4)                  # top-right corner slot, scale 16/64=0.25
+                                                                   # only when nodes[i].aws_icon is set
 title              centered at (step_cx(j), node_y+23), node-name role, font-size=9
 sub                centered at (step_cx(j), node_y+35), sublabel role, font-size=6.5, muted
 tool               centered at (step_cx(j), node_y+47), sublabel role, font-size=6.5, soft
 data chip IN       rect 16×8 at (node_x+4,   node_y+54), rx=3      # payload type entering the node
 data chip OUT      rect 16×8 at (node_x+80,  node_y+54), rx=3      # payload type leaving the node
+role_chip_text     centered at (node_x+13, node_y+9), eyebrow role, font-size=6, weight=600
 ```
+
+When `aws_icon` is present, cap the title at **~13 characters** so the centered title clears the corner icon (see [primitive-aws-icons.md § Compact nodes](primitive-aws-icons.md)).
 
 Empty cells (no node entry) render **nothing**. No placeholder rect, no role chip, no label — the cell is invisible.
 

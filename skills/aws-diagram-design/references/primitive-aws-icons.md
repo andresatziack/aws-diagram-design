@@ -131,6 +131,27 @@ The icon replaces the rectangular type tag from SKILL.md §6 — don't stack bot
       font-family="'Geist Mono', monospace">Lambda · python3.13</text>
 ```
 
+### Compact nodes (non-architecture types)
+
+**The icon rule applies to every visual type, not just Architecture.** Data-flow cells, process steps, high-level components, DP-integration nodes, sequence actors, swimlane steps, medallion tiers — any element whose subject is a named AWS service carries the official icon.
+
+Types whose nodes are too small for the icon-left pattern (e.g., the 100×64 data-flow cell, which already spends its left corner on a role chip) use the **16px corner slot** instead:
+
+```svg
+<!-- 16×16 service icon in the node's top-right corner: scale = 16 / 64 = 0.25 -->
+<g transform="translate(NODE_X + NODE_W - 20, NODE_Y + 4) scale(0.25)" aria-hidden="true">
+  …inlined icon group (ids stripped)…
+</g>
+```
+
+Rules for the corner slot:
+
+- **16px is the floor** (rule 2 below) — never render smaller to squeeze a tight cell; drop the icon from secondary nodes instead.
+- Scale factors at 16px: service `16/64 = 0.25`, resource `16/48 ≈ 0.333`, group badge `16/40 = 0.4`.
+- **One icon per node** — the node's primary service. A node listing two tools (`Kinesis · DMS`) shows the dominant one; the sublabel already names the rest.
+- **Keep the title clear of the icon.** With a centered title and a 16px top-right icon on a 100px-wide node, cap the title at ~13 characters; if the title can't shrink, move to the icon-left pattern or a wider node.
+- Nodes for non-AWS subjects (roles, generic actors, on-prem tools) take no AWS icon — mixing generic monochrome marks ([primitive-icons.md](primitive-icons.md)) in the same diagram is fine.
+
 ### Group containers (zones)
 
 AWS zone containers follow the official convention: **border in the group color, badge in the top-left corner, label to the badge's right**. Fill is `none` or a ≤5% tint of the border color.
