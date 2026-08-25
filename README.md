@@ -1,5 +1,7 @@
 # AWS Diagram Design Skill(aws-diagram-design)
 
+**한국어** | [English](README.en.md)
+
 **말로 설명하면, AWS 다이어그램을 작성합니다.**
 
 draw.io 등을 사용하여 다양한 아키텍처 및 다이어그램을 작성하는 대신, Claude Code나 Kiro에게 이렇게 말해보세요.
