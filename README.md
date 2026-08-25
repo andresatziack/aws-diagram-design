@@ -4,6 +4,30 @@ AWS 브랜드로 스킨된 에디토리얼 다이어그램 스킬. [cathrynlaver
 
 아키텍처, 플로차트, 시퀀스, 상태 머신, ER, 타임라인, 스윔레인, 쿼드런트, 레이더, 루프, 중첩, 트리, 조직도, 레이어 스택, 벤, 피라미드, 막대·선·간트·산점도, 하이레벨, 프로세스, 메달리온, 데이터 플로 등 27개 시각 타입을 자체 완결형 HTML/SVG/PNG로 생성하고, draw.io(.drawio)·Mermaid(.mmd) 원본을 지정한 크기·상세도로 다시 그립니다.
 
+## 샘플
+
+이 스킬로 생성한 아키텍처 다이어그램 예시입니다. 원본 HTML은 [docs/samples/](docs/samples/)에 있으며, 아래 SVG는 스킬의 export 절차로 추출한 것입니다.
+
+### Serverless Web Application
+
+CloudFront가 S3 정적 자산과 API Gateway → Lambda → DynamoDB 동적 경로를 분기하는 서버리스 웹 앱. ([HTML](docs/samples/serverless-web-app.html))
+
+![Serverless Web Application 아키텍처 다이어그램](docs/samples/serverless-web-app.svg)
+
+### VPC Three-Tier Web Service
+
+퍼블릭 서브넷의 ALB가 프라이빗 서브넷의 ECS on Fargate로 전달하고, RDS·ElastiCache가 데이터 계층을 담당하는 VPC 3-티어 구성. 공식 AWS 그룹 컨테이너 규약(VPC·서브넷 배지)을 따릅니다. ([HTML](docs/samples/vpc-three-tier.html))
+
+![VPC Three-Tier Web Service 아키텍처 다이어그램](docs/samples/vpc-three-tier.svg)
+
+### Event-Driven Data Pipeline
+
+Kinesis → Lambda → S3 데이터 레이크로 이어지는 스트리밍 수집과, Glue 카탈로그를 거쳐 Athena가 S3를 직접 쿼리하는 분석 경로. 교차 커넥터의 bridge/hop 프리미티브를 보여줍니다. ([HTML](docs/samples/event-driven-pipeline.html))
+
+![Event-Driven Data Pipeline 아키텍처 다이어그램](docs/samples/event-driven-pipeline.svg)
+
+> SVG는 Geist Mono를 Google Fonts에서 불러오도록 되어 있으나, GitHub 이미지 렌더링은 외부 폰트를 차단하므로 시스템 모노 폰트로 대체 표시됩니다. 정확한 타이포그래피는 HTML 원본을 브라우저에서 여세요.
+
 ## 지원 환경
 
 | 환경 | 설치 방식 | 가이드 |
