@@ -26,6 +26,12 @@ Kinesis → Lambda → S3 데이터 레이크로 이어지는 스트리밍 수�
 
 ![Event-Driven Data Pipeline 아키텍처 다이어그램](docs/samples/event-driven-pipeline.svg)
 
+### Multi-Region Network Backbone
+
+멀티 계정·멀티 리전 네트워크 백본. us-east-1과 ap-northeast-2의 워크로드 VPC가 각 리전 Network account의 Transit Gateway에 attach되고, TGW가 AWS Cloud WAN 코어 네트워크로 피어링됩니다. 온프레미스 데이터센터는 Direct Connect(BGP)로 연결되며 Site-to-Site VPN이 백업 경로를 제공합니다. Region·Account·VPC·Corporate DC의 공식 그룹 컨테이너 규약을 모두 사용합니다. ([HTML](docs/samples/multi-region-network.html))
+
+![Multi-Region Network Backbone 아키텍처 다이어그램](docs/samples/multi-region-network.svg)
+
 > SVG는 Geist Mono를 Google Fonts에서 불러오도록 되어 있으나, GitHub 이미지 렌더링은 외부 폰트를 차단하므로 시스템 모노 폰트로 대체 표시됩니다. 정확한 타이포그래피는 HTML 원본을 브라우저에서 여세요.
 
 ## 지원 환경
