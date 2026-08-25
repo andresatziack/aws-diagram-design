@@ -46,7 +46,7 @@ Kinesis → Lambda → S3 데이터 레이크 스트리밍 수집과, Glue 카�
 
 ### AWS Data Pipeline Flow
 
-"누가 어느 단계에서 무엇을 하는가"를 보여주는 역할 스코프 데이터 플로. Lake Formation 거버넌스 아래 Kinesis·DMS 수집 → S3 레이크 → Glue ETL → Redshift DW → Quick Suite 대시보드로 이어지고, 노드 하단 칩이 페이로드 타입 변환(스트림→데이터셋→테이블→리포트)을 추적합니다. ([HTML](docs/samples/data-pipeline-flow.html))
+"누가 어느 단계에서 무엇을 하는가"를 보여주는 역할 스코프 데이터 플로. Data Admin이 Lake Formation 카탈로그 거버넌스와 IAM 접근 권한을 점선 트리거로 내려주고, 그 아래에서 Kinesis·DMS 수집 → S3 레이크 → Glue ETL → Redshift DW(포컬 핸드오프) → Quick Suite 대시보드로 이어집니다. 각 노드의 공식 서비스 아이콘과 하단 칩이 페이로드 타입 변환(스트림→데이터셋→테이블→리포트)을 추적합니다. ([HTML](docs/samples/data-pipeline-flow.html))
 
 ![AWS Data Pipeline Flow 다이어그램](docs/samples/data-pipeline-flow.svg)
 
