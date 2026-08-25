@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Event-Driven Data Pipeline</title>
-  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     /* Amazon Ember — bundled with the skill (assets/fonts); local() wins when installed */
     @font-face { font-family: 'Amazon Ember'; font-weight: 400; font-style: normal;
@@ -13,6 +12,10 @@
       src: local('Amazon Ember Medium'), local('Amazon Ember'), url('../../skills/aws-diagram-design/assets/fonts/woff2/AmazonEmber_W_SBd.woff2') format('woff2'); }
     @font-face { font-family: 'Amazon Ember'; font-weight: 700; font-style: normal;
       src: local('Amazon Ember Bold'), local('Amazon Ember'), url('../../skills/aws-diagram-design/assets/fonts/woff2/AmazonEmber_W_Bd.woff2') format('woff2'); }
+    @font-face { font-family: 'Amazon Ember Mono'; font-weight: 400; font-style: normal;
+      src: local('Amazon Ember Mono'), url('../../skills/aws-diagram-design/assets/fonts/woff2/AmazonEmberMono_W_Rg.woff2') format('woff2'); }
+    @font-face { font-family: 'Amazon Ember Mono'; font-weight: 700; font-style: normal;
+      src: local('Amazon Ember Mono Bold'), local('Amazon Ember Mono'), url('../../skills/aws-diagram-design/assets/fonts/woff2/AmazonEmberMono_W_Bd.woff2') format('woff2'); }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --color-paper:   #ffffff;
@@ -20,7 +23,7 @@
       --color-muted:   #545B64;
       --color-accent:  #EC7211;
       --font-sans:     'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      --font-mono:     'Geist Mono', 'Amazon Ember Mono', ui-monospace, monospace;
+      --font-mono:     'Amazon Ember Mono', ui-monospace, monospace;
     }
     body {
       font-family: var(--font-sans);
@@ -84,32 +87,32 @@
       <!-- Producers -> Kinesis -->
       <line x1="160" y1="132" x2="224" y2="132" stroke="#0972D3" stroke-width="1.2" marker-end="url(#arrow-link)"/>
       <rect x="170" y="112" width="44" height="12" rx="2" fill="#ffffff"/>
-      <text x="192" y="121" fill="#0972D3" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">EVENTS</text>
+      <text x="192" y="121" fill="#0972D3" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">EVENTS</text>
 
       <!-- Kinesis -> Lambda -->
       <line x1="400" y1="132" x2="464" y2="132" stroke="#545B64" stroke-width="1.2" marker-end="url(#arrow)"/>
       <rect x="410" y="112" width="44" height="12" rx="2" fill="#ffffff"/>
-      <text x="432" y="121" fill="#7D8998" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">STREAM</text>
+      <text x="432" y="121" fill="#7D8998" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">STREAM</text>
 
       <!-- Lambda -> S3 (accent) -->
       <line x1="624" y1="132" x2="688" y2="132" stroke="#EC7211" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
       <rect x="638" y="112" width="36" height="12" rx="2" fill="#ffffff"/>
-      <text x="656" y="121" fill="#EC7211" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">WRITE</text>
+      <text x="656" y="121" fill="#EC7211" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">WRITE</text>
 
       <!-- S3 -> Glue (vertical) -->
       <line x1="776" y1="160" x2="776" y2="248" stroke="#545B64" stroke-width="1.2" marker-end="url(#arrow)"/>
       <rect x="784" y="196" width="40" height="12" rx="2" fill="#ffffff"/>
-      <text x="788" y="205" fill="#7D8998" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">CRAWL</text>
+      <text x="788" y="205" fill="#7D8998" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" letter-spacing="0.06em">CRAWL</text>
 
       <!-- Glue -> Athena (leftward) -->
       <line x1="688" y1="276" x2="624" y2="276" stroke="#545B64" stroke-width="1.2" marker-end="url(#arrow)"/>
       <rect x="634" y="256" width="44" height="12" rx="2" fill="#ffffff"/>
-      <text x="656" y="265" fill="#7D8998" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">SCHEMA</text>
+      <text x="656" y="265" fill="#7D8998" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">SCHEMA</text>
 
       <!-- Athena -> S3 (dashed elbow with hop over the crawl line) -->
       <path d="M544,248 V212 Q544,204 552,204 H768 a 8,8 0 0,1 16,0 H800 Q808,204 808,196 V160" fill="none" stroke="#0972D3" stroke-width="1" stroke-dasharray="5,4" marker-end="url(#arrow-link)"/>
       <rect x="500" y="220" width="36" height="12" rx="2" fill="#ffffff"/>
-      <text x="518" y="229" fill="#0972D3" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">SCAN</text>
+      <text x="518" y="229" fill="#0972D3" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">SCAN</text>
 
       <!-- ===== nodes ===== -->
       <!-- Producers (input) -->
@@ -121,7 +124,7 @@
         </g>
       </g>
       <text x="80" y="130" fill="#232F3E" font-size="12" font-weight="600" font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif">Producers</text>
-      <text x="80" y="146" fill="#545B64" font-size="9" font-family="'Geist Mono', monospace">apps · devices</text>
+      <text x="80" y="146" fill="#545B64" font-size="9" font-family="'Amazon Ember Mono', ui-monospace, monospace">apps · devices</text>
 
       <!-- Kinesis -->
       <rect x="224" y="104" width="176" height="56" rx="6" fill="#ffffff"/>
@@ -133,7 +136,7 @@
         </g>
       </g>
       <text x="272" y="130" fill="#232F3E" font-size="12" font-weight="600" font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif">Kinesis Streams</text>
-      <text x="272" y="146" fill="#545B64" font-size="9" font-family="'Geist Mono', monospace">data stream</text>
+      <text x="272" y="146" fill="#545B64" font-size="9" font-family="'Amazon Ember Mono', ui-monospace, monospace">data stream</text>
 
       <!-- Lambda -->
       <rect x="464" y="104" width="160" height="56" rx="6" fill="#ffffff"/>
@@ -145,7 +148,7 @@
         </g>
       </g>
       <text x="512" y="130" fill="#232F3E" font-size="12" font-weight="600" font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif">Lambda</text>
-      <text x="512" y="146" fill="#545B64" font-size="9" font-family="'Geist Mono', monospace">transform</text>
+      <text x="512" y="146" fill="#545B64" font-size="9" font-family="'Amazon Ember Mono', ui-monospace, monospace">transform</text>
 
       <!-- S3 Data Lake (focal) -->
       <rect x="688" y="104" width="176" height="56" rx="6" fill="#ffffff"/>
@@ -159,7 +162,7 @@
         </g>
       </g>
       <text x="736" y="130" fill="#232F3E" font-size="12" font-weight="600" font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif">S3 Data Lake</text>
-      <text x="736" y="146" fill="#545B64" font-size="9" font-family="'Geist Mono', monospace">parquet</text>
+      <text x="736" y="146" fill="#545B64" font-size="9" font-family="'Amazon Ember Mono', ui-monospace, monospace">parquet</text>
 
       <!-- Athena -->
       <rect x="464" y="248" width="160" height="56" rx="6" fill="#ffffff"/>
@@ -171,7 +174,7 @@
         </g>
       </g>
       <text x="512" y="274" fill="#232F3E" font-size="12" font-weight="600" font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif">Athena</text>
-      <text x="512" y="290" fill="#545B64" font-size="9" font-family="'Geist Mono', monospace">SQL query</text>
+      <text x="512" y="290" fill="#545B64" font-size="9" font-family="'Amazon Ember Mono', ui-monospace, monospace">SQL query</text>
 
       <!-- Glue -->
       <rect x="688" y="248" width="176" height="56" rx="6" fill="#ffffff"/>
@@ -183,32 +186,32 @@
         </g>
       </g>
       <text x="736" y="274" fill="#232F3E" font-size="12" font-weight="600" font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif">Glue Catalog</text>
-      <text x="736" y="290" fill="#545B64" font-size="9" font-family="'Geist Mono', monospace">crawler · schema</text>
+      <text x="736" y="290" fill="#545B64" font-size="9" font-family="'Amazon Ember Mono', ui-monospace, monospace">crawler · schema</text>
 
       <!-- ===== legend ===== -->
       <line x1="32" y1="348" x2="928" y2="348" stroke="rgba(35,47,62,0.10)" stroke-width="0.8"/>
-      <text x="32" y="368" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEGEND</text>
+      <text x="32" y="368" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" letter-spacing="0.14em">LEGEND</text>
 
       <rect x="112" y="360" width="20" height="12" rx="2" fill="rgba(255,153,0,0.10)" stroke="#EC7211" stroke-width="1"/>
-      <text x="140" y="369" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace">FOCAL</text>
+      <text x="140" y="369" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace">FOCAL</text>
 
       <rect x="208" y="360" width="20" height="12" rx="2" fill="#ffffff" stroke="#232F3E" stroke-width="1"/>
-      <text x="236" y="369" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace">AWS SERVICE</text>
+      <text x="236" y="369" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace">AWS SERVICE</text>
 
       <rect x="336" y="360" width="20" height="12" rx="2" fill="rgba(84,91,100,0.10)" stroke="#7D8998" stroke-width="1"/>
-      <text x="364" y="369" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace">SOURCE</text>
+      <text x="364" y="369" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace">SOURCE</text>
 
       <line x1="440" y1="366" x2="472" y2="366" stroke="#0972D3" stroke-width="1.2" marker-end="url(#arrow-link)"/>
-      <text x="480" y="369" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace">INGEST</text>
+      <text x="480" y="369" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace">INGEST</text>
 
       <line x1="552" y1="366" x2="584" y2="366" stroke="#EC7211" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
-      <text x="592" y="369" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace">PRIMARY</text>
+      <text x="592" y="369" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace">PRIMARY</text>
 
       <line x1="664" y1="366" x2="696" y2="366" stroke="#545B64" stroke-width="1.2" marker-end="url(#arrow)"/>
-      <text x="704" y="369" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace">INTERNAL</text>
+      <text x="704" y="369" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace">INTERNAL</text>
 
       <line x1="784" y1="366" x2="816" y2="366" stroke="#0972D3" stroke-width="1" stroke-dasharray="5,4" marker-end="url(#arrow-link)"/>
-      <text x="824" y="369" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace">QUERY</text>
+      <text x="824" y="369" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace">QUERY</text>
     </svg>
   </div>
 </body>

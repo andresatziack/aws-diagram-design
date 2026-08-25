@@ -65,9 +65,9 @@ Node names shrink relative to the canvas as it grows — resist that. Scale the 
 |---|---|---|---|
 | Title (Amazon Ember 700) | 28 | 40 | 32 |
 | Node name (Amazon Ember 600) | 12 | 16 | 12 |
-| Sublabel (Geist Mono) | 9 | 12 | 9 |
-| Arrow label (Geist Mono) | 8 | 12 | 8 |
-| Eyebrow / tag (Geist Mono) | 8 | 8 | 8 |
+| Sublabel (Amazon Ember Mono) | 9 | 12 | 9 |
+| Arrow label (Amazon Ember Mono) | 8 | 12 | 8 |
+| Eyebrow / tag (Amazon Ember Mono) | 8 | 8 | 8 |
 | Node box min height | 48 | 64 | 48 |
 | Min gap between nodes | 24 | 40 | 24 |
 
@@ -144,7 +144,7 @@ Amazon Ember has no CJK coverage. When labels contain Japanese, Chinese, or Kore
 <text font-family="'Amazon Ember', 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic', sans-serif">認証サービス</text>
 ```
 
-For mono sublabels use `'Geist Mono', 'Noto Sans Mono CJK JP', monospace`. CJK glyphs render ~10% wider than Latin at the same size — budget box width accordingly, and prefer 12px names over 8px sublabels for CJK, which goes muddy below 10px.
+For mono sublabels use `'Amazon Ember Mono', 'Noto Sans Mono CJK JP', monospace`. CJK glyphs render ~10% wider than Latin at the same size — budget box width accordingly, and prefer 12px names over 8px sublabels for CJK, which goes muddy below 10px.
 
 ---
 

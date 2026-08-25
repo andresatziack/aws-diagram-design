@@ -73,9 +73,9 @@ A self-contained palette for the terminal-window primitive (see [primitive-termi
 |---|---|---|---|---|
 | `title` | Amazon Ember | 1.75rem | 700 | Page H1 |
 | `node-name` | Amazon Ember | 12px | 600 | Human-readable labels |
-| `sublabel` | Geist Mono | 9px | 400 | Port, protocol, URL, field type |
-| `eyebrow` | Geist Mono | 7–8px | 500, tracked 0.18em, uppercase | Type tags, axis labels |
-| `arrow-label` | Geist Mono | 8px | 400, tracked 0.06em | Arrow annotations |
+| `sublabel` | Amazon Ember Mono | 9px | 400 | Port, protocol, URL, field type |
+| `eyebrow` | Amazon Ember Mono | 7–8px | 500, tracked 0.18em, uppercase | Type tags, axis labels |
+| `arrow-label` | Amazon Ember Mono | 8px | 400, tracked 0.06em | Arrow annotations |
 | `callout` | Amazon Ember *italic* | 14px | 400 | Editorial asides only |
 
 ### Font stack
@@ -86,15 +86,11 @@ Amazon Ember is **not on Google Fonts**, but this skill **bundles it** at [`asse
 2. **Bundled woff2 via `@font-face`** — paste the canonical block from [`assets/fonts/README.md`](../assets/fonts/README.md) into the generated HTML, pointing `FONTS` at `<skill-dir>/assets/fonts/woff2` (relative path when the output lives near the skill; or copy the woff2 files next to the deliverable and use `./fonts/`).
 3. **Fallback stack** — always declared on `font-family`; sandboxed viewers (GitHub's SVG renderer, offline tools) fall back to Helvetica/Arial.
 
-Weight map for the bundled faces: 300 Lt · 400 Rg (+italic) · 600 SBd · 700 Bd · 800 He; `Amazon Ember Mono` 400/700 is also bundled and serves as the mono fallback behind Geist Mono. Only Geist Mono loads from Google Fonts:
-
-```html
-<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-```
+Weight map for the bundled faces: Amazon Ember 300 Lt · 400 Rg (+italic) · 600 SBd · 700 Bd · 800 He; **Amazon Ember Mono 400/700** carries every mono role (sublabels, eyebrows, arrow labels — a 500/600 spec snaps to the nearest bundled weight, which is expected). **No font loads from an external CDN** — generated diagrams need no Google Fonts `<link>`.
 
 ```css
 /* sans (names, titles, callouts) */ font-family: 'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-/* mono (technical content)       */ font-family: 'Geist Mono', 'Amazon Ember Mono', ui-monospace, monospace;
+/* mono (technical content)       */ font-family: 'Amazon Ember Mono', ui-monospace, monospace;
 ```
 
 Installed Ember faces: Light 300 / Regular 400 / Medium 500 / Bold 700 / Heavy 800, plus italics. If a 600 weight renders as synthesized bold in a target environment, drop node names to 500 or up to 700 — never fake-bold the Heavy face.
@@ -148,7 +144,7 @@ Three options:
 - **Contrast**: `ink` must hit WCAG AA on `paper`. `muted` must hit AA on `paper` for 11px+ text.
 - **One accent**: pick one color for `accent`. Two accents erases the focal signal. (AWS icon/zone identity colors are exempt — they're identity marks, not accents.)
 - **No rainbow palette**: if your brand ships 8 colors, pick 3 (paper, ink, accent). The rest become `muted` variants.
-- **Typography**: at most three families. The AWS skin runs sans + mono (Ember + Geist Mono) — brand consistency outweighs the serif/sans contrast the editorial default used.
+- **Typography**: at most three families. The AWS skin runs sans + mono (Ember + Amazon Ember Mono) — brand consistency outweighs the serif/sans contrast the editorial default used.
 - **Paper**: the AWS skin uses pure white because official AWS architecture diagrams do. For non-AWS skins, prefer a warm-neutral (cream, bone, light grey) — pure white without a brand mandate turns the design sterile.
 - **Dot pattern is optional, not default**: the 22×22 dot pattern is an opt-in "dotted paper" variant (good for long-form editorial hero diagrams). The default background is a clean `paper` fill, no pattern. When the pattern is enabled, it should sit at ~10% opacity of `ink` on `paper` — visible but quiet.
 - **Container is clean by default**: the diagram sits directly on the page paper, no secondary container background or border. A framed variant (`paper-2` bg + `rule` border + 8px radius + padding) is available as an opt-in for card-heavy layouts, but don't reach for it by default — the extra chrome fights the figure.

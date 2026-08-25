@@ -4,7 +4,7 @@
 
 ## Layout conventions
 - 2×2 grid. Axis lines: 1px ink cross through the center.
-- **Axis labels: Jobs-minimal.** One single word at each arrow tip — no glyphs baked into the label (no `↑` / `→` / `←` / `↓`), no parentheticals, no "HIGH / LOW" modifiers. Geist Mono 9px regular weight, tracked 0.18em, uppercase. Flank the arrow tips — never sit labels on top of the axis line. Shorten the arrow enough (~60–80px inside the viewBox edge) to leave breathing room for the labels beyond the tips.
+- **Axis labels: Jobs-minimal.** One single word at each arrow tip — no glyphs baked into the label (no `↑` / `→` / `←` / `↓`), no parentheticals, no "HIGH / LOW" modifiers. Amazon Ember Mono 9px regular weight, tracked 0.18em, uppercase. Flank the arrow tips — never sit labels on top of the axis line. Shorten the arrow enough (~60–80px inside the viewBox edge) to leave breathing room for the labels beyond the tips.
 - Never label at the midpoint.
 - Items: small labeled dots (`r=4`) positioned in the quadrants. Labels 8–10px away; don't let labels cross axis lines.
 - Coral on the "do first" item (typically top-right).
@@ -25,7 +25,7 @@
 
 ## Consultant special (2×2 scenario matrix)
 
-A **layout variant** of the standard quadrant — same house skin (warm paper, dot pattern, Amazon Ember (700) title, Geist mono eyebrows, coral focal rule). The grammar shifts: axes hold a **range** rather than a measurement; cells hold **named scenarios** rather than positioned items.
+A **layout variant** of the standard quadrant — same house skin (warm paper, dot pattern, Amazon Ember (700) title, Ember Mono eyebrows, coral focal rule). The grammar shifts: axes hold a **range** rather than a measurement; cells hold **named scenarios** rather than positioned items.
 
 **Use when:** you're framing four futures, archetypes, or strategic options across two independent drivers — classic scenario planning, positioning frames, or 2×2 strategy decks (BCG/McKinsey territory). The reader should come away with four named bets, not a point cloud.
 
@@ -54,8 +54,8 @@ Everything else — paper, dot pattern, typography, legend strip, 4px grid, comp
 - **Non-focal cells**: `store` treatment (`ink @ 0.04` fill, `muted @ 0.28` stroke).
 - **Cell title**: Amazon Ember, 16px, weight 600, `ink`.
 - **Cell description**: Amazon Ember, 11px, `muted`, 1–3 lines, left-aligned inside the cell.
-- **Corner tag**: Geist Mono, 8px, uppercase, tracked `0.18em`, `muted` (or `accent` on focal). Format: `NN · DIMENSION-A / DIMENSION-B` — the two axis-dimension words must match the axis labels exactly.
-- **Axis labels**: Geist Mono 9px **regular weight** (not bold), tracked `0.18em`, uppercase, `ink`. **One word per tip.** No arrow glyphs in the label, no `HIGH / LOW` parentheticals, no multi-line sublabels. The word itself *is* the label. Position labels *beyond* the arrow tips (not on the axis line):
+- **Corner tag**: Amazon Ember Mono, 8px, uppercase, tracked `0.18em`, `muted` (or `accent` on focal). Format: `NN · DIMENSION-A / DIMENSION-B` — the two axis-dimension words must match the axis labels exactly.
+- **Axis labels**: Amazon Ember Mono 9px **regular weight** (not bold), tracked `0.18em`, uppercase, `ink`. **One word per tip.** No arrow glyphs in the label, no `HIGH / LOW` parentheticals, no multi-line sublabels. The word itself *is* the label. Position labels *beyond* the arrow tips (not on the axis line):
   - Top tip: `text-anchor="middle"`, ~12px above the arrow tip
   - Bottom tip: `text-anchor="middle"`, ~20px below the arrow tip
   - Left tip: `text-anchor="end"`, ~12px left of the arrow tip, `dominant-baseline="middle"`

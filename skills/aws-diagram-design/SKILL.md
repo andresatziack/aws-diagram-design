@@ -3,7 +3,7 @@ name: aws-diagram-design
 description: "Create branded architecture, IT current-state, flowchart, sequence, state machine, ER/data model, timeline, swimlane, quadrant, radar/spider, loop/flywheel, nested, tree, org chart, layer stack, Venn, pyramid/funnel, bar, line, Gantt and scatter charts, high-level, process, medallion, data flow, DP integration, or DP security matrix diagrams as standalone HTML/SVG/PNG. Default skin is the AWS brand (Amazon Ember, squid ink, smile orange) with the official AWS Architecture Icons (EC2, Lambda, S3, VPC zones, …) bundled. Redraw .drawio/.drawio.png/.drawio.svg or Mermaid .mmd sources at a chosen size/detail; onboard brand tokens from a website; add semantic patterns, callouts, accessible motion, or sketchy/hand-drawn styling. Korean triggers: AWS 아키텍처 다이어그램, 구성도, 아키텍처 그림, 흐름도, 순서도, 시퀀스 다이어그램, 다이어그램 그려줘/그리기."
 license: MIT
 metadata:
-  version: "1.1.0"
+  version: "1.2.0"
   base: "cathrynlavery/diagram-design 2.3.2 + AWS brand skin"
 ---
 
@@ -191,18 +191,17 @@ Type-specific anti-patterns live in each `references/type-*.md`.
 
 - **Title** — Amazon Ember, 1.75rem, 700 — H1 only
 - **Node name** — Amazon Ember, 12px, 600 — human-readable labels
-- **Sublabel** — Geist Mono, 9px — ports, URLs, field types
-- **Eyebrow / tag** — Geist Mono, 7–8px, uppercase, tracked — type tags, axis labels
-- **Arrow label** — Geist Mono, 8px — annotation on arrows
+- **Sublabel** — Amazon Ember Mono, 9px — ports, URLs, field types
+- **Eyebrow / tag** — Amazon Ember Mono, 7–8px, uppercase, tracked — type tags, axis labels
+- **Arrow label** — Amazon Ember Mono, 8px — annotation on arrows
 - **Editorial aside** — Amazon Ember *italic*, 14px — callouts only
 
-**Mono is for technical content.** Names, titles, and callouts are Amazon Ember. Never JetBrains Mono as a blanket "dev" font. Amazon Ember is **not on Google Fonts**, but this skill **bundles it** at [`assets/fonts/`](assets/fonts/) — include the `@font-face` block from [`assets/fonts/README.md`](assets/fonts/README.md) in generated HTML (with `local('Amazon Ember')` first, so installed copies win), or install the TTFs once via `./install.sh fonts`. Always ship the fallback stack; only Geist Mono loads from Google Fonts:
+**Mono is for technical content.** Names, titles, and callouts are Amazon Ember; sublabels, eyebrows, and arrow labels are **Amazon Ember Mono** — the entire type system is one brand family. Never JetBrains Mono as a blanket "dev" font. Neither face is on Google Fonts, but this skill **bundles both** at [`assets/fonts/`](assets/fonts/) — include the `@font-face` block from [`assets/fonts/README.md`](assets/fonts/README.md) in generated HTML (`local()` first, so installed copies win), or install the TTFs once via `./install.sh fonts`. Always ship the fallback stacks; no external font CDN is referenced:
 
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <!-- sans: 'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif -->
-<!-- mono: 'Geist Mono', 'Amazon Ember Mono', ui-monospace, monospace -->
-<!-- Amazon Ember @font-face: see assets/fonts/README.md (bundled woff2, local() first) -->
+<!-- mono: 'Amazon Ember Mono', ui-monospace, monospace -->
+<!-- @font-face for both families: assets/fonts/README.md (bundled woff2, local() first) -->
 ```
 
 ---
@@ -298,14 +297,14 @@ These six rules are **non-negotiable**. Run the pre-output checklist (§9) to ve
 <rect x="X" y="Y" width="W" height="H" rx="6" fill="FILL" stroke="STROKE" stroke-width="1"/>
 <!-- 3. Rectangular type tag (rx=2, NOT a pill) — replaced by the service icon on AWS-icon nodes -->
 <rect x="X+8" y="Y+6" width="28" height="12" rx="2" fill="transparent" stroke="STROKE@0.40" stroke-width="0.8"/>
-<text x="X+22" y="Y+15" fill="STROKE@0.8" font-size="7" font-family="'Geist Mono', monospace"
+<text x="X+22" y="Y+15" fill="STROKE@0.8" font-size="7" font-family="'Amazon Ember Mono', ui-monospace, monospace"
       text-anchor="middle" letter-spacing="0.08em">API</text>
 <!-- 4. Node name (Amazon Ember — human-readable) -->
 <text x="CX" y="CY+2" fill="#232F3E" font-size="12" font-weight="600"
       font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif" text-anchor="middle">Node Name</text>
-<!-- 5. Technical sublabel (Geist Mono) -->
+<!-- 5. Technical sublabel (Amazon Ember Mono) -->
 <text x="CX" y="CY+18" fill="#545B64" font-size="9"
-      font-family="'Geist Mono', monospace" text-anchor="middle">tech:port</text>
+      font-family="'Amazon Ember Mono', ui-monospace, monospace" text-anchor="middle">tech:port</text>
 ```
 
 For a node representing a named AWS service, use the icon-node pattern in [primitive-aws-icons.md](references/primitive-aws-icons.md) (24px official icon at left, no type tag).
@@ -318,7 +317,7 @@ Every arrow label needs an opaque rect behind it. Without one it bleeds through 
 <!-- Mask spans ARROW_Y-20 to ARROW_Y-8: 12px plate + 8px visible gap above the stroke at ARROW_Y. -->
 <rect x="MID_X-18" y="ARROW_Y-20" width="36" height="12" rx="2" fill="#ffffff"/>
 <text x="MID_X" y="ARROW_Y-11" fill="#7D8998" font-size="8"
-      font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">WRITE</text>
+      font-family="'Amazon Ember Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">WRITE</text>
 ```
 
 Rules:
@@ -335,7 +334,7 @@ Rules:
 ```svg
 <line x1="30" y1="LEGEND_Y-8" x2="VIEWBOX_W-30" y2="LEGEND_Y-8"
       stroke="rgba(35,47,62,0.10)" stroke-width="0.8"/>
-<text x="30" y="LEGEND_Y+8" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace"
+<text x="30" y="LEGEND_Y+8" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace"
       letter-spacing="0.14em">LEGEND</text>
 <!-- Items — horizontal row, ~160px apart -->
 ```
@@ -398,10 +397,10 @@ If you exceed, split into two diagrams (overview + detail).
 
 ### Page layout
 
-1. **Header** — eyebrow (Geist Mono), title (Amazon Ember 700), optional subtitle (Amazon Ember muted).
+1. **Header** — eyebrow (Amazon Ember Mono), title (Amazon Ember 700), optional subtitle (Amazon Ember muted).
 2. **Diagram container** — default: **clean, borderless**, no background — the SVG sits directly on the page paper. Optional *framed* variant (for card-heavy layouts or hero placements): `paper-2` bg + 1px `rule` border + 8px radius + `1.5rem` padding + `overflow-x: auto`.
 3. **Summary cards** — 2–3 col grid with *varied* widths (e.g., `1.1fr 1fr 0.9fr`).
-4. **Footer** — colophon in Geist Mono, muted, hairline top border.
+4. **Footer** — colophon in Amazon Ember Mono, muted, hairline top border.
 
 ---
 
@@ -482,7 +481,7 @@ Run before producing any diagram.
 
 - [ ] Brand match uses exact public families/weights, verified via `getComputedStyle`; fallbacks disclosed?
 - [ ] Human-readable names in Amazon Ember (sans), not mono?
-- [ ] Technical sublabels (ports, commands, URLs) in Geist Mono?
+- [ ] Technical sublabels (ports, commands, URLs) in Amazon Ember Mono?
 - [ ] Page title in Amazon Ember 700?
 - [ ] Annotation callouts (if any) in *italic* Amazon Ember? (see [primitive-annotation.md](references/primitive-annotation.md))
 - [ ] Amazon Ember declared with its full fallback stack (`'Helvetica Neue', Helvetica, Arial, sans-serif`) — it's not on Google Fonts?

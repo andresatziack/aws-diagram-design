@@ -4,10 +4,10 @@
 
 ## Layout conventions
 
-- **Left label column:** x=20–200 (180px). Task names in Amazon Ember 11px 600. Phase labels as Geist Mono 7px eyebrows above each group.
+- **Left label column:** x=20–200 (180px). Task names in Amazon Ember 11px 600. Phase labels as Amazon Ember Mono 7px eyebrows above each group.
 - **Timeline area:** x=200–960 (760px). Time axis runs left→right.
 - **Row height:** 40px per task. Each bar occupies h=24px centered in the row (8px top padding).
-- **Time axis:** Geist Mono 8px week/month labels at x=200+i×pitch, y=56 (just above first task row). A hairline separator at y=64.
+- **Time axis:** Amazon Ember Mono 8px week/month labels at x=200+i×pitch, y=56 (just above first task row). A hairline separator at y=64.
 - **Phase grouping:** a subtle zone rect (same pattern as architecture zone) behind each phase's rows, with an eyebrow label in the top-left margin. Use `rgba(35,47,62,0.02)` fill, `rgba(35,47,62,0.10)` stroke.
 - **Focal task bar:** 1 bar in accent fill/stroke (the key deliverable or critical path task). All others: muted fill @ 0.15, muted stroke.
 - **Today / milestone marker:** optional vertical dashed line in `muted` at the current week x-position.

@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Multi-Region Network Backbone</title>
-  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     /* Amazon Ember — bundled with the skill (assets/fonts); local() wins when installed */
     @font-face { font-family: 'Amazon Ember'; font-weight: 400; font-style: normal;
@@ -13,6 +12,10 @@
       src: local('Amazon Ember Medium'), local('Amazon Ember'), url('../../skills/aws-diagram-design/assets/fonts/woff2/AmazonEmber_W_SBd.woff2') format('woff2'); }
     @font-face { font-family: 'Amazon Ember'; font-weight: 700; font-style: normal;
       src: local('Amazon Ember Bold'), local('Amazon Ember'), url('../../skills/aws-diagram-design/assets/fonts/woff2/AmazonEmber_W_Bd.woff2') format('woff2'); }
+    @font-face { font-family: 'Amazon Ember Mono'; font-weight: 400; font-style: normal;
+      src: local('Amazon Ember Mono'), url('../../skills/aws-diagram-design/assets/fonts/woff2/AmazonEmberMono_W_Rg.woff2') format('woff2'); }
+    @font-face { font-family: 'Amazon Ember Mono'; font-weight: 700; font-style: normal;
+      src: local('Amazon Ember Mono Bold'), local('Amazon Ember Mono'), url('../../skills/aws-diagram-design/assets/fonts/woff2/AmazonEmberMono_W_Bd.woff2') format('woff2'); }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --color-paper:   #ffffff;
@@ -20,7 +23,7 @@
       --color-muted:   #545B64;
       --color-accent:  #EC7211;
       --font-sans:     'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      --font-mono:     'Geist Mono', 'Amazon Ember Mono', ui-monospace, monospace;
+      --font-mono:     'Amazon Ember Mono', ui-monospace, monospace;
     }
     body {
       font-family: var(--font-sans);
@@ -174,22 +177,22 @@
       <!-- App A -> TGW us-east-1 -->
       <line x1="424" y1="260" x2="488" y2="260" stroke="#545B64" stroke-width="1.2" marker-end="url(#arrow)"/>
       <rect x="434" y="240" width="44" height="12" rx="2" fill="#ffffff"/>
-      <text x="456" y="249" fill="#7D8998" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">ATTACH</text>
+      <text x="456" y="249" fill="#7D8998" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">ATTACH</text>
 
       <!-- App B -> TGW ap-northeast-2 -->
       <line x1="944" y1="260" x2="888" y2="260" stroke="#545B64" stroke-width="1.2" marker-end="url(#arrow)"/>
       <rect x="894" y="240" width="44" height="12" rx="2" fill="#ffffff"/>
-      <text x="916" y="249" fill="#7D8998" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">ATTACH</text>
+      <text x="916" y="249" fill="#7D8998" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">ATTACH</text>
 
       <!-- TGW us-east-1 -> Cloud WAN -->
       <line x1="564" y1="288" x2="564" y2="392" stroke="#545B64" stroke-width="1.2" marker-end="url(#arrow)"/>
       <rect x="572" y="328" width="48" height="12" rx="2" fill="#ffffff"/>
-      <text x="576" y="337" fill="#7D8998" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">PEERING</text>
+      <text x="576" y="337" fill="#7D8998" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" letter-spacing="0.06em">PEERING</text>
 
       <!-- TGW ap-northeast-2 -> Cloud WAN -->
       <line x1="812" y1="288" x2="812" y2="392" stroke="#545B64" stroke-width="1.2" marker-end="url(#arrow)"/>
       <rect x="820" y="328" width="48" height="12" rx="2" fill="#ffffff"/>
-      <text x="824" y="337" fill="#7D8998" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">PEERING</text>
+      <text x="824" y="337" fill="#7D8998" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" letter-spacing="0.06em">PEERING</text>
 
       <!-- On-prem servers -> Direct Connect -->
       <line x1="156" y1="424" x2="232" y2="424" stroke="#0972D3" stroke-width="1.2" marker-end="url(#arrow-link)"/>
@@ -197,12 +200,12 @@
       <!-- Direct Connect -> Cloud WAN -->
       <line x1="384" y1="424" x2="536" y2="424" stroke="#0972D3" stroke-width="1.2" marker-end="url(#arrow-link)"/>
       <rect x="440" y="404" width="40" height="12" rx="2" fill="#ffffff"/>
-      <text x="460" y="413" fill="#0972D3" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">BGP</text>
+      <text x="460" y="413" fill="#0972D3" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">BGP</text>
 
       <!-- On-prem servers -> Cloud WAN (VPN backup, routed under the cloud) -->
       <path d="M100,452 V512 Q100,520 108,520 H680 Q688,520 688,512 V456" fill="none" stroke="#0972D3" stroke-width="1" stroke-dasharray="5,4" marker-end="url(#arrow-link)"/>
       <rect x="356" y="500" width="68" height="12" rx="2" fill="#ffffff"/>
-      <text x="390" y="509" fill="#0972D3" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">VPN BACKUP</text>
+      <text x="390" y="509" fill="#0972D3" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">VPN BACKUP</text>
 
       <!-- ===== nodes ===== -->
       <!-- App A -->
@@ -215,7 +218,7 @@
         </g>
       </g>
       <text x="332" y="258" fill="#232F3E" font-size="12" font-weight="600" font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif">App A</text>
-      <text x="332" y="274" fill="#545B64" font-size="9" font-family="'Geist Mono', monospace">web tier</text>
+      <text x="332" y="274" fill="#545B64" font-size="9" font-family="'Amazon Ember Mono', ui-monospace, monospace">web tier</text>
 
       <!-- Transit Gateway us-east-1 -->
       <rect x="488" y="232" width="152" height="56" rx="6" fill="#ffffff"/>
@@ -227,7 +230,7 @@
         </g>
       </g>
       <text x="532" y="258" fill="#232F3E" font-size="12" font-weight="600" font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif">Transit Gateway</text>
-      <text x="532" y="274" fill="#545B64" font-size="9" font-family="'Geist Mono', monospace">tgw · use1</text>
+      <text x="532" y="274" fill="#545B64" font-size="9" font-family="'Amazon Ember Mono', ui-monospace, monospace">tgw · use1</text>
 
       <!-- Transit Gateway ap-northeast-2 -->
       <rect x="736" y="232" width="152" height="56" rx="6" fill="#ffffff"/>
@@ -239,7 +242,7 @@
         </g>
       </g>
       <text x="780" y="258" fill="#232F3E" font-size="12" font-weight="600" font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif">Transit Gateway</text>
-      <text x="780" y="274" fill="#545B64" font-size="9" font-family="'Geist Mono', monospace">tgw · apne2</text>
+      <text x="780" y="274" fill="#545B64" font-size="9" font-family="'Amazon Ember Mono', ui-monospace, monospace">tgw · apne2</text>
 
       <!-- App B -->
       <rect x="944" y="232" width="136" height="56" rx="6" fill="#ffffff"/>
@@ -251,7 +254,7 @@
         </g>
       </g>
       <text x="988" y="258" fill="#232F3E" font-size="12" font-weight="600" font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif">App B</text>
-      <text x="988" y="274" fill="#545B64" font-size="9" font-family="'Geist Mono', monospace">web tier</text>
+      <text x="988" y="274" fill="#545B64" font-size="9" font-family="'Amazon Ember Mono', ui-monospace, monospace">web tier</text>
 
       <!-- AWS Cloud WAN (focal) -->
       <rect x="536" y="392" width="304" height="64" rx="6" fill="#ffffff"/>
@@ -263,7 +266,7 @@
         </g>
       </g>
       <text x="584" y="418" fill="#232F3E" font-size="12" font-weight="600" font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif">AWS Cloud WAN</text>
-      <text x="584" y="434" fill="#545B64" font-size="9" font-family="'Geist Mono', monospace">core network · global</text>
+      <text x="584" y="434" fill="#545B64" font-size="9" font-family="'Amazon Ember Mono', ui-monospace, monospace">core network · global</text>
 
       <!-- Direct Connect -->
       <rect x="232" y="396" width="152" height="56" rx="6" fill="#ffffff"/>
@@ -275,7 +278,7 @@
         </g>
       </g>
       <text x="276" y="422" fill="#232F3E" font-size="12" font-weight="600" font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif">Direct Connect</text>
-      <text x="276" y="438" fill="#545B64" font-size="9" font-family="'Geist Mono', monospace">dx gateway</text>
+      <text x="276" y="438" fill="#545B64" font-size="9" font-family="'Amazon Ember Mono', ui-monospace, monospace">dx gateway</text>
 
       <!-- On-prem servers (external) -->
       <rect x="44" y="396" width="112" height="56" rx="6" fill="#ffffff"/>
@@ -286,29 +289,29 @@
         </g>
       </g>
       <text x="92" y="422" fill="#232F3E" font-size="12" font-weight="600" font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif">Servers</text>
-      <text x="92" y="438" fill="#545B64" font-size="9" font-family="'Geist Mono', monospace">10.9.0.0/16</text>
+      <text x="92" y="438" fill="#545B64" font-size="9" font-family="'Amazon Ember Mono', ui-monospace, monospace">10.9.0.0/16</text>
 
       <!-- ===== legend ===== -->
       <line x1="32" y1="548" x2="1168" y2="548" stroke="rgba(35,47,62,0.10)" stroke-width="0.8"/>
-      <text x="32" y="568" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEGEND</text>
+      <text x="32" y="568" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" letter-spacing="0.14em">LEGEND</text>
 
       <rect x="112" y="560" width="20" height="12" rx="2" fill="rgba(255,153,0,0.10)" stroke="#EC7211" stroke-width="1"/>
-      <text x="140" y="569" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace">FOCAL</text>
+      <text x="140" y="569" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace">FOCAL</text>
 
       <rect x="208" y="560" width="20" height="12" rx="2" fill="#ffffff" stroke="#232F3E" stroke-width="1"/>
-      <text x="236" y="569" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace">AWS SERVICE</text>
+      <text x="236" y="569" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace">AWS SERVICE</text>
 
       <rect x="336" y="560" width="20" height="12" rx="2" fill="rgba(35,47,62,0.03)" stroke="rgba(35,47,62,0.30)" stroke-width="1"/>
-      <text x="364" y="569" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace">ON-PREM</text>
+      <text x="364" y="569" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace">ON-PREM</text>
 
       <line x1="448" y1="566" x2="480" y2="566" stroke="#545B64" stroke-width="1.2" marker-end="url(#arrow)"/>
-      <text x="488" y="569" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace">INTERNAL</text>
+      <text x="488" y="569" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace">INTERNAL</text>
 
       <line x1="568" y1="566" x2="600" y2="566" stroke="#0972D3" stroke-width="1.2" marker-end="url(#arrow-link)"/>
-      <text x="608" y="569" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace">PRIVATE LINK</text>
+      <text x="608" y="569" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace">PRIVATE LINK</text>
 
       <line x1="704" y1="566" x2="736" y2="566" stroke="#0972D3" stroke-width="1" stroke-dasharray="5,4" marker-end="url(#arrow-link)"/>
-      <text x="744" y="569" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace">VPN BACKUP</text>
+      <text x="744" y="569" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace">VPN BACKUP</text>
     </svg>
   </div>
 </body>

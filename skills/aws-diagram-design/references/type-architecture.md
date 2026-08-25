@@ -58,7 +58,7 @@ Group 2+ nodes that serve the same tier or trust boundary with a zone rect — d
       fill="rgba(35,47,62,0.02)" stroke="rgba(35,47,62,0.10)" stroke-width="0.8"/>
 <rect x="{label_x}" y="{y+4}" width="{label_w}" height="12" rx="2" fill="{paper}"/>
 <text x="{label_cx}" y="{y+13}" fill="rgba(35,47,62,0.40)" font-size="7"
-      font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">LAYER</text>
+      font-family="'Amazon Ember Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.14em">LAYER</text>
 ```
 
 Rules:

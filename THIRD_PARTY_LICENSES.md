@@ -42,7 +42,7 @@ reusing the fonts outside this skill.
 
 - **License:** SIL Open Font License 1.1
 - **Upstream:** https://vercel.com/font (loaded at render time from Google Fonts)
-- **Used in:** the `mono` typography role in generated diagrams — loaded via `fonts.googleapis.com`, not bundled.
+- **Used in:** legacy pre-baked example assets only (`skills/aws-diagram-design/assets/example-*.html`, built under earlier skins) and the opt-in terminal variant — loaded via `fonts.googleapis.com` at render time, not bundled. Newly generated diagrams use the bundled **Amazon Ember Mono** for all mono roles instead.
 
 ## Tabler Icons
 

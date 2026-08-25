@@ -32,19 +32,22 @@ If the user explicitly asks for "a screenshot of the whole page including the ca
    - Ensure the opening tag has `xmlns="http://www.w3.org/2000/svg"`. Add it if missing.
    - Ensure a `viewBox` is present. The skill's templates always include one; warn the user if absent rather than guessing.
    - Preserve `role="img"`, `aria-labelledby`, and the first-child `<title>` / `<desc>` exactly as authored.
-   - Inject Google Fonts `@import` so the SVG renders with correct typography in a browser. **XML-escape the `&` separators as `&amp;`** — a standalone `.svg` is parsed as strict XML, where a bare `&` starts an entity reference and makes the whole file fail to parse. (Don't copy the raw URL from the HTML `<link href>`; that ampersand form is only valid in HTML.)
+   - Inject the Amazon Ember / Amazon Ember Mono `@font-face` block (canonical form in [`assets/fonts/README.md`](../assets/fonts/README.md)) into a `<style>` so the SVG renders with correct typography where the font files are reachable. Point the `url()` sources at a path that resolves **from the SVG's own location** (e.g. `../../skills/aws-diagram-design/assets/fonts/woff2` for an SVG inside this repo), and always keep the `local()` sources first — a machine with the fonts installed needs no file access at all. If the SVG will travel alone, either copy the woff2 files next to it, drop the `url()` sources and rely on `local()` + the fallback stack, or recommend the PNG export. No external font CDN is referenced.
      ```svg
      <defs>
-       <style>@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap');</style>
+       <style>
+         @font-face { font-family: 'Amazon Ember'; font-weight: 400; src: local('Amazon Ember'), url('FONTS/AmazonEmber_W_Rg.woff2') format('woff2'); }
+         /* …remaining faces from assets/fonts/README.md… */
+       </style>
      </defs>
      ```
-     If the SVG already contains a `<defs>` block, **merge** the `<style>` into it (don't add a second `<defs>`).
+     If the SVG already contains a `<defs>` block (or a `<style>` inside it), **merge** into it — don't add a second `<defs>`. Any CSS value containing `&` must be XML-escaped as `&amp;` — a standalone `.svg` is parsed as strict XML.
 4. Prepend `<?xml version="1.0" encoding="UTF-8"?>\n` so the file is well-formed XML.
 5. Write to `<basename>.svg` next to the source (e.g. `example-architecture.html` → `example-architecture.svg`). Honour an explicit output path if the user provides one.
 
 ### Caveat to surface to the user
 
-Tools that don't fetch remote fonts at import time (offline Illustrator, some Figma import paths, older SVG viewers) will substitute typography. The SVG renders correctly in any modern browser. For pixel-perfect portability, recommend the PNG export.
+Tools that don't load linked fonts at import time (offline Illustrator, some Figma import paths, older SVG viewers) will substitute typography. The SVG renders correctly in any modern browser. For pixel-perfect portability, recommend the PNG export.
 
 ## PNG export procedure
 
@@ -126,7 +129,7 @@ If the target aspect ratio doesn't match the `viewBox` aspect ratio, say so and 
 - **Source is `assets/index.html`** (the gallery, multiple SVGs in one file): refuse the export and ask the user which specific diagram file they meant. Don't guess.
 - **No `<svg>` block found**: the source isn't a diagram file. Tell the user; don't write anything.
 - **Surrounding HTML matters to the user**: they want cards/header in the image. Tell them this skill exports diagrams only, and recommend a browser-based full-page screenshot (or a separate PDF print).
-- **Source is missing fonts at runtime**: Playwright will substitute, the screenshot will look off. Check that the source HTML has the `<link href="...fonts.googleapis.com...">` tag in `<head>`. If absent, the file isn't from a current template — fix the source rather than working around it in export.
+- **Source is missing fonts at runtime**: Playwright will substitute, the screenshot will look off. Check that the source HTML carries the Amazon Ember / Ember Mono `@font-face` block (with resolvable `url()` paths) or that the fonts are OS-installed (`./install.sh fonts`). If neither holds, fix the source rather than working around it in export.
 
 ## What this command never does
 

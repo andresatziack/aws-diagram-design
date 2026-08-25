@@ -9,9 +9,9 @@
 - **Bar count cap:** 4–8 bars. More than 8 → group into periods or split into two charts.
 - **Bar width:** ≥ 50% of the column pitch (the gap should never exceed the bar). Typical: pitch=110px, bar=72px.
 - **Y-axis gridlines:** 4–6 horizontal lines at regular intervals. Stroke `rgba(35,47,62,0.08)` (very faint), 0.8px. X-axis baseline at `rgba(35,47,62,0.25)`, 1px.
-- **Y-axis labels:** right-aligned Geist Mono 8px muted, at x=72 (8px left of the plot area).
+- **Y-axis labels:** right-aligned Amazon Ember Mono 8px muted, at x=72 (8px left of the plot area).
 - **X-axis labels:** centered below each bar, Amazon Ember 11px 600 for category names.
-- **Value labels:** Geist Mono 8px above each bar. Focal bar label in accent; others in muted.
+- **Value labels:** Amazon Ember Mono 8px above each bar. Focal bar label in accent; others in muted.
 - **Focal bar:** 1 bar max in accent fill/stroke. All others in `muted @ 0.15` fill + `muted` stroke.
 - **Y-axis line:** thin vertical `<line>` at x=80 from y=40 to y=420.
 
@@ -23,7 +23,7 @@
 <!-- Bar body -->
 <rect x="X" y="Y" width="W" height="H" fill="rgba(84,91,100,0.15)" stroke="#545B64" stroke-width="1"/>
 <!-- Value label above bar -->
-<text x="X+W/2" y="Y-8" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">VALUE</text>
+<text x="X+W/2" y="Y-8" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" text-anchor="middle">VALUE</text>
 ```
 
 Focal bar: replace fill with `rgba(255,153,0,0.12)`, stroke with `#EC7211`, label fill with `#EC7211`.

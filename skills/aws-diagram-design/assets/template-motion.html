@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Motion diagram template</title>
-  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Amazon Ember + Amazon Ember Mono are bundled with the skill (assets/fonts/README.md) — add the @font-face block when shipping the file; local() resolves installed copies with no CDN. -->
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     :root {
@@ -15,7 +15,7 @@
       --color-accent: #EC7211;
       --color-rule: rgba(35,47,62,0.12);
       --font-sans: 'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      --font-mono: 'Geist Mono', ui-monospace, monospace;
+      --font-mono: 'Amazon Ember Mono', ui-monospace, monospace;
       --motion-fast: 160ms;
       --motion-step: 480ms;
       --motion-hold: 720ms;
@@ -193,23 +193,23 @@
       <g data-motion-item data-step="1" aria-label="Step 1: Request received">
         <rect x="48" y="128" width="200" height="104" rx="8" fill="#ffffff" stroke="#232F3E"/>
         <text x="148" y="172" text-anchor="middle" fill="#232F3E" font-family="Amazon Ember, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="600">Request</text>
-        <text x="148" y="196" text-anchor="middle" fill="#545B64" font-family="Geist Mono, monospace" font-size="12">fields complete</text>
+        <text x="148" y="196" text-anchor="middle" fill="#545B64" font-family="Amazon Ember Mono, monospace" font-size="12">fields complete</text>
       </g>
       <g data-motion-item data-step="2" aria-label="Step 2: Policy passed">
         <rect x="356" y="128" width="200" height="104" rx="8" fill="rgba(255,153,0,0.08)" stroke="#EC7211"/>
         <text x="456" y="168" text-anchor="middle" fill="#232F3E" font-family="Amazon Ember, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="600">Policy</text>
-        <text x="456" y="196" text-anchor="middle" fill="#545B64" font-family="Geist Mono, monospace" font-size="12">✓ PASS · rule 2</text>
+        <text x="456" y="196" text-anchor="middle" fill="#545B64" font-family="Amazon Ember Mono, monospace" font-size="12">✓ PASS · rule 2</text>
       </g>
       <g data-motion-item data-step="3" aria-label="Step 3: Three items queued">
         <rect x="664" y="128" width="200" height="104" rx="8" fill="#ffffff" stroke="#232F3E"/>
         <text x="764" y="164" text-anchor="middle" fill="#232F3E" font-family="Amazon Ember, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="600">Queue</text>
         <rect x="700" y="184" width="16" height="16" fill="#545B64"/><rect x="724" y="184" width="16" height="16" fill="#545B64"/><rect x="748" y="184" width="16" height="16" fill="#545B64"/>
-        <text x="796" y="196" fill="#545B64" font-family="Geist Mono, monospace" font-size="12">3 queued</text>
+        <text x="796" y="196" fill="#545B64" font-family="Amazon Ember Mono, monospace" font-size="12">3 queued</text>
       </g>
       <g data-motion-item data-step="4" aria-label="Step 4: Audit entry appended">
         <rect x="664" y="328" width="200" height="88" rx="8" fill="#ffffff" stroke="#232F3E"/>
         <text x="764" y="364" text-anchor="middle" fill="#232F3E" font-family="Amazon Ember, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="600">Audit log</text>
-        <text x="764" y="388" text-anchor="middle" fill="#545B64" font-family="Geist Mono, monospace" font-size="12">0042 · appended</text>
+        <text x="764" y="388" text-anchor="middle" fill="#545B64" font-family="Amazon Ember Mono, monospace" font-size="12">0042 · appended</text>
       </g>
       <g data-motion-item data-step="5" aria-label="Step 5: Evaluation complete">
         <text x="48" y="376" fill="#232F3E" font-family="Amazon Ember, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="600">Outcome: accepted and recorded</text>

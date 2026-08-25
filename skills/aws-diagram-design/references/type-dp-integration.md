@@ -233,7 +233,7 @@ Five styles, bound to topology. Don't let user override style on focal-touching,
 - **Fan-out staggering:** when one node fans out to N targets on the same side, stagger the exit y by ±4 px per index so arrows don't overlap (e.g., Trino → 4 consumers exits at y=124, 132, 140, 148). The vertical segments run in the corridor between the zone edge and the consumer column, also y-staggered.
 - **Z-order:** all connectors drawn **before** any rect (so node fills mask the line ends).
 - **Markers:** exactly one `marker-end` per `<line>` / `<path>`. Never `marker-start`.
-- **Labels:** every `primary`, `secondary`, `federated`, `auth` edge gets a protocol label (Geist Mono 8 px, paper-filled rect mask with 6–10 px clear gap above the stroke). `trigger` edges are unlabelled.
+- **Labels:** every `primary`, `secondary`, `federated`, `auth` edge gets a protocol label (Amazon Ember Mono 8 px, paper-filled rect mask with 6–10 px clear gap above the stroke). `trigger` edges are unlabelled.
 
 ### 3.3 Footer → zone trunk
 

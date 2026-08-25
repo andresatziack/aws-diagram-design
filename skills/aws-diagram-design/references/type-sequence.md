@@ -35,7 +35,7 @@ Dark mode: stroke `#B6BEC9` (muted on dark paper). Do not fill the open marker �
 
 ## Combined fragments (`alt` / `opt` / `loop`)
 
-Use a rectangular **frame** that spans only the lifelines participating in the branch. Operator label is Geist Mono, uppercase, in a small tab at the top-left of the frame. Time still flows top→down inside the frame.
+Use a rectangular **frame** that spans only the lifelines participating in the branch. Operator label is Amazon Ember Mono, uppercase, in a small tab at the top-left of the frame. Time still flows top→down inside the frame.
 
 ### Frame primitive (shared)
 
@@ -47,7 +47,7 @@ Use a rectangular **frame** that spans only the lifelines participating in the b
 <rect x="X" y="Y" width="40" height="16" rx="2"
       fill="#ffffff" stroke="rgba(35,47,62,0.22)" stroke-width="1"/>
 <text x="X+20" y="Y+12" fill="#545B64" font-size="8"
-      font-family="'Geist Mono', monospace" text-anchor="middle"
+      font-family="'Amazon Ember Mono', ui-monospace, monospace" text-anchor="middle"
       letter-spacing="0.12em">ALT</text>
 ```
 
@@ -57,7 +57,7 @@ Dark mode: frame fill `rgba(255,255,255,0.04)`, stroke `rgba(255,255,255,0.22)`,
 
 | Operator | Regions | Divider | Guard label |
 |---|---|---|---|
-| `opt` | 1 | none | `[if condition]` under the tab (Geist Mono 8px) |
+| `opt` | 1 | none | `[if condition]` under the tab (Amazon Ember Mono 8px) |
 | `alt` | **2 max** | dashed horizontal hairline across the frame | `[guard]` on region 1; `[else]` (or a second guard) on region 2 |
 | `loop` | 1 | none | `[for each item]` or `[retry ≤ 3]` under the tab |
 
@@ -66,7 +66,7 @@ Dark mode: frame fill `rgba(255,255,255,0.04)`, stroke `rgba(255,255,255,0.22)`,
 ```svg
 <!-- Guard: left-aligned inside the frame, mono -->
 <text x="X+12" y="GUARD_Y" fill="#545B64" font-size="8"
-      font-family="'Geist Mono', monospace" letter-spacing="0.04em">[token valid]</text>
+      font-family="'Amazon Ember Mono', ui-monospace, monospace" letter-spacing="0.04em">[token valid]</text>
 
 <!-- alt region divider -->
 <line x1="X+8" y1="DIV_Y" x2="X+W-8" y2="DIV_Y"

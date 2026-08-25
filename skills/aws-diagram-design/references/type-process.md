@@ -127,7 +127,7 @@ label_anchor     = (step_cx(j), 32)              # 8-px gap below chip
 
 **Label** (the uppercase mono text below the chip):
 - Renders `steps[j].label` (uppercased), anchored at `label_anchor`.
-- Font: Geist Mono 6 px, weight 500, `letter-spacing="0.12em"`, `text-anchor="middle"`.
+- Font: Amazon Ember Mono 6 px, weight 500, `letter-spacing="0.12em"`, `text-anchor="middle"`.
 - Default fill: muted (`#545B64` light / `#B6BEC9` dark).
 - Focal fill: accent (`#EC7211` light / `#FF9900` dark).
 - Per-step `color` override: fill = `C` (matches the chip number color).

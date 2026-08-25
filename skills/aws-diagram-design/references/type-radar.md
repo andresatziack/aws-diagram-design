@@ -8,7 +8,7 @@
 - **Five concentric grid rings** at fractions `0.2 / 0.4 / 0.6 / 0.8 / 1.0` of the radius. Drawn as closed polygons connecting the axis vertices at that fraction. Inner four at `rule` 0.10 opacity, outer ring at `rule-solid` 0.20 (a hint stronger to anchor the chart).
 - **Axis spokes** from center to each outer vertex. `rule-solid` 0.20 opacity. **No arrowheads.**
 - **Axis labels:** one word per spoke (Jobs-minimal). Amazon Ember 11px weight 600. Place 16px outside the outer ring along the axis vector. Top/bottom = `text-anchor="middle"`; right side = `start`; left side = `end`.
-- **Scale ticks** (e.g. `2 4 6 8 10`) only on the **first (top) axis** — putting numbers on every spoke clutters the chart fast. Geist Mono 8px, `muted`, anchored end at `cx − 6`.
+- **Scale ticks** (e.g. `2 4 6 8 10`) only on the **first (top) axis** — putting numbers on every spoke clutters the chart fast. Amazon Ember Mono 8px, `muted`, anchored end at `cx − 6`.
 - **Series polygon:** stroke 1.5px at the series color, fill the same color at `0.18` opacity (`0.22` in dark). Stroke 1.8px on the focal series — a subtle weight bump.
 - **Vertex dots:** **only on the focal series**, `r=4` filled with the series color. Non-focal series are stroke-and-fill only. This is the load-bearing rule that keeps the chart readable at 4–5 series.
 - **Drawing order:** dots-pattern bg → grid rings → axis spokes → axis labels → scale ticks → non-focal series (smallest area first) → focal series → focal vertex dots → legend.

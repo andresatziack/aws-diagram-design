@@ -18,7 +18,7 @@ Amazon Ember (and Amazon Ember Mono) as distributed by Amazon at
 | `AmazonEmberMono_W_Rg.woff2` | Amazon Ember Mono | 400 |
 | `AmazonEmberMono_W_Bd.woff2` | Amazon Ember Mono | 700 |
 
-`ttf/` carries the desktop faces (Lt/Rg/RgIt/Medium/Bd/He) for OS installation via
+`ttf/` carries the desktop faces (Ember Lt/Rg/RgIt/Medium/Bd/He + Ember Mono Rg/Bd) for OS installation via
 `./install.sh fonts` (repo root).
 
 ## Canonical @font-face block
@@ -47,6 +47,8 @@ loading-order rules):
   src: local('Amazon Ember Mono Bold'), local('Amazon Ember Mono'), url('FONTS/AmazonEmberMono_W_Bd.woff2') format('woff2'); }
 ```
 
-`local()` first — a machine with Ember installed never fetches the files. Always keep the
-fallback stack on `font-family` declarations; environments that block file/remote fonts
-(e.g., GitHub's SVG sandbox) fall back to Helvetica/Arial.
+`local()` first — a machine with the fonts installed never fetches the files. Always keep the
+fallback stacks on `font-family` declarations (`'Helvetica Neue', Helvetica, Arial, sans-serif`
+for Ember; `ui-monospace, monospace` for Ember Mono); environments that block file fonts
+(e.g., GitHub's SVG sandbox) fall back to system faces. Ember Mono ships 400/700 — mono specs
+at 500/600 snap to the nearest weight. No external font CDN is needed anywhere.

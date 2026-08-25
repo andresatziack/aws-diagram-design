@@ -4,14 +4,11 @@
       <desc id="vpc-three-tier-desc">Internet users reach an Application Load Balancer in a public subnet, which forwards to an ECS on Fargate service in a private subnet backed by RDS and an ElastiCache cache in a private data subnet.</desc>
       <defs>
         <style>
-          @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&amp;display=swap');
-          /* Amazon Ember — bundled with the skill (assets/fonts); local() wins when installed */
-          @font-face { font-family: 'Amazon Ember'; font-weight: 400; font-style: normal;
-            src: local('Amazon Ember'), url('../../skills/aws-diagram-design/assets/fonts/woff2/AmazonEmber_W_Rg.woff2') format('woff2'); }
-          @font-face { font-family: 'Amazon Ember'; font-weight: 600; font-style: normal;
-            src: local('Amazon Ember Medium'), local('Amazon Ember'), url('../../skills/aws-diagram-design/assets/fonts/woff2/AmazonEmber_W_SBd.woff2') format('woff2'); }
-          @font-face { font-family: 'Amazon Ember'; font-weight: 700; font-style: normal;
-            src: local('Amazon Ember Bold'), local('Amazon Ember'), url('../../skills/aws-diagram-design/assets/fonts/woff2/AmazonEmber_W_Bd.woff2') format('woff2'); }
+          @font-face { font-family: 'Amazon Ember'; font-weight: 400; font-style: normal; src: local('Amazon Ember'), url('../../skills/aws-diagram-design/assets/fonts/woff2/AmazonEmber_W_Rg.woff2') format('woff2'); }
+          @font-face { font-family: 'Amazon Ember'; font-weight: 600; font-style: normal; src: local('Amazon Ember Medium'), local('Amazon Ember'), url('../../skills/aws-diagram-design/assets/fonts/woff2/AmazonEmber_W_SBd.woff2') format('woff2'); }
+          @font-face { font-family: 'Amazon Ember'; font-weight: 700; font-style: normal; src: local('Amazon Ember Bold'), local('Amazon Ember'), url('../../skills/aws-diagram-design/assets/fonts/woff2/AmazonEmber_W_Bd.woff2') format('woff2'); }
+          @font-face { font-family: 'Amazon Ember Mono'; font-weight: 400; font-style: normal; src: local('Amazon Ember Mono'), url('../../skills/aws-diagram-design/assets/fonts/woff2/AmazonEmberMono_W_Rg.woff2') format('woff2'); }
+          @font-face { font-family: 'Amazon Ember Mono'; font-weight: 700; font-style: normal; src: local('Amazon Ember Mono Bold'), local('Amazon Ember Mono'), url('../../skills/aws-diagram-design/assets/fonts/woff2/AmazonEmberMono_W_Bd.woff2') format('woff2'); }
         </style>
         <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#545B64"/></marker>
         <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#EC7211"/></marker>
@@ -74,22 +71,22 @@
       <!-- Users -> ALB -->
       <line x1="160" y1="260" x2="264" y2="260" stroke="#0972D3" stroke-width="1.2" marker-end="url(#arrow-link)"/>
       <rect x="192" y="240" width="40" height="12" rx="2" fill="#ffffff"/>
-      <text x="212" y="249" fill="#0972D3" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">HTTPS</text>
+      <text x="212" y="249" fill="#0972D3" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">HTTPS</text>
 
       <!-- ALB -> Fargate -->
       <line x1="424" y1="260" x2="488" y2="260" stroke="#545B64" stroke-width="1.2" marker-end="url(#arrow)"/>
       <rect x="434" y="240" width="44" height="12" rx="2" fill="#ffffff"/>
-      <text x="456" y="249" fill="#7D8998" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">FORWARD</text>
+      <text x="456" y="249" fill="#7D8998" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">FORWARD</text>
 
       <!-- Fargate -> RDS -->
       <line x1="648" y1="260" x2="712" y2="260" stroke="#545B64" stroke-width="1.2" marker-end="url(#arrow)"/>
       <rect x="666" y="240" width="28" height="12" rx="2" fill="#ffffff"/>
-      <text x="680" y="249" fill="#7D8998" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">SQL</text>
+      <text x="680" y="249" fill="#7D8998" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.06em">SQL</text>
 
       <!-- Fargate -> ElastiCache (dashed elbow) -->
       <path d="M568,288 V324 Q568,332 576,332 H712" fill="none" stroke="#545B64" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
       <rect x="576" y="300" width="40" height="12" rx="2" fill="#ffffff"/>
-      <text x="580" y="309" fill="#7D8998" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">CACHE</text>
+      <text x="580" y="309" fill="#7D8998" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" letter-spacing="0.06em">CACHE</text>
 
       <!-- ===== nodes ===== -->
       <!-- Users (input) -->
@@ -101,7 +98,7 @@
         </g>
       </g>
       <text x="80" y="258" fill="#232F3E" font-size="12" font-weight="600" font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif">Users</text>
-      <text x="80" y="274" fill="#545B64" font-size="9" font-family="'Geist Mono', monospace">internet</text>
+      <text x="80" y="274" fill="#545B64" font-size="9" font-family="'Amazon Ember Mono', ui-monospace, monospace">internet</text>
 
       <!-- ALB -->
       <rect x="264" y="232" width="160" height="56" rx="6" fill="#ffffff"/>
@@ -113,7 +110,7 @@
         </g>
       </g>
       <text x="312" y="258" fill="#232F3E" font-size="12" font-weight="600" font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif">ALB</text>
-      <text x="312" y="274" fill="#545B64" font-size="9" font-family="'Geist Mono', monospace">HTTPS :443</text>
+      <text x="312" y="274" fill="#545B64" font-size="9" font-family="'Amazon Ember Mono', ui-monospace, monospace">HTTPS :443</text>
 
       <!-- ECS on Fargate (focal) -->
       <rect x="488" y="232" width="160" height="56" rx="6" fill="#ffffff"/>
@@ -125,7 +122,7 @@
         </g>
       </g>
       <text x="536" y="258" fill="#232F3E" font-size="12" font-weight="600" font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif">ECS on Fargate</text>
-      <text x="536" y="274" fill="#545B64" font-size="9" font-family="'Geist Mono', monospace">app service</text>
+      <text x="536" y="274" fill="#545B64" font-size="9" font-family="'Amazon Ember Mono', ui-monospace, monospace">app service</text>
 
       <!-- RDS -->
       <rect x="712" y="232" width="192" height="56" rx="6" fill="#ffffff"/>
@@ -137,7 +134,7 @@
         </g>
       </g>
       <text x="760" y="258" fill="#232F3E" font-size="12" font-weight="600" font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif">Amazon RDS</text>
-      <text x="760" y="274" fill="#545B64" font-size="9" font-family="'Geist Mono', monospace">postgres multi-az</text>
+      <text x="760" y="274" fill="#545B64" font-size="9" font-family="'Amazon Ember Mono', ui-monospace, monospace">postgres multi-az</text>
 
       <!-- ElastiCache -->
       <rect x="712" y="312" width="192" height="56" rx="6" fill="#ffffff"/>
@@ -149,27 +146,27 @@
         </g>
       </g>
       <text x="760" y="338" fill="#232F3E" font-size="12" font-weight="600" font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif">ElastiCache</text>
-      <text x="760" y="354" fill="#545B64" font-size="9" font-family="'Geist Mono', monospace">redis cache</text>
+      <text x="760" y="354" fill="#545B64" font-size="9" font-family="'Amazon Ember Mono', ui-monospace, monospace">redis cache</text>
 
       <!-- ===== legend ===== -->
       <line x1="32" y1="452" x2="968" y2="452" stroke="rgba(35,47,62,0.10)" stroke-width="0.8"/>
-      <text x="32" y="472" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEGEND</text>
+      <text x="32" y="472" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" letter-spacing="0.14em">LEGEND</text>
 
       <rect x="112" y="464" width="20" height="12" rx="2" fill="rgba(255,153,0,0.10)" stroke="#EC7211" stroke-width="1"/>
-      <text x="140" y="473" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace">FOCAL</text>
+      <text x="140" y="473" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace">FOCAL</text>
 
       <rect x="216" y="464" width="20" height="12" rx="2" fill="#ffffff" stroke="#232F3E" stroke-width="1"/>
-      <text x="244" y="473" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace">AWS SERVICE</text>
+      <text x="244" y="473" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace">AWS SERVICE</text>
 
       <rect x="344" y="464" width="20" height="12" rx="2" fill="rgba(84,91,100,0.10)" stroke="#7D8998" stroke-width="1"/>
-      <text x="372" y="473" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace">CLIENT</text>
+      <text x="372" y="473" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace">CLIENT</text>
 
       <line x1="440" y1="470" x2="472" y2="470" stroke="#0972D3" stroke-width="1.2" marker-end="url(#arrow-link)"/>
-      <text x="480" y="473" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace">HTTPS</text>
+      <text x="480" y="473" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace">HTTPS</text>
 
       <line x1="544" y1="470" x2="576" y2="470" stroke="#545B64" stroke-width="1.2" marker-end="url(#arrow)"/>
-      <text x="584" y="473" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace">INTERNAL</text>
+      <text x="584" y="473" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace">INTERNAL</text>
 
       <line x1="664" y1="470" x2="696" y2="470" stroke="#545B64" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
-      <text x="704" y="473" fill="#545B64" font-size="8" font-family="'Geist Mono', monospace">ASYNC / CACHE</text>
+      <text x="704" y="473" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace">ASYNC / CACHE</text>
     </svg>
