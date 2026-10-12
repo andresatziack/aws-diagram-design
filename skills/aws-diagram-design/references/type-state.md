@@ -1,21 +1,21 @@
-# State Machine
+# Máquina de estados (State Machine)
 
-**Best for:** finite state logic — order status, auth state, connection lifecycle, form wizard, job queue status.
+**Ideal para:** lógica de estados finitos — status de pedido, estado de autenticação, ciclo de vida de conexão, assistente de formulário (wizard), status de fila de jobs.
 
-## Layout conventions
-- States are rounded rectangles (`rx=8`), labeled in Amazon Ember.
-- **Start**: filled ink dot (`r=6`). **End**: ringed dot (outer `r=8` outline, inner filled `r=5`).
-- Transitions: curved arrows labeled in Amazon Ember Mono as `event [guard] / action` (omit sections you don't need).
-- Self-loops curve above the state.
-- Orient along the dominant flow direction (left→right or top→down); rearrange before crossing transitions.
-- Coral on the state the reader should notice — typically the error state, or "happy completion".
+## Convenções de layout
+- Os estados são retângulos arredondados (`rx=8`), rotulados em Amazon Ember.
+- **Início**: ponto preenchido em ink (`r=6`). **Fim**: ponto com anel (contorno externo `r=8`, interno preenchido `r=5`).
+- Transições: setas curvas rotuladas em Amazon Ember Mono como `event [guard] / action` (omita as seções de que não precisar).
+- Auto-loops (self-loops) fazem uma curva acima do estado.
+- Oriente pela direção dominante do fluxo (esquerda→direita ou cima→baixo); reorganize antes de cruzar transições.
+- Coral no estado que o leitor deve notar — tipicamente o estado de erro, ou a "conclusão feliz".
 
-## Anti-patterns
-- More transitions than states × 2 → likely two state machines.
-- "From any state" transitions drawn from every state — use a single annotation (`* → Error on timeout`) instead.
-- Unlabeled transitions (the whole point is *what triggers this*).
+## Antipadrões
+- Mais transições do que estados × 2 → provavelmente são duas máquinas de estados.
+- Transições "a partir de qualquer estado" desenhadas a partir de cada estado — use uma única anotação (`* → Error on timeout`).
+- Transições sem rótulo (o objetivo é justamente *o que dispara isto*).
 
-## Examples
-- `assets/example-state.html` — minimal light
-- `assets/example-state-dark.html` — minimal dark
-- `assets/example-state-full.html` — full editorial
+## Exemplos
+- `assets/example-state.html` — minimal claro
+- `assets/example-state-dark.html` — minimal escuro
+- `assets/example-state-full.html` — editorial completo

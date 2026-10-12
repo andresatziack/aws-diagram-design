@@ -1,14 +1,14 @@
-# DP integration
+# Integração de DP (DP integration)
 
-**Best for:** the integration topology of a data platform — which source systems plug in, which consumer surfaces plug out, and which protocol each one speaks. Hub-and-spoke layout wrapped in an explicit **Data platform** layer; no time/phase axis.
+**Ideal para:** a topologia de integração de uma plataforma de dados — quais sistemas de origem se conectam na entrada, quais superfícies de consumo se conectam na saída e qual protocolo cada um utiliza. Layout hub-and-spoke envolto em uma camada explícita de **Data platform** (plataforma de dados); sem eixo de tempo/fase.
 
-Use when the question is *"what surfaces does this platform expose, and over what wire?"* rather than *"how does data move through phases?"*.
+Use quando a pergunta for *"quais superfícies esta plataforma expõe e por qual meio (wire)?"* em vez de *"como os dados se movem pelas fases?"*.
 
-This type is **parametric** — like `type-high-level.md`, every coord is derived from a small inputs schema. Two generations from the same inputs must produce visually identical SVG.
+Este tipo é **paramétrico** — assim como `type-high-level.md`, toda coordenada é derivada de um pequeno esquema de entradas. Duas gerações a partir das mesmas entradas devem produzir SVGs visualmente idênticos.
 
 ---
 
-## 1. Inputs — the parameter contract
+## 1. Entradas — o contrato de parâmetros
 
 ```yaml
 sources:                            # left column, 0..6 nodes
@@ -61,21 +61,21 @@ focal_accent: "#EC7211"             # one color for all focal components (defaul
 dark: false
 ```
 
-**Reserved `kind` values for `platform.rows`:**
-- `bar` — full-zone-width strip. Default height 44 px (focal bars get 56 px). Required fields: `name`, `icon`. Optional: `subtitle`, `role`, `color`, `focal`.
-- `row` — N nodes evenly spaced across zone width. Required: `nodes` list. Each node has `name`, `icon`, optional `role`, `subtitle`, `color`, `focal`.
+**Valores reservados de `kind` para `platform.rows`:**
+- `bar` — faixa com a largura total da zona. Altura padrão de 44 px (barras focais recebem 56 px). Campos obrigatórios: `name`, `icon`. Opcionais: `subtitle`, `role`, `color`, `focal`.
+- `row` — N nós distribuídos uniformemente pela largura da zona. Obrigatório: lista `nodes`. Cada nó tem `name`, `icon` e, opcionalmente, `role`, `subtitle`, `color`, `focal`.
 
-**Source/consumer `type` values** → icon mapping (extends `references/primitive-icons.md`):
-- `db` → cylinder, `sftp` → folder-with-arrow, `mail` → envelope, `mainframe` → server-with-vents
-- `monitor` → desktop screen, `chart` → bar-chart, `globe` → globe, `api` → curly braces
-- `key` → key + ring (identity / IDP)
-- Any explicit icon name in `primitive-icons.md` is also accepted.
+**Valores de `type` de origem/consumidor** → mapeamento de ícones (estende `references/primitive-icons.md`):
+- `db` → cilindro, `sftp` → pasta com seta, `mail` → envelope, `mainframe` → servidor com grades de ventilação
+- `monitor` → tela de desktop, `chart` → gráfico de barras, `globe` → globo, `api` → chaves
+- `key` → chave + argola (identidade / IDP)
+- Qualquer nome de ícone explícito em `primitive-icons.md` também é aceito.
 
-**Per-component `color: "#hex"`** is optional on any node, bar, or footer entry. See §4.
+**`color: "#hex"` por componente** é opcional em qualquer nó, barra ou entrada de rodapé. Veja §4.
 
 ---
 
-## 2. Layout formulas — deterministic geometry
+## 2. Fórmulas de layout — geometria determinística
 
 ```
 # Canvas
@@ -124,9 +124,9 @@ row_h            = 72
 row_gap          = 16
 ```
 
-### 2.1 Row placement (cursor algorithm)
+### 2.1 Posicionamento das linhas (algoritmo de cursor)
 
-Allocate each `platform.rows` entry top-to-bottom. The single `row` (or first row when N>1) anchors to side-column row 2 so its connectors stay horizontal:
+Aloque cada entrada de `platform.rows` de cima para baixo. A única `row` (ou a primeira linha, quando N>1) é ancorada na linha 2 das colunas laterais para que seus conectores permaneçam horizontais:
 
 ```
 primary_row_idx  = index of first kind=row in platform.rows
@@ -156,9 +156,9 @@ for entry in platform.rows[primary_row_idx+1:]:
 # Constraint: y <= zone_y + zone_h
 ```
 
-This produces the canonical layout for the standard shape (top bar / 3-node row / bottom bar): Trino at `y=104 h=56`, primary row at `y=176 h=72`, Airflow at `y=324 h=44`. Bottom anchor of Airflow at y=368 (40-px clear from zone bottom at y=408). **Note**: with the canonical layout there's a 76-px gap between the primary row's bottom (y=248) and Airflow's top (y=324). That gap is intentional — Airflow visually sits at the same y-band as source/consumer row 4 (cy=388), so it reads as a sibling of the bottom side-column row.
+Isso produz o layout canônico para o formato padrão (barra superior / linha de 3 nós / barra inferior): Trino em `y=104 h=56`, linha primária em `y=176 h=72`, Airflow em `y=324 h=44`. A base do Airflow fica em y=368 (40 px de folga até a base da zona em y=408). **Observação**: no layout canônico há um espaço de 76 px entre a base da linha primária (y=248) e o topo do Airflow (y=324). Esse espaço é intencional — visualmente, o Airflow fica na mesma faixa de y que a linha 4 de origens/consumidores (cy=388), de modo que é lido como irmão da linha inferior das colunas laterais.
 
-### 2.2 Node placement inside a `row` entry
+### 2.2 Posicionamento dos nós dentro de uma entrada `row`
 
 ```
 N            = len(row.nodes)
@@ -167,9 +167,9 @@ node_x(j)    = zone_x + zone_pad_x + j * (node_w + 16)
 node_cx(j)   = node_x(j) + node_w/2
 ```
 
-For the canonical 3-node row: `node_w = (696 - 32 - 32) / 3 = 210.67`. The shipped example uses fixed `node_w=160` with custom x positions (`288, 480, 672`) chosen so each node's `cx` aligns to the column for connector convenience: 368, 560, 752. **Both layouts are valid**; the formula above is the default for new diagrams. Document any deviation in the rendered SVG with a comment.
+Para a linha canônica de 3 nós: `node_w = (696 - 32 - 32) / 3 = 210.67`. O exemplo distribuído usa `node_w=160` fixo com posições x personalizadas (`288, 480, 672`), escolhidas para que o `cx` de cada nó se alinhe à coluna por conveniência dos conectores: 368, 560, 752. **Ambos os layouts são válidos**; a fórmula acima é o padrão para novos diagramas. Documente qualquer desvio no SVG renderizado com um comentário.
 
-### 2.3 Bar (full-zone-width) placement
+### 2.3 Posicionamento de barras (largura total da zona)
 
 ```
 bar_x      = zone_x + zone_pad_x         # 276
@@ -177,9 +177,9 @@ bar_w      = zone_w - 2*zone_pad_x       # 664
 bar_cx     = zone_cx                     # 608
 ```
 
-Bars span the full zone width minus 16-px padding on each side. Bars marked `focal: true` use `bar_h_focal=56` and accent styling (fill `rgba(focal_accent, 0.08)`, stroke `focal_accent`). Non-focal bars use `bar_h_default=44` with muted styling (fill `rgba(35,47,62,0.05)`, stroke `rgba(35,47,62,0.32)`).
+As barras ocupam toda a largura da zona menos 16 px de padding de cada lado. Barras marcadas com `focal: true` usam `bar_h_focal=56` e estilo de destaque (fill `rgba(focal_accent, 0.08)`, stroke `focal_accent`). Barras não focais usam `bar_h_default=44` com estilo atenuado (fill `rgba(35,47,62,0.05)`, stroke `rgba(35,47,62,0.32)`).
 
-### 2.4 Source / consumer placement (side columns)
+### 2.4 Posicionamento de origens / consumidores (colunas laterais)
 
 ```
 source_y(k)       = col_top + k * 88            # 92, 180, 268, 356, …
@@ -188,23 +188,23 @@ consumer_y(k)     = source_y(k)                 # mirrored
 consumer_cy(k)    = source_cy(k)
 ```
 
-All side-column nodes use fixed `w=160 h=64`. Same fill / stroke pattern: fill `rgba(84,91,100,0.06)`, stroke `#7D8998`, stroke-width 1.
+Todos os nós das colunas laterais usam tamanho fixo `w=160 h=64`. Mesmo padrão de fill / stroke: fill `rgba(84,91,100,0.06)`, stroke `#7D8998`, stroke-width 1.
 
 ---
 
-## 3. Connector rules (mandatory)
+## 3. Regras de conectores (obrigatórias)
 
-Five styles, bound to topology. Don't let user override style on focal-touching, bar-originating, or Trino → consumer edges — those are fixed by rule.
+Cinco estilos, vinculados à topologia. Não permita que o usuário substitua o estilo em arestas que tocam componentes focais, que se originam de barras ou que vão do Trino → consumidor — esses são fixados por regra.
 
-| `style` | Stroke | Width | Dash | Marker | When required |
+| `style` | Traço | Largura | Tracejado | Marcador | Quando é obrigatório |
 |---|---|---|---|---|---|
-| `primary` | `#EC7211` (focal_accent) | 1.4 | — | `arrow-accent` | Every edge whose endpoint is a `focal: true` component. Also every Trino → consumer edge (serve-flow rule). |
-| `secondary` | `#545B64` (muted) | 1.2 | — | `arrow` | Default for internal platform-component edges and source → platform edges that don't touch focal. |
-| `federated` | `#0972D3` (link-blue) | 1.0 | `4,3` | `arrow-link` | Federation queries (e.g., source DB → Trino). |
-| `trigger` | `#545B64` (muted) | 1.0 | `4,3` | `arrow` | Every edge originating from a `kind: bar` component (Airflow drops). Unlabelled. |
-| `auth` | `#EC7211` | 1.2 | `5,4` | `arrow-accent` | Every edge from a footer node up to the zone bottom edge. **Never to a specific component.** |
+| `primary` | `#EC7211` (focal_accent) | 1.4 | — | `arrow-accent` | Toda aresta cuja extremidade seja um componente `focal: true`. Também toda aresta Trino → consumidor (regra do fluxo de serviço). |
+| `secondary` | `#545B64` (muted) | 1.2 | — | `arrow` | Padrão para arestas internas entre componentes da plataforma e para arestas origem → plataforma que não tocam um focal. |
+| `federated` | `#0972D3` (link-blue) | 1.0 | `4,3` | `arrow-link` | Consultas de federação (ex.: BD de origem → Trino). |
+| `trigger` | `#545B64` (muted) | 1.0 | `4,3` | `arrow` | Toda aresta originada de um componente `kind: bar` (descidas do Airflow). Sem rótulo. |
+| `auth` | `#EC7211` | 1.2 | `5,4` | `arrow-accent` | Toda aresta de um nó de rodapé subindo até a borda inferior da zona. **Nunca para um componente específico.** |
 
-**Defs block** (required, five markers — exactly):
+**Bloco defs** (obrigatório, cinco marcadores — exatamente):
 
 ```svg
 <defs>
@@ -216,195 +216,195 @@ Five styles, bound to topology. Don't let user override style on focal-touching,
 </defs>
 ```
 
-### 3.1 Exit / entry sides (non-negotiable)
+### 3.1 Lados de saída / entrada (inegociáveis)
 
-| Edge kind | Exit side of source | Entry side of target |
+| Tipo de aresta | Lado de saída da origem | Lado de entrada do destino |
 |---|---|---|
-| Source → platform component | **right** of source | **left** of target |
-| Platform → platform (same row) | **right** | **left** |
-| Bar → row node (vertical drop) | **bottom** of bar at `node_cx(target)` | **top** of target |
-| Platform → consumer | **right** of source platform component | **left** of consumer |
-| Footer → zone | **top** of footer (at `footer_auth_x(k)`) | zone bottom edge `y = zone_y + zone_h` |
-| Footer → component (any specific one) | **forbidden** |
+| Origem → componente da plataforma | **direita** da origem | **esquerda** do destino |
+| Plataforma → plataforma (mesma linha) | **direita** | **esquerda** |
+| Barra → nó da linha (descida vertical) | **base** da barra em `node_cx(target)` | **topo** do destino |
+| Plataforma → consumidor | **direita** do componente de plataforma de origem | **esquerda** do consumidor |
+| Rodapé → zona | **topo** do rodapé (em `footer_auth_x(k)`) | borda inferior da zona `y = zone_y + zone_h` |
+| Rodapé → componente (qualquer componente específico) | **proibido** |
 
-### 3.2 Routing
+### 3.2 Roteamento
 
-- Orthogonal elbows with at most two bends; Q-bezier `r=8` at every corner.
-- **Fan-out staggering:** when one node fans out to N targets on the same side, stagger the exit y by ±4 px per index so arrows don't overlap (e.g., Trino → 4 consumers exits at y=124, 132, 140, 148). The vertical segments run in the corridor between the zone edge and the consumer column, also y-staggered.
-- **Z-order:** all connectors drawn **before** any rect (so node fills mask the line ends).
-- **Markers:** exactly one `marker-end` per `<line>` / `<path>`. Never `marker-start`.
-- **Labels:** every `primary`, `secondary`, `federated`, `auth` edge gets a protocol label (Amazon Ember Mono 8 px, paper-filled rect mask with 6–10 px clear gap above the stroke). `trigger` edges are unlabelled.
+- Cotovelos ortogonais com no máximo duas dobras; Q-bezier `r=8` em cada canto.
+- **Escalonamento de fan-out:** quando um nó distribui (fan-out) para N destinos do mesmo lado, escalone o y de saída em ±4 px por índice para que as setas não se sobreponham (ex.: Trino → 4 consumidores sai em y=124, 132, 140, 148). Os segmentos verticais correm no corredor entre a borda da zona e a coluna de consumidores, também escalonados em y.
+- **Ordem Z:** todos os conectores são desenhados **antes** de qualquer rect (para que os fills dos nós mascarem as pontas das linhas).
+- **Marcadores:** exatamente um `marker-end` por `<line>` / `<path>`. Nunca `marker-start`.
+- **Rótulos:** toda aresta `primary`, `secondary`, `federated` e `auth` recebe um rótulo de protocolo (Amazon Ember Mono 8 px, máscara de rect preenchida com paper e folga de 6–10 px acima do traço). Arestas `trigger` ficam sem rótulo.
 
-### 3.3 Footer → zone trunk
+### 3.3 Tronco rodapé → zona
 
-When N=1 footer: single vertical line at `x = zone_cx` from `footer_y(0)` to `zone_y + zone_h`.
+Com N=1 rodapé: uma única linha vertical em `x = zone_cx` de `footer_y(0)` até `zone_y + zone_h`.
 
-When N≥2 footers: stagger AUTH lines so they don't overlap stacked footers. For footer index `k`:
+Com N≥2 rodapés: escalone as linhas AUTH para que não se sobreponham aos rodapés empilhados. Para o rodapé de índice `k`:
 
 ```
 footer_auth_x(k) = zone_cx + (k - (N-1)/2) * 32     # 32-px stride per footer
 ```
 
-Examples:
+Exemplos:
 - N=1 → 560
 - N=2 → 544, 576
 - N=3 → 528, 560, 592
 
-Each AUTH line goes from `(footer_auth_x(k), footer_y(k))` up to `(footer_auth_x(k), zone_y + zone_h)`. AUTH labels sit just above the arrowhead at the zone bottom edge.
+Cada linha AUTH vai de `(footer_auth_x(k), footer_y(k))` até `(footer_auth_x(k), zone_y + zone_h)`. Os rótulos AUTH ficam logo acima da ponta da seta na borda inferior da zona.
 
-### 3.4 Crossings
+### 3.4 Cruzamentos
 
-Avoid. Re-route via the corridor x positions before accepting a crossing. If unavoidable, the path drawn second carries a 6-px arc hop over the first.
+Evite. Redirecione pelas posições x do corredor antes de aceitar um cruzamento. Se for inevitável, o caminho desenhado em segundo lugar recebe um salto em arco de 6 px (hop) sobre o primeiro.
 
 ---
 
-## 4. Component color override (mirrors `type-high-level.md` §3.4)
+## 4. Substituição de cor de componente (espelha `type-high-level.md` §3.4)
 
-Any source, consumer, platform component (node or bar), or footer node accepts an optional `color: "#hex"`. Mirrors high-level so the rule reads identically across types.
+Qualquer origem, consumidor, componente da plataforma (nó ou barra) ou nó de rodapé aceita um `color: "#hex"` opcional. Espelha o high-level para que a regra seja lida de forma idêntica entre os tipos.
 
-**Where the color is applied** (`C = color`):
+**Onde a cor é aplicada** (`C = color`):
 
-| Element | Light | Dark |
+| Elemento | Claro | Escuro |
 |---|---|---|
-| Container fill (`rect` body) | `rgba(C, 0.06)` | `rgba(C_light, 0.10)` |
-| Container stroke | `rgba(C, 0.35)` (`stroke-width=1` for nodes, `0.8` for bars) | `rgba(C_light, 0.45)` |
-| Role badge stroke | `rgba(C, 0.40)` | `rgba(C_light, 0.55)` |
-| Role badge text | `rgba(C, 0.85)` | `rgba(C_light, 1.0)` |
-| Icon stroke / fill | `C` | `C_light` |
-| Name text | `C` | `C_light` |
-| Subtitle text | **unchanged** (muted) | **unchanged** (muted) |
-| Connectors touching this component | **unchanged** — topology-driven | **unchanged** |
+| Fill do contêiner (corpo do `rect`) | `rgba(C, 0.06)` | `rgba(C_light, 0.10)` |
+| Stroke do contêiner | `rgba(C, 0.35)` (`stroke-width=1` para nós, `0.8` para barras) | `rgba(C_light, 0.45)` |
+| Stroke do badge de papel | `rgba(C, 0.40)` | `rgba(C_light, 0.55)` |
+| Texto do badge de papel | `rgba(C, 0.85)` | `rgba(C_light, 1.0)` |
+| Stroke / fill do ícone | `C` | `C_light` |
+| Texto do nome | `C` | `C_light` |
+| Texto do subtítulo | **inalterado** (muted) | **inalterado** (muted) |
+| Conectores que tocam este componente | **inalterados** — definidos pela topologia | **inalterados** |
 
-`C_light` = the same hex lightened ~15% for dark-mode contrast (e.g., `#b85450` → `#d97a78`).
+`C_light` = o mesmo hex clareado em ~15% para contraste no modo escuro (ex.: `#b85450` → `#d97a78`).
 
-**Rules:**
+**Regras:**
 
-- **Never on focal components.** `focal_accent` always wins — a `color` on a focal component is ignored.
-- **Never on connectors.** If you want a colored edge, pick a different `style` from §3, not a color override.
-- **Cap at 2 custom-colored components** per diagram (in addition to the focal pair).
+- **Nunca em componentes focais.** `focal_accent` sempre prevalece — um `color` em um componente focal é ignorado.
+- **Nunca em conectores.** Se você quer uma aresta colorida, escolha outro `style` da §3, não uma substituição de cor.
+- **Limite de 2 componentes com cor personalizada** por diagrama (além do par focal).
 
-**Semantic palette** (use these unless brand demands otherwise):
-- `#b85450` rust-red — Security / Identity (AD, Keycloak, Vault)
-- `#5a7d9a` slate-blue — Observability (Prometheus, Datadog, OpenTelemetry)
-- `#7a8c47` olive-green — Governance / Lineage (OpenMetadata, DataHub)
-- `#8c6d3f` warm-brown — Backup / DR (Velero, Restic)
-
----
-
-## 5. Focal rule
-
-**Exactly two focal components.** Default: the storage hub (MinIO / S3 / similar) and the federation engine (Trino / Dremio / similar). These two surfaces distinguish a "platform" from a pile of tools. Everything else (NiFi, Jupyter, Airflow, AD, all sources, all consumers) stays ink / muted.
-
-- Mark with `focal: true` on the component entry.
-- A focal `kind: bar` uses `bar_h_focal=56` (taller) and accent styling.
-- A focal `kind: row` node keeps `row_h=72` but uses accent styling.
-- The **Trino → all consumers** edges are always `primary` (accent), regardless of focal flag on each consumer — this is the serve-flow rule.
-- If fewer than 2 or more than 2 components are marked `focal: true`, halt and ask the user.
+**Paleta semântica** (use estas, a menos que a marca exija outra coisa):
+- `#b85450` vermelho-ferrugem — Segurança / Identidade (AD, Keycloak, Vault)
+- `#5a7d9a` azul-ardósia — Observabilidade (Prometheus, Datadog, OpenTelemetry)
+- `#7a8c47` verde-oliva — Governança / Linhagem (OpenMetadata, DataHub)
+- `#8c6d3f` marrom-quente — Backup / DR (Velero, Restic)
 
 ---
 
-## 6. Dark mode
+## 5. Regra focal
 
-| Token | Light | Dark |
+**Exatamente dois componentes focais.** Padrão: o hub de armazenamento (MinIO / S3 / similar) e o motor de federação (Trino / Dremio / similar). Essas duas superfícies distinguem uma "plataforma" de uma pilha de ferramentas. Todo o resto (NiFi, Jupyter, Airflow, AD, todas as origens, todos os consumidores) permanece em ink / muted.
+
+- Marque com `focal: true` na entrada do componente.
+- Um `kind: bar` focal usa `bar_h_focal=56` (mais alto) e estilo de destaque.
+- Um nó focal de `kind: row` mantém `row_h=72`, mas usa estilo de destaque.
+- As arestas **Trino → todos os consumidores** são sempre `primary` (accent), independentemente da flag focal de cada consumidor — esta é a regra do fluxo de serviço.
+- Se menos de 2 ou mais de 2 componentes estiverem marcados com `focal: true`, interrompa e pergunte ao usuário.
+
+---
+
+## 6. Modo escuro
+
+| Token | Claro | Escuro |
 |---|---|---|
-| Page paper | `#ffffff` | `#161E2D` |
+| Papel da página (paper) | `#ffffff` | `#161E2D` |
 | Ink | `#232F3E` | `#ffffff` |
 | Muted | `#545B64` | `#B6BEC9` |
 | Accent | `#EC7211` | `#FF9900` |
-| Link (federated) | `#0972D3` | `#539FE5` |
-| Side-column fill | `rgba(84,91,100,0.06)` | `rgba(255,255,255,0.06)` |
-| Side-column stroke | `#7D8998` | `rgba(255,255,255,0.30)` |
-| Zone fill | `rgba(35,47,62,0.025)` | `rgba(255,255,255,0.04)` |
-| Zone stroke | `rgba(35,47,62,0.32)` | `rgba(255,255,255,0.30)` |
-| Non-focal bar fill | `rgba(35,47,62,0.05)` | `rgba(255,255,255,0.06)` |
-| Focal fill | `rgba(255,153,0,0.08)` | `rgba(255,153,0,0.12)` |
-| Focal stroke | `#EC7211` | `#FF9900` |
-| Custom component colors | `C` | `C_light` (lighten ~15%) |
+| Link (federado) | `#0972D3` | `#539FE5` |
+| Fill da coluna lateral | `rgba(84,91,100,0.06)` | `rgba(255,255,255,0.06)` |
+| Stroke da coluna lateral | `#7D8998` | `rgba(255,255,255,0.30)` |
+| Fill da zona | `rgba(35,47,62,0.025)` | `rgba(255,255,255,0.04)` |
+| Stroke da zona | `rgba(35,47,62,0.32)` | `rgba(255,255,255,0.30)` |
+| Fill de barra não focal | `rgba(35,47,62,0.05)` | `rgba(255,255,255,0.06)` |
+| Fill focal | `rgba(255,153,0,0.08)` | `rgba(255,153,0,0.12)` |
+| Stroke focal | `#EC7211` | `#FF9900` |
+| Cores personalizadas de componente | `C` | `C_light` (clarear ~15%) |
 
 ---
 
-## 7. Reproducibility checklist (taste gate)
+## 7. Checklist de reprodutibilidade (*taste gate*)
 
-Before emitting SVG, verify **every** item:
+Antes de emitir o SVG, verifique **cada** item:
 
-1. `viewBox = "0 0 1200 {viewBox_h}"` where `viewBox_h = max(600, footer_bottom + 84)`.
-2. Platform zone at `x=260 y=72 w=696 h=col_h`. Zone label paper-masked across top border at `y=zone_y+3`.
-3. Left column at `x=40..200`, right column at `x=1000..1160` — both 160 wide.
-4. Source / consumer rows top at `y=92`, stride 88 px.
-5. `platform.rows` entries stack inside zone via the §2.1 cursor algorithm; total y-span ≤ `zone_h`.
-6. Inside each `kind: row`, node x-centers are evenly spaced across zone width (§2.2).
-7. **Exactly 2** focal components (`focal: true`).
-8. Every edge originating from a `kind: bar` component uses `style: trigger` (dashed, unlabelled).
-9. Every Trino → consumer edge uses `style: primary` (the serve-flow rule).
-10. Footer nodes connect only to the zone bottom edge via `auth` style. **No** edge from a footer to a specific component.
-11. Custom component colors ≤ 2 (in addition to the focal pair). Connectors never recolored by component `color`.
-12. All connectors emitted before any node rect (z-order rule).
-
----
-
-## 8. Sources and consumers — icon library
-
-Define each icon as `<g id="ico-…">` in `<defs>`, drawn at translate(cx, cy) with `stroke="currentColor"` so it inherits the surrounding text color. Common icons:
-
-- `ico-db` (cylinder) — relational sources
-- `ico-sftp` (folder with down arrow) — file drops
-- `ico-mail` (envelope) — email pulls
-- `ico-mainframe` (server with vents) — legacy systems
-- `ico-monitor` — desktop analytics tools
-- `ico-chart` (bars) — BI / report tools
-- `ico-globe` — public websites
-- `ico-api` (brackets `{}`) — gateways and 3rd-party clients
-- `ico-key` — identity / IDP
-- `ico-monitoring` (chart-line) — observability stack
-
-If you need more icons, browse `assets/icons.html` and define matching `<symbol>` blocks.
+1. `viewBox = "0 0 1200 {viewBox_h}"` onde `viewBox_h = max(600, footer_bottom + 84)`.
+2. Zona da plataforma em `x=260 y=72 w=696 h=col_h`. Rótulo da zona mascarado com paper sobre a borda superior em `y=zone_y+3`.
+3. Coluna esquerda em `x=40..200`, coluna direita em `x=1000..1160` — ambas com 160 de largura.
+4. Topo das linhas de origens / consumidores em `y=92`, passo de 88 px.
+5. As entradas de `platform.rows` são empilhadas dentro da zona pelo algoritmo de cursor da §2.1; a extensão total em y ≤ `zone_h`.
+6. Dentro de cada `kind: row`, os centros x dos nós são espaçados uniformemente pela largura da zona (§2.2).
+7. **Exatamente 2** componentes focais (`focal: true`).
+8. Toda aresta originada de um componente `kind: bar` usa `style: trigger` (tracejada, sem rótulo).
+9. Toda aresta Trino → consumidor usa `style: primary` (a regra do fluxo de serviço).
+10. Os nós de rodapé se conectam apenas à borda inferior da zona via estilo `auth`. **Nenhuma** aresta de um rodapé para um componente específico.
+11. Cores personalizadas de componente ≤ 2 (além do par focal). Conectores nunca são recoloridos pelo `color` do componente.
+12. Todos os conectores emitidos antes de qualquer rect de nó (regra de ordem Z).
 
 ---
 
-## 9. Identity, common services → connect to the layer, not to components
+## 8. Origens e consumidores — biblioteca de ícones
 
-**Active Directory** (or Keycloak, IAM, OPA, any cross-cutting identity / policy / secrets store) authenticates *every* component in the platform. Wiring it to one specific tool would understate the trust scope. Connect it instead with a single arrow to the bottom edge of the platform zone, labeled `AUTH` (§3.3).
+Defina cada ícone como `<g id="ico-…">` em `<defs>`, desenhado em translate(cx, cy) com `stroke="currentColor"` para que herde a cor do texto ao redor. Ícones comuns:
 
-The same rule applies to any other layer-wide service: centralized logging, secrets vault, observability stack, audit sink, mTLS root. Each goes in the `footer` list, each gets its own row, each gets its own AUTH line up to the zone bottom edge (staggered by index per §3.3). The visual reading is "the platform layer delegates to all of these," which is the architectural truth.
+- `ico-db` (cilindro) — origens relacionais
+- `ico-sftp` (pasta com seta para baixo) — depósitos de arquivos
+- `ico-mail` (envelope) — coletas de e-mail
+- `ico-mainframe` (servidor com grades de ventilação) — sistemas legados
+- `ico-monitor` — ferramentas analíticas de desktop
+- `ico-chart` (barras) — ferramentas de BI / relatórios
+- `ico-globe` — sites públicos
+- `ico-api` (chaves `{}`) — gateways e clientes de terceiros
+- `ico-key` — identidade / IDP
+- `ico-monitoring` (gráfico de linha) — stack de observabilidade
 
----
-
-## 10. Budget — this type exceeds the default
-
-This is the one type where the default 9-node / 12-arrow budget is intentionally exceeded. A realistic platform integration shows:
-
-- 4–6 source nodes
-- 5 platform components
-- 4–6 consumer nodes
-- 1–3 footer nodes (identity, observability, backup, …)
-
-That's **14–20 nodes**. The complexity is the point — the diagram is making a claim about the *number of distinct integration surfaces*. Compressing them collapses the claim.
-
-When this gets unwieldy:
-- Combine clearly-identical source rows (e.g., four MariaDB databases → one `Databases` node with sublabel `4 × MariaDB`)
-- Split into two diagrams (one per integration plane: data vs. identity vs. observability)
+Se precisar de mais ícones, consulte `assets/icons.html` e defina os blocos `<symbol>` correspondentes.
 
 ---
 
-## 11. Anti-patterns
+## 9. Identidade e serviços comuns → conecte à camada, não aos componentes
 
-- **Sources or consumers as a single collapsed node** when ≥3 distinct items exist — defeats the whole point of this type. Use Architecture or High-level if you want collapsing.
-- **One bus arrow from "sources" to "the platform"** — every wire is labeled with its protocol; this is how integration teams read the diagram.
-- **Per-tool color coding** (teal-NiFi, magenta-MinIO, yellow-Jupyter) inside the zone — collapses hierarchy; only the two focal accents earn coral, plus up to 2 custom colors on cross-cutting components (§4 cap).
-- **More than 2 focal components** — focal exists to distinguish "platform" from "pile of tools"; >2 erases the signal (same rule as SKILL.md §1).
-- **`color` override on a focal component** — ignored. Focal_accent always wins.
-- **Footer wired to one specific tool** (e.g., AD → Airflow only) — wrong unless that service truly only protects one tool. The default is the layer-wide connection.
-- **Footer or identity inside the zone** — identity gates the layer from outside. Drawing it inside misrepresents the trust model.
-- **Phase chevrons across the top** — those belong on `high-level`.
-- **Custom-colored connectors** — connectors are topology-driven. Style picks the color; `color` on a component never spreads to its edges.
+**Active Directory** (ou Keycloak, IAM, OPA, qualquer repositório transversal de identidade / políticas / segredos) autentica *todos* os componentes da plataforma. Conectá-lo a uma ferramenta específica subestimaria o escopo de confiança. Em vez disso, conecte-o com uma única seta até a borda inferior da zona da plataforma, com o rótulo `AUTH` (§3.3).
+
+A mesma regra vale para qualquer outro serviço de abrangência de camada: logging centralizado, cofre de segredos, stack de observabilidade, destino de auditoria, raiz mTLS. Cada um vai na lista `footer`, cada um recebe sua própria linha, cada um recebe sua própria linha AUTH até a borda inferior da zona (escalonada por índice conforme a §3.3). A leitura visual é "a camada da plataforma delega a todos esses", que é a verdade arquitetural.
 
 ---
 
-## 12. Examples
+## 10. Orçamento — este tipo excede o padrão
 
-- `assets/example-dp-integration.html` — minimal light (1 footer = AD). Gallery default.
-- `assets/example-dp-integration-dark.html` — same, dark skin.
-- `assets/example-dp-integration-full.html` — same, editorial-card frame.
-- `assets/example-dp-integration-extended.html` — exercises §4 color override + multi-footer: AD in rust-red, Observability (Prometheus/Grafana/Loki) in slate-blue. Canvas height grown to fit 2 footer rows.
-- `assets/example-dp-integration-extended-dark.html` — extended pattern, dark skin.
-- `assets/example-dp-integration-extended-full.html` — extended pattern, editorial-card frame.
+Este é o único tipo em que o orçamento (limite) padrão de 9 nós / 12 setas é excedido intencionalmente. Uma integração de plataforma realista mostra:
+
+- 4–6 nós de origem
+- 5 componentes de plataforma
+- 4–6 nós de consumo
+- 1–3 nós de rodapé (identidade, observabilidade, backup, …)
+
+Isso dá **14–20 nós**. A complexidade é o objetivo — o diagrama faz uma afirmação sobre o *número de superfícies de integração distintas*. Comprimi-las anula a afirmação.
+
+Quando isso ficar difícil de manejar:
+- Combine linhas de origem claramente idênticas (ex.: quatro bancos MariaDB → um nó `Databases` com sub-rótulo `4 × MariaDB`)
+- Divida em dois diagramas (um por plano de integração: dados vs. identidade vs. observabilidade)
+
+---
+
+## 11. Antipadrões
+
+- **Origens ou consumidores como um único nó colapsado** quando existem ≥3 itens distintos — anula todo o propósito deste tipo. Use Architecture ou High-level se quiser colapsar.
+- **Uma única seta de barramento de "origens" para "a plataforma"** — cada conexão é rotulada com seu protocolo; é assim que equipes de integração leem o diagrama.
+- **Codificação de cor por ferramenta** (NiFi em verde-azulado, MinIO em magenta, Jupyter em amarelo) dentro da zona — colapsa a hierarquia; apenas os dois destaques focais ganham coral, mais até 2 cores personalizadas em componentes transversais (limite da §4).
+- **Mais de 2 componentes focais** — o focal existe para distinguir "plataforma" de "pilha de ferramentas"; >2 apaga o sinal (mesma regra de SKILL.md §1).
+- **Substituição de `color` em um componente focal** — ignorada. O focal_accent sempre prevalece.
+- **Rodapé conectado a uma ferramenta específica** (ex.: AD → apenas Airflow) — errado, a menos que esse serviço realmente proteja só uma ferramenta. O padrão é a conexão com a camada inteira.
+- **Rodapé ou identidade dentro da zona** — a identidade controla o acesso à camada a partir de fora. Desenhá-la dentro representa incorretamente o modelo de confiança.
+- **Chevrons de fase no topo** — esses pertencem ao `high-level`.
+- **Conectores com cor personalizada** — conectores são definidos pela topologia. O estilo escolhe a cor; o `color` de um componente nunca se propaga para suas arestas.
+
+---
+
+## 12. Exemplos
+
+- `assets/example-dp-integration.html` — mínimo claro (1 rodapé = AD). Padrão da galeria.
+- `assets/example-dp-integration-dark.html` — o mesmo, skin (tema) escuro.
+- `assets/example-dp-integration-full.html` — o mesmo, moldura de cartão editorial.
+- `assets/example-dp-integration-extended.html` — exercita a substituição de cor da §4 + múltiplos rodapés: AD em vermelho-ferrugem, Observabilidade (Prometheus/Grafana/Loki) em azul-ardósia. Altura do canvas aumentada para acomodar 2 linhas de rodapé.
+- `assets/example-dp-integration-extended-dark.html` — padrão estendido, skin (tema) escuro.
+- `assets/example-dp-integration-extended-full.html` — padrão estendido, moldura de cartão editorial.

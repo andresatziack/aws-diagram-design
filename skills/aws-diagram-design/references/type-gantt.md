@@ -1,18 +1,18 @@
-# Gantt Chart
+# Gráfico de Gantt
 
-**Best for:** project plans and roadmaps — tasks with explicit start and end dates, grouped into phases. Use when the reader needs to see temporal overlap, parallel tracks, and milestone sequencing at a glance.
+**Ideal para:** planos de projeto e roadmaps — tarefas com datas explícitas de início e fim, agrupadas em fases. Use quando o leitor precisa ver, de relance, a sobreposição temporal, as trilhas paralelas e o sequenciamento de marcos.
 
-## Layout conventions
+## Convenções de layout
 
-- **Left label column:** x=20–200 (180px). Task names in Amazon Ember 11px 600. Phase labels as Amazon Ember Mono 7px eyebrows above each group.
-- **Timeline area:** x=200–960 (760px). Time axis runs left→right.
-- **Row height:** 40px per task. Each bar occupies h=24px centered in the row (8px top padding).
-- **Time axis:** Amazon Ember Mono 8px week/month labels at x=200+i×pitch, y=56 (just above first task row). A hairline separator at y=64.
-- **Phase grouping:** a subtle zone rect (same pattern as architecture zone) behind each phase's rows, with an eyebrow label in the top-left margin. Use `rgba(35,47,62,0.02)` fill, `rgba(35,47,62,0.10)` stroke.
-- **Focal task bar:** 1 bar in accent fill/stroke (the key deliverable or critical path task). All others: muted fill @ 0.15, muted stroke.
-- **Today / milestone marker:** optional vertical dashed line in `muted` at the current week x-position.
+- **Coluna de rótulos à esquerda:** x=20–200 (180px). Nomes das tarefas em Amazon Ember 11px 600. Rótulos de fase como eyebrows em Amazon Ember Mono 7px acima de cada grupo.
+- **Área da linha do tempo:** x=200–960 (760px). O eixo do tempo corre da esquerda→direita.
+- **Altura da linha:** 40px por tarefa. Cada barra ocupa h=24px centralizada na linha (8px de padding superior).
+- **Eixo do tempo:** rótulos de semana/mês em Amazon Ember Mono 8px em x=200+i×pitch, y=56 (logo acima da primeira linha de tarefa). Um separador em linha fina (hairline) em y=64.
+- **Agrupamento por fase:** um retângulo de zona sutil (mesmo padrão da zona de arquitetura) atrás das linhas de cada fase, com um rótulo eyebrow na margem superior esquerda. Use preenchimento `rgba(35,47,62,0.02)` e traço `rgba(35,47,62,0.10)`.
+- **Barra de tarefa focal:** 1 barra com preenchimento/traço accent (a entrega-chave ou a tarefa do caminho crítico). Todas as outras: preenchimento muted @ 0.15, traço muted.
+- **Marcador de hoje / marco:** linha vertical tracejada opcional em `muted` na posição x da semana atual.
 
-### Task bar pattern
+### Padrão de barra de tarefa
 
 ```svg
 <!-- Non-focal task -->
@@ -28,18 +28,18 @@
       font-family="'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif">Key task</text>
 ```
 
-Duration in pixels: `(end_week - start_week) × pitch`. Pitch = timeline_width / total_weeks.
+Duração em pixels: `(end_week - start_week) × pitch`. Pitch = timeline_width / total_weeks.
 
-## Anti-patterns
+## Antipadrões
 
-- More than 12 tasks (splits into sub-plans or collapses into phase-level view).
-- More than 5 parallel tracks per phase (illegible overlap).
-- Dependency arrows between tasks in v1 (add only when essential; use the annotation primitive for labels).
-- Start/end dates in the bar label (put them in the x-axis or tooltip comment instead).
-- Equal visual weight for all bars (the focal task must stand out).
+- Mais de 12 tarefas (divida em subplanos ou condense em uma visão por fase).
+- Mais de 5 trilhas paralelas por fase (sobreposição ilegível).
+- Setas de dependência entre tarefas na v1 (adicione apenas quando essencial; use a primitiva de anotação para os rótulos).
+- Datas de início/fim no rótulo da barra (coloque-as no eixo x ou em um comentário de tooltip).
+- Peso visual igual para todas as barras (a tarefa focal precisa se destacar).
 
-## Examples
+## Exemplos
 
-- `assets/example-gantt.html` — minimal light
-- `assets/example-gantt-dark.html` — minimal dark
-- `assets/example-gantt-full.html` — full editorial
+- `assets/example-gantt.html` — minimal claro
+- `assets/example-gantt-dark.html` — minimal escuro
+- `assets/example-gantt-full.html` — editorial completo

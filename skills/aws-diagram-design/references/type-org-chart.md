@@ -1,44 +1,44 @@
-# Org Chart / Responsibility Map
+# Organograma / Mapa de responsabilidades (Org Chart)
 
-**Best for:** human teams, agent teams, support escalation maps, role ownership, routing maps, and any hierarchy where the reader needs to know *who owns what* rather than just parent → child structure.
+**Ideal para:** equipes humanas, equipes de agentes, mapas de escalonamento de suporte, responsabilidade por papéis, mapas de roteamento e qualquer hierarquia em que o leitor precise saber *quem é responsável por quê*, e não apenas a estrutura pai → filho.
 
-Use **Org Chart** instead of **Tree** when the nodes are people, agents, teams, roles, or accountable owners. A tree shows generic hierarchy. An org chart shows responsibility, invocation paths, and coverage gaps.
+Use **Org Chart** em vez de **Tree** quando os nós forem pessoas, agentes, equipes, papéis ou responsáveis com prestação de contas. Uma árvore mostra hierarquia genérica. Um organograma mostra responsabilidade, caminhos de acionamento e lacunas de cobertura.
 
-## Layout conventions
-- Root owner or front door at top center. Use one coral focal node for the person/team/agent that receives ambiguous work.
-- Tier 1 nodes are departments, pods, queues, or primary routing buckets. Keep them horizontally aligned.
-- Tier 2 nodes are responsible owners or specialists. If there are more than 8 specialists, group them under pod nodes instead of making one giant row.
-- Use orthogonal connectors: vertical drop from parent → horizontal bus → vertical drops to children. No diagonal lines.
-- Each node should answer three questions when space allows:
-  1. **Name** — human-readable role/person/agent in Amazon Ember.
-  2. **How to invoke** — Slack handle, queue, issue prefix, or trigger in Amazon Ember Mono.
-  3. **Scope** — 2–4 terse ownership words, not a paragraph.
-- Show non-Slack / not-yet-live owners with dashed optional styling rather than hiding them. Missing routes are operationally important.
-- Put escalation / approval rules in a small side callout or footer strip, not as extra org nodes.
+## Convenções de layout
+- Responsável raiz ou porta de entrada no topo, ao centro. Use um único nó focal em coral para a pessoa/equipe/agente que recebe trabalho ambíguo.
+- Os nós do nível 1 são departamentos, pods, filas ou buckets primários de roteamento. Mantenha-os alinhados horizontalmente.
+- Os nós do nível 2 são responsáveis ou especialistas. Se houver mais de 8 especialistas, agrupe-os sob nós de pod em vez de criar uma única fileira gigante.
+- Use conectores ortogonais: queda vertical a partir do pai → barramento horizontal → quedas verticais até os filhos. Nada de linhas diagonais.
+- Cada nó deve responder a três perguntas quando houver espaço:
+  1. **Nome** — papel/pessoa/agente legível por humanos, em Amazon Ember.
+  2. **Como acionar** — handle do Slack, fila, prefixo de issue ou gatilho, em Amazon Ember Mono.
+  3. **Escopo** — 2–4 palavras concisas de responsabilidade, não um parágrafo.
+- Mostre responsáveis fora do Slack / ainda não ativos com o estilo opcional tracejado em vez de ocultá-los. Rotas ausentes são operacionalmente importantes.
+- Coloque regras de escalonamento / aprovação em um pequeno callout lateral ou em uma faixa de rodapé, não como nós extras do organograma.
 
-## Node treatments
-- **Front door / command center:** focal treatment (`accent-tint` + `accent`).
-- **Team / pod / department:** backend treatment (white + `ink`).
-- **Individual agent / owner:** store or external treatment depending on whether it is active in the system.
-- **Gap / needs setup:** optional dashed treatment.
-- **Approval gate:** security treatment, separate from reporting hierarchy.
+## Tratamentos de nós
+- **Porta de entrada / central de comando:** tratamento focal (`accent-tint` + `accent`).
+- **Equipe / pod / departamento:** tratamento de backend (branco + `ink`).
+- **Agente / responsável individual:** tratamento de store ou externo, dependendo de estar ativo no sistema.
+- **Lacuna / precisa de configuração:** tratamento opcional tracejado.
+- **Portão de aprovação:** tratamento de segurança, separado da hierarquia de reporte.
 
-## Complexity budget
-- Max visible org nodes: 12. If more, create an overview org chart plus separate detail charts per pod.
-- Max depth: 4 tiers.
-- Max direct reports under one parent: 5. If there are more, introduce grouping nodes.
-- Max coral nodes: 1. The org chart's job is clarity, not highlighting everything.
-- Max side callouts: 2.
+## Orçamento de complexidade (limite)
+- Máximo de nós visíveis no organograma: 12. Se houver mais, crie um organograma de visão geral mais organogramas de detalhe separados por pod.
+- Profundidade máxima: 4 níveis.
+- Máximo de subordinados diretos sob um pai: 5. Se houver mais, introduza nós de agrupamento.
+- Máximo de nós em coral: 1. A função do organograma é clareza, não destacar tudo.
+- Máximo de callouts laterais: 2.
 
-## Anti-patterns
-- Using a swimlane when the user's real question is "who does what?" Swimlanes explain process; org charts explain ownership.
-- Drawing every person/agent as an identical box. It hides the front door, specialists, gaps, and escalation paths.
-- Cramming full job descriptions into nodes. Keep scope phrases short and move detail to summary cards below.
-- Showing unavailable / not-yet-wired agents as normal active owners. Use dashed optional styling so gaps are visible.
-- Repeating Slack handles in body paragraphs when a node sublabel can carry the invocation path.
-- Floating legends in the org area. Use the standard bottom legend strip.
+## Antipadrões
+- Usar um swimlane quando a pergunta real do usuário é "quem faz o quê?". Swimlanes explicam processo; organogramas explicam responsabilidade.
+- Desenhar cada pessoa/agente como uma caixa idêntica. Isso esconde a porta de entrada, os especialistas, as lacunas e os caminhos de escalonamento.
+- Espremer descrições de cargo completas dentro dos nós. Mantenha as frases de escopo curtas e mova os detalhes para cards de resumo abaixo.
+- Mostrar agentes indisponíveis / ainda não conectados como responsáveis ativos normais. Use o estilo opcional tracejado para que as lacunas fiquem visíveis.
+- Repetir handles do Slack nos parágrafos do corpo quando um sublabel do nó pode carregar o caminho de acionamento.
+- Legendas flutuando na área do organograma. Use a faixa de legenda padrão na parte inferior.
 
-## Examples
-- `assets/example-org-chart.html` — minimal light
-- `assets/example-org-chart-dark.html` — minimal dark
-- `assets/example-org-chart-full.html` — full editorial
+## Exemplos
+- `assets/example-org-chart.html` — minimal claro
+- `assets/example-org-chart-dark.html` — minimal escuro
+- `assets/example-org-chart-full.html` — editorial completo

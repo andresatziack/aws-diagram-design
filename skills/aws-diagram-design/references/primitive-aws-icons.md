@@ -1,46 +1,46 @@
-# AWS Architecture Icons (primitive)
+# AWS Architecture Icons (primitivo)
 
-The official AWS Architecture Icons, release **07312026**, bundled with this skill under [`assets/aws-icons/`](../assets/aws-icons/). Use these — not the generic monochrome `aws` silhouette — whenever a diagram names specific AWS services (EC2, Lambda, S3, Bedrock, …). Browse visually in [`assets/aws-icons.html`](../assets/aws-icons.html); look up any file in [`assets/aws-icons/INDEX.md`](../assets/aws-icons/INDEX.md).
+Os AWS Architecture Icons oficiais, versão **07312026**, incluídos nesta skill em [`assets/aws-icons/`](../assets/aws-icons/). Use estes — e não a silhueta monocromática genérica `aws` — sempre que um diagrama citar serviços AWS específicos (EC2, Lambda, S3, Bedrock, …). Navegue visualmente em [`assets/aws-icons.html`](../assets/aws-icons.html); procure qualquer arquivo em [`assets/aws-icons/INDEX.md`](../assets/aws-icons/INDEX.md).
 
-**812 icons**: 305 service, 466 resource, 15 group, 26 category.
+**812 ícones**: 305 de serviço, 466 de recurso, 15 de grupo, 26 de categoria.
 
-## When to use which set
+## Quando usar cada conjunto
 
-| Set | Path | Canvas (`viewBox`) | Anatomy | Use for |
+| Conjunto | Caminho | Tela (`viewBox`) | Anatomia | Usar para |
 |---|---|---|---|---|
-| **Service** | `service/<Category>/Arch_<Service>_48.svg` | `0 0 64 64` | Solid category-color square + white glyph | A named AWS service as a node |
-| **Resource** | `resource/<Category>/Res_<Service>_<Resource>_48.svg` | `0 0 48 48` | Category-color glyph, transparent bg | A resource *within* a service (EC2 instance, Lambda function, S3 object) and generic marks (`General-Icons`: Users, Documents, Internet, …) |
-| **Group** | `group/<Name>_32.svg` | `0 0 40 40` | Solid color square + white glyph | Corner badge on a zone/container border |
-| **Category** | `category/Arch-Category_<Name>_48.svg` | `0 0 74 74` | Category-color square + white glyph | A whole category, service not yet chosen |
+| **Service** | `service/<Category>/Arch_<Service>_48.svg` | `0 0 64 64` | Quadrado sólido na cor da categoria + glifo branco | Um serviço AWS nomeado como nó |
+| **Resource** | `resource/<Category>/Res_<Service>_<Resource>_48.svg` | `0 0 48 48` | Glifo na cor da categoria, fundo transparente | Um recurso *dentro* de um serviço (instância EC2, função Lambda, objeto S3) e marcas genéricas (`General-Icons`: Users, Documents, Internet, …) |
+| **Group** | `group/<Name>_32.svg` | `0 0 40 40` | Quadrado de cor sólida + glifo branco | Selo de canto na borda de uma zona/contêiner |
+| **Category** | `category/Arch-Category_<Name>_48.svg` | `0 0 74 74` | Quadrado na cor da categoria + glifo branco | Uma categoria inteira, serviço ainda não escolhido |
 
-Mixing is normal: service icons for nodes, group badges on containers, resource icons for interior detail. If the diagram is about generic infrastructure (any cloud, no named AWS service), stay with the monochrome set in [primitive-icons.md](primitive-icons.md) instead.
+Misturar é normal: ícones de serviço para nós, selos de grupo em contêineres, ícones de recurso para detalhes internos. Se o diagrama for sobre infraestrutura genérica (qualquer nuvem, nenhum serviço AWS nomeado), fique com o conjunto monocromático de [primitive-icons.md](primitive-icons.md).
 
-## Category colors (extracted from this release — ground truth)
+## Cores de categoria (extraídas desta versão — a verdade de referência)
 
-| Hex | Categories |
+| Hex | Categorias |
 |---|---|
-| `#ED7100` orange | Compute, Containers, Media Services, Blockchain, Quantum |
-| `#8C4FFF` purple | Analytics, Networking & Content Delivery, Games |
+| `#ED7100` laranja | Compute, Containers, Media Services, Blockchain, Quantum |
+| `#8C4FFF` roxo | Analytics, Networking & Content Delivery, Games |
 | `#C925D1` magenta | Databases, Developer Tools, Customer Enablement, Satellite |
-| `#DD344C` red | Security & Identity, Front-End Web & Mobile, Business Applications |
-| `#7AA116` green | Storage, IoT, Cloud Financial Management |
-| `#01A88D` teal | Artificial Intelligence, Migration & Modernization, End User Computing |
-| `#E7157B` pink | Application Integration, Management & Governance |
-| `#232F3E` squid ink | General icons, AWS Cloud |
-| `#00A4A6` dark teal | Region, subnets (group set only) |
-| `#7D8998` grey | Corporate data center, generic server (group set only) |
+| `#DD344C` vermelho | Security & Identity, Front-End Web & Mobile, Business Applications |
+| `#7AA116` verde | Storage, IoT, Cloud Financial Management |
+| `#01A88D` verde-azulado | Artificial Intelligence, Migration & Modernization, End User Computing |
+| `#E7157B` rosa | Application Integration, Management & Governance |
+| `#232F3E` squid ink | Ícones gerais, AWS Cloud |
+| `#00A4A6` verde-azulado escuro | Region, sub-redes (apenas conjunto de grupos) |
+| `#7D8998` cinza | Data center corporativo, servidor genérico (apenas conjunto de grupos) |
 
-## Lookup workflow
+## Fluxo de busca
 
-1. Check the common-services table below — it covers most diagrams.
-2. Not there → search `assets/aws-icons/INDEX.md` for the service name.
-3. Still unsure → glob the directory: `ls <skill-dir>/assets/aws-icons/service/*/`. Naming follows the official package: `Arch_Amazon-EC2_48.svg`, `Res_Amazon-EC2_Instance_48.svg`, General resource icons end in `_48_Light.svg`.
+1. Verifique a tabela de serviços comuns abaixo — ela cobre a maioria dos diagramas.
+2. Não está lá → procure o nome do serviço em `assets/aws-icons/INDEX.md`.
+3. Ainda em dúvida → faça glob no diretório: `ls <skill-dir>/assets/aws-icons/service/*/`. A nomenclatura segue o pacote oficial: `Arch_Amazon-EC2_48.svg`, `Res_Amazon-EC2_Instance_48.svg`; ícones de recurso gerais terminam em `_48_Light.svg`.
 
-Renamed services to know: SageMaker → `Arch_Amazon-SageMaker-AI`, QuickSight → `Arch_Amazon-Quick` (Quick Suite), plain ECS/EKS → `Arch_Amazon-Elastic-Container-Service` / `Arch_Amazon-Elastic-Kubernetes-Service`.
+Serviços renomeados que você precisa conhecer: SageMaker → `Arch_Amazon-SageMaker-AI`, QuickSight → `Arch_Amazon-Quick` (Quick Suite), ECS/EKS simples → `Arch_Amazon-Elastic-Container-Service` / `Arch_Amazon-Elastic-Kubernetes-Service`.
 
-### Common services (relative to `assets/aws-icons/`)
+### Serviços comuns (relativos a `assets/aws-icons/`)
 
-| Service | Path |
+| Serviço | Caminho |
 |---|---|
 | EC2 | `service/Compute/Arch_Amazon-EC2_48.svg` |
 | Lambda | `service/Compute/Arch_AWS-Lambda_48.svg` |
@@ -93,15 +93,15 @@ Renamed services to know: SageMaker → `Arch_Amazon-SageMaker-AI`, QuickSight �
 | WAF | `service/Security-Identity/Arch_AWS-WAF_48.svg` |
 | Shield | `service/Security-Identity/Arch_AWS-Shield_48.svg` |
 | GuardDuty | `service/Security-Identity/Arch_Amazon-GuardDuty_48.svg` |
-| Users (generic) | `resource/General-Icons/Res_Users_48_Light.svg` |
-| User (generic) | `resource/General-Icons/Res_User_48_Light.svg` |
-| Internet (generic) | `resource/General-Icons/Res_Internet_48_Light.svg` |
-| EC2 instance | `resource/Compute/Res_Amazon-EC2_Instance_48.svg` |
-| Lambda function | `resource/Compute/Res_AWS-Lambda_Lambda-Function_48.svg` |
+| Users (genérico) | `resource/General-Icons/Res_Users_48_Light.svg` |
+| User (genérico) | `resource/General-Icons/Res_User_48_Light.svg` |
+| Internet (genérico) | `resource/General-Icons/Res_Internet_48_Light.svg` |
+| Instância EC2 | `resource/Compute/Res_Amazon-EC2_Instance_48.svg` |
+| Função Lambda | `resource/Compute/Res_AWS-Lambda_Lambda-Function_48.svg` |
 
-## Inlining an icon
+## Embutindo um ícone
 
-Read the SVG file, keep only its **inner `<g>`** (drop the XML declaration, the outer `<svg>` wrapper, and the `<title>`), strip `id` attributes (two icons from the same category collide on the BG-group id), and wrap in a positioned group:
+Leia o arquivo SVG, mantenha apenas o seu **`<g>` interno** (descarte a declaração XML, o invólucro `<svg>` externo e o `<title>`), remova os atributos `id` (dois ícones da mesma categoria colidem no id do grupo BG) e envolva-o em um grupo posicionado:
 
 ```svg
 <!-- 24×24 service icon at (x,y): scale = 24 / 64 = 0.375 -->
@@ -113,11 +113,11 @@ Read the SVG file, keep only its **inner `<g>`** (drop the XML declaration, the 
 </g>
 ```
 
-Scale factors for a 24px render: service `24/64 = 0.375`, resource `24/48 = 0.5`, group badge `24/40 = 0.6`, category `24/74 ≈ 0.324` (use 32px → `32/74` if the odd ratio fights the 4px grid). Round the *placement* to the 4px grid; the internal icon geometry is exempt (like stroke widths).
+Fatores de escala para renderização em 24px: serviço `24/64 = 0.375`, recurso `24/48 = 0.5`, selo de grupo `24/40 = 0.6`, categoria `24/74 ≈ 0.324` (use 32px → `32/74` se a proporção ímpar brigar com a grade de 4px). Arredonde o *posicionamento* para a grade de 4px; a geometria interna do ícone é isenta (assim como as larguras de traço).
 
-### Node pattern with a service icon
+### Padrão de nó com ícone de serviço
 
-The icon replaces the rectangular type tag from SKILL.md §6 — don't stack both:
+O ícone substitui a tag de tipo retangular do SKILL.md §6 — não empilhe os dois:
 
 ```svg
 <rect x="X" y="Y" width="176" height="56" rx="6" fill="#ffffff"/>          <!-- opaque mask -->
@@ -131,11 +131,11 @@ The icon replaces the rectangular type tag from SKILL.md §6 — don't stack bot
       font-family="'Amazon Ember Mono', ui-monospace, monospace">Lambda · python3.13</text>
 ```
 
-### Compact nodes (non-architecture types)
+### Nós compactos (Compact nodes — tipos não arquiteturais)
 
-**The icon rule applies to every visual type, not just Architecture.** Data-flow cells, process steps, high-level components, DP-integration nodes, sequence actors, swimlane steps, medallion tiers — any element whose subject is a named AWS service carries the official icon.
+**A regra do ícone se aplica a todos os tipos visuais, não apenas a Architecture.** Células de data-flow, etapas de processo, componentes de high-level, nós de DP-integration, atores de sequence, etapas de swimlane, camadas medallion — qualquer elemento cujo assunto seja um serviço AWS nomeado leva o ícone oficial.
 
-Types whose nodes are too small for the icon-left pattern (e.g., the 100×64 data-flow cell, which already spends its left corner on a role chip) use the **16px corner slot** instead:
+Tipos cujos nós são pequenos demais para o padrão de ícone à esquerda (por exemplo, a célula de data-flow de 100×64, que já usa o canto esquerdo para um chip de papel) usam o **slot de canto de 16px**:
 
 ```svg
 <!-- 16×16 service icon in the node's top-right corner: scale = 16 / 64 = 0.25 -->
@@ -144,33 +144,33 @@ Types whose nodes are too small for the icon-left pattern (e.g., the 100×64 dat
 </g>
 ```
 
-Rules for the corner slot:
+Regras para o slot de canto:
 
-- **16px is the floor** (rule 2 below) — never render smaller to squeeze a tight cell; drop the icon from secondary nodes instead.
-- Scale factors at 16px: service `16/64 = 0.25`, resource `16/48 ≈ 0.333`, group badge `16/40 = 0.4`.
-- **One icon per node** — the node's primary service. A node listing two tools (`Kinesis · DMS`) shows the dominant one; the sublabel already names the rest.
-- **Keep the title clear of the icon.** With a centered title and a 16px top-right icon on a 100px-wide node, cap the title at ~13 characters; if the title can't shrink, move to the icon-left pattern or a wider node.
-- Nodes for non-AWS subjects (roles, generic actors, on-prem tools) take no AWS icon — mixing generic monochrome marks ([primitive-icons.md](primitive-icons.md)) in the same diagram is fine.
+- **16px é o piso** (regra 2 abaixo) — nunca renderize menor para espremer em uma célula apertada; em vez disso, remova o ícone dos nós secundários.
+- Fatores de escala em 16px: serviço `16/64 = 0.25`, recurso `16/48 ≈ 0.333`, selo de grupo `16/40 = 0.4`.
+- **Um ícone por nó** — o serviço principal do nó. Um nó que lista duas ferramentas (`Kinesis · DMS`) mostra a dominante; o sublabel já nomeia as demais.
+- **Mantenha o título longe do ícone.** Com um título centralizado e um ícone de 16px no canto superior direito de um nó de 100px de largura, limite o título a ~13 caracteres; se o título não puder encolher, passe para o padrão de ícone à esquerda ou para um nó mais largo.
+- Nós de assuntos não AWS (papéis, atores genéricos, ferramentas on-premises) não levam ícone AWS — misturar marcas monocromáticas genéricas ([primitive-icons.md](primitive-icons.md)) no mesmo diagrama não tem problema.
 
-### Group containers (zones)
+### Contêineres de grupo (zonas)
 
-AWS zone containers follow the official convention: **border in the group color, badge in the top-left corner, label to the badge's right**. Fill is `none` or a ≤5% tint of the border color.
+Os contêineres de zona AWS seguem a convenção oficial: **borda na cor do grupo, selo no canto superior esquerdo, rótulo à direita do selo**. O preenchimento é `none` ou uma tonalidade de ≤5% da cor da borda.
 
-| Zone | Border | Style | Badge file |
+| Zona | Borda | Estilo | Arquivo do selo |
 |---|---|---|---|
-| AWS Cloud | `#242F3E` (light) / `#232F3E` (dark) | solid | `group/AWS-Cloud_32.svg` (`_Dark` variant for dark skin) |
-| AWS account | `#E7157B` | solid | `group/AWS-Account_32.svg` |
-| Region | `#00A4A6` | dashed | `group/Region_32.svg` |
-| Availability Zone | `#00A4A6` | dashed | *none — text label only* |
-| VPC | `#8C4FFF` | solid | `group/Virtual-private-cloud-VPC_32.svg` |
-| Private subnet | `#00A4A6` | solid | `group/Private-subnet_32.svg` |
-| Public subnet | `#7AA116` | solid | `group/Public-subnet_32.svg` |
-| Security group | `#DD344C` | dashed | *none — text label only* |
-| Auto Scaling group | `#ED7100` | dashed | `group/Auto-Scaling-group_32.svg` (badge top-center is also official) |
-| Corporate data center | `#7D8998` | solid | `group/Corporate-data-center_32.svg` |
-| EC2 instance contents | `#ED7100` | solid | `group/EC2-instance-contents_32.svg` |
-| Spot Fleet | `#ED7100` | solid | `group/Spot-Fleet_32.svg` |
-| Server contents | `#7D8998` | solid | `group/Server-contents_32.svg` |
+| AWS Cloud | `#242F3E` (claro) / `#232F3E` (escuro) | sólida | `group/AWS-Cloud_32.svg` (variante `_Dark` para skin escura) |
+| Conta AWS | `#E7157B` | sólida | `group/AWS-Account_32.svg` |
+| Region | `#00A4A6` | tracejada | `group/Region_32.svg` |
+| Availability Zone | `#00A4A6` | tracejada | *nenhum — apenas rótulo de texto* |
+| VPC | `#8C4FFF` | sólida | `group/Virtual-private-cloud-VPC_32.svg` |
+| Sub-rede privada | `#00A4A6` | sólida | `group/Private-subnet_32.svg` |
+| Sub-rede pública | `#7AA116` | sólida | `group/Public-subnet_32.svg` |
+| Security group | `#DD344C` | tracejada | *nenhum — apenas rótulo de texto* |
+| Auto Scaling group | `#ED7100` | tracejada | `group/Auto-Scaling-group_32.svg` (o selo no topo central também é oficial) |
+| Data center corporativo | `#7D8998` | sólida | `group/Corporate-data-center_32.svg` |
+| Conteúdo de instância EC2 | `#ED7100` | sólida | `group/EC2-instance-contents_32.svg` |
+| Spot Fleet | `#ED7100` | sólida | `group/Spot-Fleet_32.svg` |
+| Conteúdo de servidor | `#7D8998` | sólida | `group/Server-contents_32.svg` |
 
 ```svg
 <!-- VPC container -->
@@ -180,17 +180,17 @@ AWS zone containers follow the official convention: **border in the group color,
       font-family="'Amazon Ember', 'Helvetica Neue', Arial, sans-serif">VPC · 10.0.0.0/16</text>
 ```
 
-Zone dashes use `stroke-dasharray="4,4"`; nested zones inset by ≥16px. These zone borders are *identity colors* and don't count against the accent budget — but the §6 connector rules and §7 complexity budget still apply unchanged.
+Os tracejados de zona usam `stroke-dasharray="4,4"`; zonas aninhadas ficam recuadas em ≥16px. Essas bordas de zona são *cores de identidade* e não contam no orçamento (limite) de accent — mas as regras de conectores do §6 e o orçamento de complexidade do §7 continuam valendo sem alteração.
 
-## Rules (official brand + skill integration)
+## Regras (marca oficial + integração com a skill)
 
-1. **Never recolor, restyle, distort, rotate, or crop an official icon.** If the diagram must be monochrome, use the generic set ([primitive-icons.md](primitive-icons.md)) instead of tinting AWS icons.
-2. **Minimum render 16px**; 24–32px inside nodes is the sweet spot. Keep the 1:1 aspect ratio.
-3. **Icon and zone-border colors are identity marks, exempt from the accent budget.** The `accent` (#FF9900) budget of 1–2 still governs editorial elements: focal node strokes, highlighted arrows, callouts.
-4. **Don't pair a full-color icon with a colored type tag** — the icon already carries the category signal. Node text stays `ink`/`muted`.
-5. **Latest names**: this release renames several services (see Lookup workflow). Label nodes with the current service name, not the icon's historical one.
-6. **Density**: full-color icons are visually loud. Above ~7 icons, consider zoning the diagram or dropping icons from secondary nodes (text-only nodes are fine).
+1. **Nunca recolora, reestilize, distorça, gire ou recorte um ícone oficial.** Se o diagrama precisar ser monocromático, use o conjunto genérico ([primitive-icons.md](primitive-icons.md)) em vez de tingir os ícones AWS.
+2. **Renderização mínima de 16px**; 24–32px dentro dos nós é o ponto ideal. Mantenha a proporção 1:1.
+3. **As cores de ícones e de bordas de zona são marcas de identidade, isentas do orçamento de accent.** O orçamento de 1–2 do `accent` (#FF9900) continua governando os elementos editoriais: traços de nós focais, setas destacadas, callouts.
+4. **Não combine um ícone colorido com uma tag de tipo colorida** — o ícone já carrega o sinal da categoria. O texto do nó continua `ink`/`muted`.
+5. **Nomes mais recentes**: esta versão renomeia vários serviços (veja Fluxo de busca). Rotule os nós com o nome atual do serviço, não com o nome histórico do ícone.
+6. **Densidade**: ícones coloridos são visualmente chamativos. Acima de ~7 ícones, considere dividir o diagrama em zonas ou remover os ícones dos nós secundários (nós só com texto não têm problema).
 
-## License attribution
+## Atribuição de licença
 
-AWS Architecture Icons © Amazon Web Services, Inc. — provided by AWS for use in architecture diagrams per the AWS Architecture Icons terms (https://aws.amazon.com/architecture/icons/). Do not alter the icons or use them to imply AWS sponsorship of non-AWS products.
+AWS Architecture Icons © Amazon Web Services, Inc. — fornecidos pela AWS para uso em diagramas de arquitetura conforme os termos dos AWS Architecture Icons (https://aws.amazon.com/architecture/icons/). Não altere os ícones nem os use para sugerir patrocínio da AWS a produtos que não sejam da AWS.

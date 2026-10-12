@@ -1,31 +1,31 @@
-# Amazon Ember — bundled fonts
+# Amazon Ember — fontes incluídas
 
-Amazon Ember (and Amazon Ember Mono) as distributed by Amazon at
+Amazon Ember (e Amazon Ember Mono) conforme distribuídas pela Amazon em
 <https://developer.amazon.com/en-US/alexa/branding/echo-guidelines/identity-guidelines/typography>
-(`Amazon_Typefaces_Complete_Font_Set_Mar2020.zip`). Usage terms:
-[`Amazon-Ember-Licensing-Guidelines.pdf`](Amazon-Ember-Licensing-Guidelines.pdf) in this directory.
+(`Amazon_Typefaces_Complete_Font_Set_Mar2020.zip`). Termos de uso:
+[`Amazon-Ember-Licensing-Guidelines.pdf`](Amazon-Ember-Licensing-Guidelines.pdf) neste diretório.
 
-## Inventory
+## Inventário
 
-| File (woff2/) | Family | Weight / style |
+| Arquivo (woff2/) | Família | Peso / estilo |
 |---|---|---|
 | `AmazonEmber_W_Lt.woff2` | Amazon Ember | 300 |
 | `AmazonEmber_W_Rg.woff2` | Amazon Ember | 400 |
-| `AmazonEmber_W_RgIt.woff2` | Amazon Ember | 400 italic |
+| `AmazonEmber_W_RgIt.woff2` | Amazon Ember | 400 itálico |
 | `AmazonEmber_W_SBd.woff2` | Amazon Ember | 600 |
 | `AmazonEmber_W_Bd.woff2` | Amazon Ember | 700 |
 | `AmazonEmber_W_He.woff2` | Amazon Ember | 800 |
 | `AmazonEmberMono_W_Rg.woff2` | Amazon Ember Mono | 400 |
 | `AmazonEmberMono_W_Bd.woff2` | Amazon Ember Mono | 700 |
 
-`ttf/` carries the desktop faces (Ember Lt/Rg/RgIt/Medium/Bd/He + Ember Mono Rg/Bd) for OS installation via
-`./install.sh fonts` (repo root).
+`ttf/` contém as fontes para desktop (Ember Lt/Rg/RgIt/Medium/Bd/He + Ember Mono Rg/Bd) para instalação no sistema operacional via
+`./install.sh fonts` (raiz do repositório).
 
-## Canonical @font-face block
+## Bloco @font-face canônico
 
-Paste into generated diagram HTML, adjusting `FONTS` to the path that reaches this
-directory from the output file (see `references/style-guide.md § Font stack` for the
-loading-order rules):
+Cole no HTML do diagrama gerado, ajustando `FONTS` para o caminho que chega a este
+diretório a partir do arquivo de saída (veja `references/style-guide.md § Pilha de fontes (Font stack)` para as
+regras de ordem de carregamento):
 
 ```css
 /* FONTS = relative or absolute path to <skill-dir>/assets/fonts/woff2 */
@@ -47,8 +47,8 @@ loading-order rules):
   src: local('Amazon Ember Mono Bold'), local('Amazon Ember Mono'), url('FONTS/AmazonEmberMono_W_Bd.woff2') format('woff2'); }
 ```
 
-`local()` first — a machine with the fonts installed never fetches the files. Always keep the
-fallback stacks on `font-family` declarations (`'Helvetica Neue', Helvetica, Arial, sans-serif`
-for Ember; `ui-monospace, monospace` for Ember Mono); environments that block file fonts
-(e.g., GitHub's SVG sandbox) fall back to system faces. Ember Mono ships 400/700 — mono specs
-at 500/600 snap to the nearest weight. No external font CDN is needed anywhere.
+`local()` primeiro — uma máquina com as fontes instaladas nunca baixa os arquivos. Sempre mantenha as
+pilhas de fallback nas declarações `font-family` (`'Helvetica Neue', Helvetica, Arial, sans-serif`
+para Ember; `ui-monospace, monospace` para Ember Mono); ambientes que bloqueiam fontes de arquivo
+(ex.: o sandbox de SVG do GitHub) recorrem às fontes do sistema. Ember Mono vem com 400/700 — especificações mono
+em 500/600 se ajustam ao peso mais próximo. Nenhuma CDN externa de fontes é necessária em lugar algum.

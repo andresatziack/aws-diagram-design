@@ -1,23 +1,23 @@
-# Flowchart
+# Fluxograma (Flowchart)
 
-**Best for:** decision logic, algorithms, user-facing branching flows ("Should I…?"), onboarding routing, support-triage trees.
+**Ideal para:** lógica de decisão, algoritmos, fluxos com ramificações voltados ao usuário ("Devo…?"), roteamento de onboarding, árvores de triagem de suporte.
 
-## Layout conventions
-- Shape carries type, not color:
-  - **Oval** (`rx=20`) — start / end
-  - **Rectangle** (`rx=6`) — step / action
-  - **Diamond** — decision (≤3 exits)
-  - **Small filled ink dot** (`r=4`) — merge point where branches rejoin
-- Flow runs top→down. From a diamond, conventional exits: Yes to the right, No below — but label every outgoing arrow regardless.
-- Use coral on the happy path *or* on the single most consequential decision — never on every decision.
-- If two arrows must cross, use a small arc jump on one so the crossing is readable.
+## Convenções de layout
+- A forma carrega o tipo, não a cor:
+  - **Oval** (`rx=20`) — início / fim
+  - **Retângulo** (`rx=6`) — etapa / ação
+  - **Losango** — decisão (≤3 saídas)
+  - **Pequeno ponto preenchido em ink** (`r=4`) — ponto de junção onde os ramos se reencontram
+- O fluxo corre de cima→baixo. A partir de um losango, as saídas convencionais são: Sim para a direita, Não para baixo — mas rotule toda seta de saída de qualquer forma.
+- Use coral no caminho feliz (happy path) *ou* na única decisão de maior consequência — nunca em todas as decisões.
+- Se duas setas precisarem se cruzar, use um pequeno salto em arco em uma delas para que o cruzamento seja legível.
 
-## Anti-patterns
-- Using fill color to signal node type (shape does that).
-- Decision diamond with 4+ exits — refactor into nested diamonds.
-- Unlabeled decision branches.
+## Antipadrões
+- Usar cor de preenchimento para sinalizar o tipo do nó (a forma faz isso).
+- Losango de decisão com 4+ saídas — refatore em losangos aninhados.
+- Ramos de decisão sem rótulo.
 
-## Examples
-- `assets/example-flowchart.html` — minimal light
-- `assets/example-flowchart-dark.html` — minimal dark
-- `assets/example-flowchart-full.html` — full editorial
+## Exemplos
+- `assets/example-flowchart.html` — minimal claro
+- `assets/example-flowchart-dark.html` — minimal escuro
+- `assets/example-flowchart-full.html` — editorial completo

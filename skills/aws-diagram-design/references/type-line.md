@@ -1,20 +1,20 @@
-# Line Chart
+# Gráfico de linhas (Line Chart)
 
-**Best for:** continuous trends over time or a sequential index — signups over weeks, revenue by month, latency over releases. Use when the direction and rate of change between points is the primary message.
+**Ideal para:** tendências contínuas ao longo do tempo ou de um índice sequencial — cadastros ao longo das semanas, receita por mês, latência ao longo das releases. Use quando a direção e a taxa de variação entre os pontos são a mensagem principal.
 
-## Layout conventions
+## Convenções de layout
 
-- **Plot area margins:** left 80px, bottom 60px, top 40px, right 40px — inside `0 0 1000 500` viewBox.
-- **Points:** 4–12 data points. Fewer → consider a summary stat; more → aggregate into periods.
-- **X-axis:** evenly spaced time/index labels below the plot. Use Amazon Ember Mono 8px, centered on each point x.
-- **Y-axis gridlines:** 4–6 horizontals at regular intervals. Same faint treatment as bar chart.
-- **Lines:** `<polyline>` with `fill="none"`. Focal series `stroke-width="1.8"`, others `"1.2"`.
-- **Vertex dots:** only on the focal series (`r=4`, filled). Other series: line only.
-- **Area fill (optional):** `<polygon>` closing back to `y=420` (x-axis baseline) at 0.08 opacity. Use for the focal series only when the area meaning is important.
-- **Multi-series:** up to 5 series. Focal = `accent`. Others = `series-1`, `series-2`, `series-3`, `series-4` from style-guide.md. Apply series palette in order — don't skip.
-- **Legend:** horizontal strip at the bottom. Swatch = 16×8px rect with the series fill/stroke. One entry per series.
+- **Margens da área de plotagem:** esquerda 80px, base 60px, topo 40px, direita 40px — dentro do viewBox `0 0 1000 500`.
+- **Pontos:** 4–12 pontos de dados. Menos → considere uma estatística-resumo; mais → agregue em períodos.
+- **Eixo x:** rótulos de tempo/índice uniformemente espaçados abaixo da plotagem. Use Amazon Ember Mono 8px, centralizado no x de cada ponto.
+- **Linhas de grade do eixo y:** 4–6 horizontais em intervalos regulares. Mesmo tratamento tênue do gráfico de barras.
+- **Linhas:** `<polyline>` com `fill="none"`. Série focal `stroke-width="1.8"`, as demais `"1.2"`.
+- **Pontos de vértice:** apenas na série focal (`r=4`, preenchidos). Demais séries: apenas a linha.
+- **Preenchimento de área (opcional):** `<polygon>` fechando de volta em `y=420` (linha de base do eixo x) com opacidade 0.08. Use apenas na série focal, quando o significado da área for importante.
+- **Múltiplas séries:** até 5 séries. Focal = `accent`. As demais = `series-1`, `series-2`, `series-3`, `series-4` de style-guide.md. Aplique a paleta de séries em ordem — não pule nenhuma.
+- **Legenda:** faixa horizontal na parte inferior. Amostra = retângulo de 16×8px com o preenchimento/traço da série. Uma entrada por série.
 
-### Polyline pattern
+### Padrão de polyline
 
 ```svg
 <!-- Focal series -->
@@ -28,17 +28,17 @@
           fill="none" stroke="#7c8f6f" stroke-width="1.2" stroke-linejoin="round"/>
 ```
 
-## Anti-patterns
+## Antipadrões
 
-- More than 5 series (visual mush — reduce or split).
-- Lines that don't start at a shared zero baseline unless explicitly annotated.
-- Smoothed/spline curves when the underlying data is sampled — polyline is honest.
-- Dots on every series when there are 4+ series (only focal gets dots).
-- Y-axis that doesn't include zero when the absolute magnitude matters.
-- Connecting discontinuous data segments without a visual gap.
+- Mais de 5 séries (massa visual — reduza ou divida).
+- Linhas que não começam em uma linha de base zero compartilhada, a menos que isso seja explicitamente anotado.
+- Curvas suavizadas/spline quando os dados subjacentes são amostrados — a polyline é honesta.
+- Pontos em todas as séries quando há 4+ séries (apenas a focal recebe pontos).
+- Eixo y que não inclui o zero quando a magnitude absoluta importa.
+- Conectar segmentos de dados descontínuos sem uma lacuna visual.
 
-## Examples
+## Exemplos
 
-- `assets/example-line.html` — minimal light
-- `assets/example-line-dark.html` — minimal dark
-- `assets/example-line-full.html` — full editorial
+- `assets/example-line.html` — minimal claro
+- `assets/example-line-dark.html` — minimal escuro
+- `assets/example-line-full.html` — editorial completo

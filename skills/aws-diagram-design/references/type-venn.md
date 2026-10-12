@@ -1,26 +1,26 @@
-# Venn / Set Overlap
+# Venn / Sobreposição de conjuntos (Venn / Set Overlap)
 
-**Best for:** intersection of concepts/domains, shared attributes between categories, "where A meets B", ikigai-style frames (desirable × feasible × viable).
+**Ideal para:** interseção de conceitos/domínios, atributos compartilhados entre categorias, "onde A encontra B", quadros no estilo ikigai (desejável × viável × sustentável).
 
-## Layout conventions
-- **Prefer 2 or 3 circles.** Avoid 4+ (unreadable — use a matrix instead).
-- Circle stroke: 1px hairline, color per-set (ink, muted, soft).
-- Circle fill: very low-opacity tint — `rgba(35,47,62,0.04)` for ink set, `rgba(84,91,100,0.05)` for muted. Tints compound naturally in overlap regions.
-- Radii: equal when sets are comparable in size; proportional when sets are meaningfully different. Don't fake equal sizes for aesthetics.
-- **Set labels** placed outside the circle, NEVER crossing the stroke. Amazon Ember 12–14px 600 for the set name, optional Amazon Ember Mono 9px sublabel.
-- **Intersection labels** placed inside the overlap region, Amazon Ember 12px 600, centered. For small overlaps, use a leader line to a label in clear space.
-- **Coral accent** on the ONE focal intersection — the "sweet spot". Either coral label stroke OR clipPath-bounded coral fill tint (`rgba(255,153,0,0.10)`).
-- Circle centers and radii divisible by 4.
+## Convenções de layout
+- **Prefira 2 ou 3 círculos.** Evite 4+ (ilegível — use uma matriz).
+- Traço do círculo: linha fina (hairline) de 1px, cor por conjunto (ink, muted, soft).
+- Preenchimento do círculo: tom de opacidade muito baixa — `rgba(35,47,62,0.04)` para o conjunto ink, `rgba(84,91,100,0.05)` para muted. Os tons se somam naturalmente nas regiões de sobreposição.
+- Raios: iguais quando os conjuntos têm tamanho comparável; proporcionais quando os conjuntos são significativamente diferentes. Não finja tamanhos iguais por estética.
+- **Rótulos de conjunto** posicionados fora do círculo, NUNCA cruzando o traço. Amazon Ember 12–14px 600 para o nome do conjunto, sublabel opcional em Amazon Ember Mono 9px.
+- **Rótulos de interseção** posicionados dentro da região de sobreposição, Amazon Ember 12px 600, centralizados. Para sobreposições pequenas, use uma linha guia até um rótulo em espaço livre.
+- **Accent coral** em UMA interseção focal — o "ponto ideal" (sweet spot). Ou traço coral no rótulo OU preenchimento com tom coral limitado por clipPath (`rgba(255,153,0,0.10)`).
+- Centros e raios dos círculos divisíveis por 4.
 
-## Anti-patterns
-- Unlabeled regions — reader can't tell which set is which.
-- Circles that don't overlap when overlap is the point.
-- Equal-sized circles when sets are obviously different (dishonest).
-- Coral on multiple overlap regions (focal signal dies).
-- Labels sitting on top of circle strokes (illegible).
-- 4+ circles where 2–3 would do.
+## Antipadrões
+- Regiões sem rótulo — o leitor não consegue distinguir qual conjunto é qual.
+- Círculos que não se sobrepõem quando a sobreposição é o objetivo.
+- Círculos de tamanho igual quando os conjuntos são obviamente diferentes (desonesto).
+- Coral em múltiplas regiões de sobreposição (o sinal focal morre).
+- Rótulos posicionados em cima dos traços dos círculos (ilegível).
+- 4+ círculos quando 2–3 bastariam.
 
-## Examples
-- `assets/example-venn.html` — minimal light
-- `assets/example-venn-dark.html` — minimal dark
-- `assets/example-venn-full.html` — full editorial
+## Exemplos
+- `assets/example-venn.html` — minimal claro
+- `assets/example-venn-dark.html` — minimal escuro
+- `assets/example-venn-full.html` — editorial completo

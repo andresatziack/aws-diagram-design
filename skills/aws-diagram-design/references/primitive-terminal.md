@@ -1,10 +1,10 @@
-# Terminal Window (CLI-chrome variant)
+# Janela de terminal (variante com chrome de CLI)
 
-Optional full-page skin that wraps any diagram in a fake terminal window — titlebar with three dots, a `$` prompt line, monospace type throughout. Use for dev-tool announcements, CLI-product posts, and technical social cards where a screenshot needs to read as "terminal," not "editorial doc."
+Skin (tema) opcional de página inteira que envolve qualquer diagrama em uma janela de terminal falsa — barra de título com três pontos, uma linha de prompt `$`, tipografia monoespaçada em tudo. Use para anúncios de ferramentas de desenvolvimento, posts de produtos CLI e cards técnicos para redes sociais em que uma captura de tela precisa ser lida como "terminal", não como "documento editorial".
 
-This is a **second, fixed skin** — see [style-guide.md § Terminal skin](style-guide.md#terminal-skin-opt-in-alternate) for the token table. It does not inherit from `onboarding.md` brand tokens and isn't part of the light/dark inversion rule; every terminal example uses the same nine tokens regardless of the host site's brand.
+Esta é uma **segunda skin, fixa** — veja [style-guide.md § Terminal skin](style-guide.md#terminal-skin-opt-in-alternate) para a tabela de tokens. Ela não herda os tokens de marca de `onboarding.md` e não faz parte da regra de inversão claro/escuro; todo exemplo de terminal usa os mesmos nove tokens, independentemente da marca do site anfitrião.
 
-## Grammar
+## Gramática
 
 ```html
 <div class="terminal">
@@ -45,32 +45,32 @@ body {
 }
 ```
 
-Inside the SVG, swap the default light/dark tokens 1:1 for their `terminal-*` equivalents: `paper` → `terminal-paper`, `ink` → `terminal-ink`, `muted`/`soft` → `terminal-muted`/`terminal-soft`, `accent`/`accent-tint` → `terminal-accent`/`terminal-accent-tint`. The hub/focal-node pattern (inverted fill for the one highlighted element) still applies.
+Dentro do SVG, troque os tokens padrão claro/escuro 1:1 pelos equivalentes `terminal-*`: `paper` → `terminal-paper`, `ink` → `terminal-ink`, `muted`/`soft` → `terminal-muted`/`terminal-soft`, `accent`/`accent-tint` → `terminal-accent`/`terminal-accent-tint`. O padrão de hub/nó focal (preenchimento invertido para o único elemento destacado) continua valendo.
 
-## Typography
+## Tipografia
 
-**Everything is monospace** — this is the one variant where that's correct. Drop Amazon Ember entirely; set the page title in mono, bold, prefixed with `# ` (reads as a comment line). The eyebrow becomes a shell prompt: `$ ` in `terminal-accent`, the command in `terminal-muted`.
+**Tudo é monoespaçado** — esta é a única variante em que isso é correto. Abandone o Amazon Ember por completo; defina o título da página em mono, negrito, prefixado com `# ` (lido como uma linha de comentário). O eyebrow vira um prompt de shell: `$ ` em `terminal-accent`, o comando em `terminal-muted`.
 
-Run every text role about **1–2px above** the default type scale in `style-guide.md` (e.g. `node-name` 12px → 14px, `sublabel`/`arrow-label` 8–9px → 9–10px, hub label 16px → 18px). Monospace at the default sizes reads small next to the sans/serif mix it's replacing, and these cards are usually viewed at social-feed scale, not full-bleed.
+Use todos os papéis de texto **1–2px acima** da escala tipográfica padrão em `style-guide.md` (ex.: `node-name` 12px → 14px, `sublabel`/`arrow-label` 8–9px → 9–10px, rótulo do hub 16px → 18px). Monoespaçada nos tamanhos padrão parece pequena ao lado da mistura sans/serif que está substituindo, e esses cards geralmente são vistos na escala de feed de rede social, não em tela cheia.
 
-## Titlebar dots
+## Pontos da barra de título
 
-Three 10px circles, macOS-style. The **1-accent rule caps the color use here too**: one dot is `terminal-accent`, the other two are `terminal-soft`. Do not use a red/yellow/green traffic-light triad — that's a second and third hue, which the palette forbids.
+Três círculos de 10px, no estilo macOS. A **regra de 1 accent limita o uso de cor aqui também**: um ponto é `terminal-accent`, os outros dois são `terminal-soft`. Não use a tríade de semáforo vermelho/amarelo/verde — isso seria uma segunda e uma terceira matiz, o que a paleta proíbe.
 
-## Critical rules
+## Regras críticas
 
-- No pure black (`#000000`) — use `terminal-page` (`#0a0a0a`) / `terminal-paper` (`#141414`). Same rule as the default skin, same reason: true black clips on OLED and in print.
-- One accent only. If a diagram needs a second focal element, use `terminal-ink` (white) for emphasis via weight/size, not a second color.
-- Background dot-grid pattern (if used) stays `rgba(255,255,255,0.06–0.08)` — barely visible texture, not a visual competitor to the titlebar chrome.
+- Nada de preto puro (`#000000`) — use `terminal-page` (`#0a0a0a`) / `terminal-paper` (`#141414`). Mesma regra da skin padrão, mesmo motivo: o preto absoluto estoura em telas OLED e na impressão.
+- Apenas um accent. Se um diagrama precisar de um segundo elemento focal, use `terminal-ink` (branco) para dar ênfase via peso/tamanho, não uma segunda cor.
+- O padrão de grade de pontos no fundo (se usado) permanece `rgba(255,255,255,0.06–0.08)` — uma textura quase invisível, não um concorrente visual do chrome da barra de título.
 
-## When to use
+## Quando usar
 
-- Dev-tool / CLI-product launch posts (npm package, CLI flag, terminal-based workflow).
-- Technical social cards where "this is a tool for engineers" is part of the message.
-- Screenshots meant to pop in a dark-mode-heavy feed (X, Discord, dev blogs).
+- Posts de lançamento de ferramentas de desenvolvimento / produtos CLI (pacote npm, flag de CLI, fluxo de trabalho baseado em terminal).
+- Cards técnicos para redes sociais em que "esta é uma ferramenta para engenheiros" faz parte da mensagem.
+- Capturas de tela feitas para se destacar em um feed com muito modo escuro (X, Discord, blogs de desenvolvimento).
 
-## When not to use
+## Quando não usar
 
-- Editorial / long-form posts — pair with the default light or full-editorial variant instead.
-- Brand-matched output from `onboarding.md` — terminal is a fixed skin, not brand-tokenized. Don't try to reconcile the two.
-- Any diagram where the audience isn't developer-coded to read `$`/`#`/titlebar-dots as chrome rather than content.
+- Posts editoriais / de formato longo — combine com a variante padrão clara ou editorial completa.
+- Saída alinhada à marca a partir de `onboarding.md` — terminal é uma skin fixa, não tokenizada por marca. Não tente conciliar as duas.
+- Qualquer diagrama cujo público não esteja acostumado, como desenvolvedor, a ler `$`/`#`/pontos da barra de título como chrome em vez de conteúdo.

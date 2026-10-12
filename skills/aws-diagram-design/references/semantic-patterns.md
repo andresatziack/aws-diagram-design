@@ -1,122 +1,122 @@
-# Semantic patterns
+# Padrões semânticos
 
-Semantic patterns describe **what a system does**; the 27 visual types describe **how information is arranged**. Choose a pattern first when behavior, state, enforcement, or risk is load-bearing, then use its nearest visual type as the layout grammar. If no pattern matches, choose a visual type directly.
+Padrões semânticos descrevem **o que um sistema faz**; os 27 tipos visuais descrevem **como a informação é organizada**. Escolha primeiro um padrão quando comportamento, estado, aplicação de controles ou risco forem essenciais, e então use o tipo visual mais próximo como gramática de layout. Se nenhum padrão corresponder, escolha um tipo visual diretamente.
 
-Use one primary pattern per figure. A second pattern may supply at most one supporting primitive; if both need full treatment, split overview and detail. Labels and outcomes must remain complete in a static frame.
+Use um padrão principal por figura. Um segundo padrão pode fornecer no máximo uma primitiva de apoio; se ambos precisarem de tratamento completo, separe visão geral e detalhe. Rótulos e resultados devem permanecer completos em um quadro estático.
 
-## Routing table
+## Tabela de roteamento
 
-| The reader must understand… | Semantic pattern | Nearest visual type |
+| O leitor precisa entender… | Padrão semântico | Tipo visual mais próximo |
 |---|---|---|
-| Many arrivals competing for finite service capacity | **Fan-in queue / bottleneck** | Data flow |
-| Repeated questions, inputs, controls, and outputs across stages | **Stage framework with semantic slots** | Process |
-| A loose conversation becoming a durable structured record | **Unstructured input → structured artifact** | Data flow |
-| Why two policy decisions differ and where they first diverge | **Paired policy-evaluation traces** | Flowchart |
-| Which routes cross a trust boundary and which routes are blocked | **Secure paved road** | Architecture |
-| Which controls apply at each enforcement surface | **Governance / control catalog** | Layer stack |
-| How defenses reduce risk and what risk remains | **Compensating security layers** | Layer stack |
+| Muitas chegadas competindo por capacidade de atendimento finita | **Fila de convergência (fan-in) / gargalo** | Data flow |
+| Perguntas, entradas, controles e saídas repetidos ao longo das etapas | **Framework de etapas com slots semânticos** | Process |
+| Uma conversa solta se tornando um registro estruturado durável | **Entrada não estruturada → artefato estruturado** | Data flow |
+| Por que duas decisões de política diferem e onde elas divergem pela primeira vez | **Traços pareados de avaliação de política** | Flowchart |
+| Quais rotas cruzam uma fronteira de confiança e quais rotas são bloqueadas | **Caminho pavimentado seguro (secure paved road)** | Architecture |
+| Quais controles se aplicam em cada superfície de aplicação | **Catálogo de governança / controles** | Layer stack |
+| Como as defesas reduzem o risco e que risco permanece | **Camadas de segurança compensatórias** | Layer stack |
 
-## 1. Fan-in queue / bottleneck
+## 1. Fila de convergência (fan-in) / gargalo
 
-**Selection triggers:** Several producers converge on one reviewer, service, gate, or constrained resource; the story depends on arrival rate, queue depth, wait, capacity, or backpressure.
+**Gatilhos de seleção:** Vários produtores convergem para um único revisor, serviço, portão ou recurso restrito; a história depende de taxa de chegada, profundidade da fila, espera, capacidade ou contrapressão (backpressure).
 
-**Required primitives:** Distinct sources; fanned ingress; an ordered queue with visible slots and count; a capacity/service-rate label; one constrained service point; admitted and deferred/rejected outcomes. Label units (`8/hour`, `3 slots`), not just “high.”
+**Primitivas obrigatórias:** Fontes distintas; entrada distribuída em leque; uma fila ordenada com slots visíveis e contagem; um rótulo de capacidade/taxa de atendimento; um único ponto de atendimento restrito; resultados admitidos e adiados/rejeitados. Rotule com unidades (`8/hour`, `3 slots`), não apenas “alto”.
 
-**Complexity budget:** ≤5 sources, ≤5 queue slots, one bottleneck, two outcomes, and ≤9 primary nodes. Aggregate excess sources as a named cohort.
+**Orçamento (limite) de complexidade:** ≤5 fontes, ≤5 slots de fila, um gargalo, dois resultados e ≤9 nós primários. Agregue o excesso de fontes como um grupo nomeado.
 
-**Anti-patterns:** Equal-width pipeline that hides contention; arrows merged before they can be traced; capacity implied only by box size; decorative pile-up; animation that changes item order; red alone meaning overloaded.
+**Antipadrões:** Pipeline de largura uniforme que esconde a contenção; setas mescladas antes que possam ser rastreadas; capacidade sugerida apenas pelo tamanho da caixa; amontoado decorativo; animação que altera a ordem dos itens; vermelho sozinho significando sobrecarga.
 
-**Static fallback:** Show the representative final queue, numeric count/capacity, bottleneck label, and both outcome paths. A still must reveal why work waits.
+**Fallback estático:** Mostre a fila final representativa, a contagem/capacidade numérica, o rótulo do gargalo e ambos os caminhos de resultado. Um quadro estático deve revelar por que o trabalho espera.
 
-**Nearest visual type:** **Data flow** by default; use **Process** when service stages, rather than sources, dominate.
+**Tipo visual mais próximo:** **Data flow** por padrão; use **Process** quando as etapas de atendimento, e não as fontes, predominarem.
 
-## 2. Stage framework with semantic slots
+## 2. Framework de etapas com slots semânticos
 
-**Selection triggers:** A lifecycle or operating model repeats the same semantic questions across stages, commonly Question, Input, Governance, and Output. Cross-stage comparability matters more than message timing.
+**Gatilhos de seleção:** Um ciclo de vida ou modelo operacional repete as mesmas perguntas semânticas ao longo das etapas, comumente Pergunta, Entrada, Governança e Saída. A comparabilidade entre etapas importa mais do que o tempo das mensagens.
 
-**Required primitives:** Ordered stage headers; a consistent slot grid; explicit empty/not-applicable slots; stage-to-stage handoff; stable slot labels; one primary output per stage. Preserve slot order in every stage.
+**Primitivas obrigatórias:** Cabeçalhos de etapa ordenados; uma grade de slots consistente; slots vazios/não aplicáveis explícitos; passagem de etapa para etapa; rótulos de slot estáveis; uma saída principal por etapa. Preserve a ordem dos slots em todas as etapas.
 
-**Complexity budget:** 3–6 stages, 3–4 slot kinds, ≤20 populated cells, ≤2 lines per cell. Split detail when a cell needs prose.
+**Orçamento (limite) de complexidade:** 3–6 etapas, 3–4 tipos de slot, ≤20 células preenchidas, ≤2 linhas por célula. Separe o detalhe quando uma célula precisar de prosa.
 
-**Anti-patterns:** Each stage invents a different internal layout; slot meaning encoded by position with no labels; fake precision from dozens of cells; confusing stage order with ownership lanes; shrinking text to keep one canvas.
+**Antipadrões:** Cada etapa inventa um layout interno diferente; significado do slot codificado pela posição sem rótulos; falsa precisão com dezenas de células; confundir a ordem das etapas com raias de responsabilidade; encolher o texto para manter uma única tela.
 
-**Static fallback:** Render the full stage × slot matrix with handoffs and explicit `—` or `Not applicable` entries. Do not depend on staged reveal to teach the schema.
+**Fallback estático:** Renderize a matriz completa etapa × slot com as passagens e entradas explícitas `—` ou `Not applicable`. Não dependa de revelação gradual para ensinar o esquema.
 
-**Nearest visual type:** **Process**; use **Swimlane** only when the repeated rows represent owners rather than semantic slots.
+**Tipo visual mais próximo:** **Process**; use **Swimlane** somente quando as linhas repetidas representarem responsáveis, e não slots semânticos.
 
-## 3. Unstructured input → structured artifact
+## 3. Entrada não estruturada → artefato estruturado
 
-**Selection triggers:** Dialogue, notes, prompts, or a rambling request are elicited, normalized, and written into a durable brief, ticket, record, schema, or other structured artifact.
+**Gatilhos de seleção:** Diálogo, anotações, prompts ou um pedido prolixo são elicitados, normalizados e escritos em um brief, ticket, registro, esquema ou outro artefato estruturado durável.
 
-**Required primitives:** Source utterance(s); clarifying questions; extracted field/value pairs; a named transformation; the durable artifact boundary; provenance links from representative statements to fields; missing/unknown state.
+**Primitivas obrigatórias:** Enunciado(s) de origem; perguntas de esclarecimento; pares campo/valor extraídos; uma transformação nomeada; a fronteira do artefato durável; links de proveniência de declarações representativas para campos; estado ausente/desconhecido.
 
-**Complexity budget:** ≤4 exchanges, ≤6 artifact fields, one transformation, and ≤3 provenance links. Show representative content, not a transcript.
+**Orçamento (limite) de complexidade:** ≤4 trocas, ≤6 campos de artefato, uma transformação e ≤3 links de proveniência. Mostre conteúdo representativo, não uma transcrição.
 
-**Anti-patterns:** “AI magic” sparkle between two boxes; artifact shown as another chat bubble; fields appearing without sources; inventing certainty for missing facts; typing animation as the only readable copy.
+**Antipadrões:** Brilho de “mágica de IA” entre duas caixas; artefato mostrado como mais um balão de chat; campos aparecendo sem fontes; inventar certeza para fatos ausentes; animação de digitação como a única cópia legível.
 
-**Static fallback:** Show a short source excerpt beside the completed labeled artifact, with at least one provenance mapping and any unknown fields visible.
+**Fallback estático:** Mostre um trecho curto da fonte ao lado do artefato rotulado completo, com pelo menos um mapeamento de proveniência e quaisquer campos desconhecidos visíveis.
 
-**Nearest visual type:** **Data flow**; use **Process** when elicitation has several ordered gates.
+**Tipo visual mais próximo:** **Data flow**; use **Process** quando a elicitação tiver vários portões ordenados.
 
-## 4. Paired policy-evaluation traces
+## 4. Traços pareados de avaliação de política
 
-**Selection triggers:** Two otherwise similar requests reach different outcomes; the reader needs rule-by-rule `PASS`, `FAIL`, `SKIPPED`, or `NOT REACHED` state and the first divergence.
+**Gatilhos de seleção:** Duas solicitações de resto semelhantes chegam a resultados diferentes; o leitor precisa do estado regra a regra `PASS`, `FAIL`, `SKIPPED` ou `NOT REACHED` e da primeira divergência.
 
-**Required primitives:** The same ordered rules on both traces; explicit status text plus symbol/shape; inputs that differ; final outcomes; a labeled first-divergence marker; a distinction between `SKIPPED` (applicable flow intentionally bypassed) and `NOT REACHED` (evaluation stopped earlier).
+**Primitivas obrigatórias:** As mesmas regras ordenadas em ambos os traços; texto de status explícito mais símbolo/forma; as entradas que diferem; resultados finais; um marcador rotulado da primeira divergência; uma distinção entre `SKIPPED` (fluxo aplicável intencionalmente ignorado) e `NOT REACHED` (a avaliação parou antes).
 
-**Complexity budget:** Exactly 2 traces, 3–6 rules, one first divergence, ≤12 status cells, and one outcome per trace. Move rule prose to notes if labels exceed one line.
+**Orçamento (limite) de complexidade:** Exatamente 2 traços, 3–6 regras, uma primeira divergência, ≤12 células de status e um resultado por traço. Mova a prosa das regras para notas se os rótulos excederem uma linha.
 
-**Anti-patterns:** Comparing two independently ordered flows; green/red dots without words; treating skipped and not-reached as synonyms; highlighting every difference; continuing a denied trace as if downstream rules ran.
+**Antipadrões:** Comparar dois fluxos ordenados de forma independente; pontos verdes/vermelhos sem palavras; tratar skipped e not-reached como sinônimos; destacar todas as diferenças; continuar um traço negado como se as regras seguintes tivessem sido executadas.
 
-**Static fallback:** Show all rule states and both outcomes at once; use a persistent bracket/line and label for the first divergence.
+**Fallback estático:** Mostre todos os estados das regras e ambos os resultados de uma vez; use um colchete/linha persistente e um rótulo para a primeira divergência.
 
-**Nearest visual type:** **Flowchart** for ordered decision logic; use **Sequence** only when messages between actors and time are also load-bearing.
+**Tipo visual mais próximo:** **Flowchart** para lógica de decisão ordenada; use **Sequence** somente quando mensagens entre atores e o tempo também forem essenciais.
 
-## 5. Secure paved road
+## 5. Caminho pavimentado seguro (secure paved road)
 
-**Selection triggers:** A supported architecture creates a bounded route from intake/build to deployment; trust boundaries, privileged moments, permitted ingress, forbidden ingress, and approved versus blocked deploy paths are the point.
+**Gatilhos de seleção:** Uma arquitetura suportada cria uma rota delimitada desde a entrada/build até o deploy; fronteiras de confiança, momentos privilegiados, entrada permitida, entrada proibida e caminhos de deploy aprovados versus bloqueados são o ponto central.
 
-**Required primitives:** Labeled trust boundaries; actors and identities; permitted ingress with a positive text label; forbidden ingress terminating at the boundary; approved deployment path; blocked bypass path; privileged gate; isolated runtime; audit destination. Use different line styles and stop symbols in addition to color.
+**Primitivas obrigatórias:** Fronteiras de confiança rotuladas; atores e identidades; entrada permitida com um rótulo de texto positivo; entrada proibida terminando na fronteira; caminho de deploy aprovado; caminho de desvio bloqueado; portão privilegiado; runtime isolado; destino de auditoria. Use estilos de linha e símbolos de parada diferentes, além da cor.
 
-**Complexity budget:** ≤3 trust zones, ≤8 components, ≤10 paths, ≤2 forbidden paths, and one privileged gate. Split control detail into a catalog figure.
+**Orçamento (limite) de complexidade:** ≤3 zonas de confiança, ≤8 componentes, ≤10 caminhos, ≤2 caminhos proibidos e um portão privilegiado. Separe o detalhe dos controles em uma figura de catálogo.
 
-**Anti-patterns:** Dashed box called “security” with no route semantics; forbidden arrow crossing into the protected zone; secrets or identity implied but unlabeled; every component styled as trusted; a bypass path that visually rejoins the approved route.
+**Antipadrões:** Caixa tracejada chamada “segurança” sem semântica de rota; seta proibida atravessando para dentro da zona protegida; segredos ou identidade sugeridos, mas não rotulados; todos os componentes estilizados como confiáveis; um caminho de desvio que visualmente volta a se juntar à rota aprovada.
 
-**Static fallback:** Render every boundary and both permitted/forbidden routes. Blocked paths must visibly stop before entry or deployment.
+**Fallback estático:** Renderize todas as fronteiras e ambas as rotas permitidas/proibidas. Caminhos bloqueados devem parar visivelmente antes da entrada ou do deploy.
 
-**Nearest visual type:** **Architecture**.
+**Tipo visual mais próximo:** **Architecture**.
 
-## 6. Governance / control catalog
+## 6. Catálogo de governança / controles
 
-**Selection triggers:** A control inventory must be understood by where it is enforced: authoring, workspace, merge/CI, deploy/runtime, or another named surface. A single checklist would hide those enforcement points.
+**Gatilhos de seleção:** Um inventário de controles precisa ser entendido pelo local onde é aplicado: autoria, workspace, merge/CI, deploy/runtime ou outra superfície nomeada. Um único checklist esconderia esses pontos de aplicação.
 
-**Required primitives:** Enforcement-surface groups; named controls; enforcement actor (`code`, `platform`, `human`); timing (`write`, `merge`, `deploy`, `run`); bypassability or exception route; coverage/gap notation.
+**Primitivas obrigatórias:** Grupos por superfície de aplicação; controles nomeados; ator que aplica (`code`, `platform`, `human`); momento (`write`, `merge`, `deploy`, `run`); possibilidade de contorno ou rota de exceção; notação de cobertura/lacuna.
 
-**Complexity budget:** 3–5 surfaces, 3–7 controls per surface, ≤24 controls total, and ≤3 attributes per control. Summarize counts only when the item list exists elsewhere.
+**Orçamento (limite) de complexidade:** 3–5 superfícies, 3–7 controles por superfície, ≤24 controles no total e ≤3 atributos por controle. Resuma contagens somente quando a lista de itens existir em outro lugar.
 
-**Anti-patterns:** 35 tiny pills; grouping by vague themes instead of enforcement point; mixing aspirations with enforced controls; icons without control names; claiming defense-in-depth without showing surface coverage.
+**Antipadrões:** 35 pílulas minúsculas; agrupar por temas vagos em vez de ponto de aplicação; misturar aspirações com controles efetivamente aplicados; ícones sem nomes de controle; alegar defesa em profundidade sem mostrar a cobertura das superfícies.
 
-**Static fallback:** Show the complete grouped catalog with surface headers and text labels for actor and enforcement timing; preserve gaps and exceptions.
+**Fallback estático:** Mostre o catálogo agrupado completo com cabeçalhos de superfície e rótulos de texto para ator e momento de aplicação; preserve lacunas e exceções.
 
-**Nearest visual type:** **Layer stack**; use **DP security matrix** when role permissions, not enforcement surfaces, are the dominant comparison.
+**Tipo visual mais próximo:** **Layer stack**; use **DP security matrix** quando permissões de papéis, e não superfícies de aplicação, forem a comparação dominante.
 
-## 7. Compensating security layers
+## 7. Camadas de segurança compensatórias
 
-**Selection triggers:** No layer is perfect; each defense covers a failure left by the previous layer, and residual risk must visibly narrow, transfer, or remain through the stack.
+**Gatilhos de seleção:** Nenhuma camada é perfeita; cada defesa cobre uma falha deixada pela camada anterior, e o risco residual deve visivelmente se estreitar, ser transferido ou permanecer ao longo da pilha.
 
-**Required primitives:** Ordered threat/risk input; named defensive layers; each layer's mitigation; explicit limitation or escape; residual-risk carrier between layers; final residual risk and consequence/response. Use labels or decreasing measures, never area alone.
+**Primitivas obrigatórias:** Entrada ordenada de ameaça/risco; camadas defensivas nomeadas; a mitigação de cada camada; limitação ou escape explícito; portador do risco residual entre as camadas; risco residual final e consequência/resposta. Use rótulos ou medidas decrescentes, nunca apenas área.
 
-**Complexity budget:** 3–5 layers, one primary risk thread, ≤2 mitigations per layer, and one final residual-risk statement. Split multiple unrelated threats into separate figures.
+**Orçamento (limite) de complexidade:** 3–5 camadas, um fio principal de risco, ≤2 mitigações por camada e uma declaração final de risco residual. Separe múltiplas ameaças não relacionadas em figuras distintas.
 
-**Anti-patterns:** Implying the final layer makes risk zero; equal opaque slabs with no propagation; treating audit as prevention; shrinking shapes without numeric or verbal meaning; reversing prevention/detection/recovery order without explanation.
+**Antipadrões:** Sugerir que a camada final zera o risco; placas opacas iguais sem propagação; tratar auditoria como prevenção; encolher formas sem significado numérico ou verbal; inverter a ordem prevenção/detecção/recuperação sem explicação.
 
-**Static fallback:** Show the complete propagation chain: initial risk → mitigation → escaped risk at every layer → final residual risk and response.
+**Fallback estático:** Mostre a cadeia de propagação completa: risco inicial → mitigação → risco escapado em cada camada → risco residual final e resposta.
 
-**Nearest visual type:** **Layer stack**; use **Nested** when containment boundaries, rather than ordered compensation, carry the meaning.
+**Tipo visual mais próximo:** **Layer stack**; use **Nested** quando fronteiras de contenção, e não a compensação ordenada, carregarem o significado.
 
-## Composition rules
+## Regras de composição
 
-- The semantic pattern may specialize status, boundary, queue, or propagation primitives; the selected type still owns page axis, connector grammar, spacing, and type-specific limits.
-- Apply the stricter of the pattern budget and visual-type budget. Semantic cells/statuses are not permission to exceed the nine-node overview target.
-- Use stable text for states and outcomes. Color, motion, and position reinforce meaning but never carry it alone.
-- Optional animation is a presentation layer, not another pattern. Load [`animation.md`](animation.md) only when motion is requested or materially clarifies ordered change.
+- O padrão semântico pode especializar primitivas de status, fronteira, fila ou propagação; o tipo selecionado continua sendo dono do eixo da página, da gramática de conectores, do espaçamento e dos limites específicos do tipo.
+- Aplique o mais restritivo entre o orçamento do padrão e o orçamento do tipo visual. Células/status semânticos não são permissão para exceder a meta de nove nós da visão geral.
+- Use texto estável para estados e resultados. Cor, movimento e posição reforçam o significado, mas nunca o carregam sozinhos.
+- Animação opcional é uma camada de apresentação, não outro padrão. Carregue [`animation.md`](animation.md) somente quando movimento for solicitado ou esclarecer materialmente uma mudança ordenada.

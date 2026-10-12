@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Validar diagramas AWS",
+      "description": "Roda o self_check da skill aws-diagram-design quando o agente salva um HTML em diagramas/. Falhas voltam para o agente corrigir.",
+      "trigger": "PostFileSave",
+      "matcher": "diagramas/.*\\.html$",
+      "timeout": 60,
+      "action": {
+        "type": "command",
+        "command": "python3 .kiro/skills/aws-diagram-design/scripts/self_check.py diagramas/*.html 1>&2"
+      }
+    }
+  ]
+}

@@ -1,156 +1,156 @@
-# Draw.io import output spec — format × size × detail × audience
+# Especificação de saída da importação de Draw.io — formato × tamanho × detalhe × público
 
-Four dials decide what an imported diagram becomes. Set them **before** redrawing — they change the deliverable, layout, type ramp, node count, and wording, so retrofitting them afterwards means redrawing.
+Quatro controles decidem o que um diagrama importado se torna. Defina-os **antes** de redesenhar — eles mudam o entregável, o layout, a escala tipográfica, a quantidade de nós e o texto, então ajustá-los depois significa redesenhar.
 
-| Dial | Question it answers | Default |
+| Controle | Pergunta que responde | Padrão |
 |---|---|---|
-| **Format** | Where does this file land? | `html` |
-| **Size** | How big is the canvas, and how far away is the reader? | `doc-inline` |
-| **Detail level** | Reproduce every element, or compress it? | `balanced` |
-| **Audience** | How technical should the wording be? | `mixed` |
+| **Formato** | Onde este arquivo vai parar? | `html` |
+| **Tamanho** | Qual o tamanho da tela (canvas) e a que distância está o leitor? | `doc-inline` |
+| **Nível de detalhe** | Reproduzir cada elemento ou comprimir? | `balanced` |
+| **Público** | Quão técnico deve ser o texto? | `mixed` |
 
-Infer choices that are clear from the request (for example, "for my deck" implies a slide preset). Ask one concise question for anything material that remains ambiguous. If the user does not care, use the defaults above and say which ones you used.
+Infira as escolhas que estiverem claras no pedido (por exemplo, "para minha apresentação" implica um preset de slide). Faça uma pergunta concisa sobre qualquer ponto relevante que continue ambíguo. Se o usuário não se importar, use os padrões acima e diga quais usou.
 
 ---
 
-## 1. Format
+## 1. Formato
 
-| Format | Deliverable | Keeps | Drops |
+| Formato | Entregável | Mantém | Descarta |
 |---|---|---|---|
-| `html` | self-contained `.html` (default) | header, diagram, summary cards, footer, live fonts | nothing |
-| `svg` | `.svg` next to the source | the `<svg>` node, vector text | editorial wrapper; fonts substitute in offline tools |
-| `png` | `.png` at `device_scale_factor` | pixels exactly as the browser renders them | vector editability |
-| `html+png` | both | — | — |
+| `html` | `.html` autocontido (padrão) | cabeçalho, diagrama, cards de resumo, rodapé, fontes ao vivo | nada |
+| `svg` | `.svg` ao lado da origem | o nó `<svg>`, texto vetorial | o invólucro editorial; as fontes são substituídas em ferramentas offline |
+| `png` | `.png` em `device_scale_factor` | os pixels exatamente como o navegador os renderiza | a editabilidade vetorial |
+| `html+png` | ambos | — | — |
 
-Always generate the HTML first — `svg` and `png` are produced *from* it via [`export.md`](export.md). Never hand-author an SVG file directly; the HTML is the source of truth and the only artifact the taste gate (SKILL.md §9) is written against.
+Sempre gere o HTML primeiro — `svg` e `png` são produzidos *a partir* dele via [`export.md`](export.md). Nunca escreva um arquivo SVG à mão diretamente; o HTML é a fonte da verdade e o único artefato contra o qual o *taste gate* (portão de gosto, SKILL.md §9) foi escrito.
 
-Pick by destination:
+Escolha pelo destino:
 
-| Destination | Format | Size preset |
+| Destino | Formato | Preset de tamanho |
 |---|---|---|
-| Blog post, README, docs site | `html` (embed) or `png` | `doc-inline` |
+| Post de blog, README, site de documentação | `html` (incorporado) ou `png` | `doc-inline` |
 | Keynote / PowerPoint / Google Slides | `png` @2 | `slide-16x9` |
-| Figma / Illustrator / further editing | `svg` | `fit` |
-| X / LinkedIn / OG link card | `png` @2 | `social-og` |
-| Printed handout, PDF deck | `png` @3 | `print-a4-landscape` |
-| Confluence / Notion / internal wiki | `png` @2 | `doc-wide` |
+| Figma / Illustrator / edição posterior | `svg` | `fit` |
+| X / LinkedIn / card de link OG | `png` @2 | `social-og` |
+| Material impresso, apresentação em PDF | `png` @3 | `print-a4-landscape` |
+| Confluence / Notion / wiki interna | `png` @2 | `doc-wide` |
 
 ---
 
-## 2. Size
+## 2. Tamanho
 
-The preset sets the SVG `viewBox`. Every value below is divisible by 4, so the grid rule in SKILL.md §7 still holds.
+O preset define o `viewBox` do SVG. Todos os valores abaixo são divisíveis por 4, então a regra de grade do SKILL.md §7 continua valendo.
 
-| Preset | viewBox | Aspect | PNG @2 | Type ramp | Use |
+| Preset | viewBox | Proporção | PNG @2 | Escala tipográfica | Uso |
 |---|---|---|---|---|---|
-| `doc-inline` (default) | `0 0 960 600` | 8:5 | 1920×1200 | standard | Body-width diagram in a post or README |
-| `doc-wide` | `0 0 1280 720` | 16:9 | 2560×1440 | standard | Full-width docs, wiki pages |
-| `slide-16x9` | `0 0 1280 720` | 16:9 | 2560×1440 | presentation | Deck slide, projected |
-| `slide-4x3` | `0 0 1024 768` | 4:3 | 2048×1536 | presentation | Legacy deck templates |
-| `social-og` | `0 0 1200 632` | ~1.9:1 | 2400×1264 | presentation | Link preview card |
-| `social-square` | `0 0 1080 1080` | 1:1 | 2160×2160 | presentation | Feed post, carousel |
-| `print-a4-landscape` | `0 0 1120 792` | ~1.41:1 | @3 → 3360×2376 | print | A4 landscape, ~10mm margins at 96dpi |
-| `print-letter-landscape` | `0 0 1056 816` | ~1.29:1 | @3 → 3168×2448 | print | US Letter landscape |
-| `fit` | derived from content | any | @2 | standard | Vector hand-off; no fixed frame |
+| `doc-inline` (padrão) | `0 0 960 600` | 8:5 | 1920×1200 | standard | Diagrama na largura do corpo de um post ou README |
+| `doc-wide` | `0 0 1280 720` | 16:9 | 2560×1440 | standard | Documentação em largura total, páginas de wiki |
+| `slide-16x9` | `0 0 1280 720` | 16:9 | 2560×1440 | presentation | Slide de apresentação, projetado |
+| `slide-4x3` | `0 0 1024 768` | 4:3 | 2048×1536 | presentation | Templates de apresentação legados |
+| `social-og` | `0 0 1200 632` | ~1.9:1 | 2400×1264 | presentation | Card de pré-visualização de link |
+| `social-square` | `0 0 1080 1080` | 1:1 | 2160×2160 | presentation | Post de feed, carrossel |
+| `print-a4-landscape` | `0 0 1120 792` | ~1.41:1 | @3 → 3360×2376 | print | A4 paisagem, margens de ~10mm a 96dpi |
+| `print-letter-landscape` | `0 0 1056 816` | ~1.29:1 | @3 → 3168×2448 | print | US Letter paisagem |
+| `fit` | derivado do conteúdo | qualquer | @2 | standard | Entrega vetorial; sem moldura fixa |
 
-### Deriving `fit`
+### Derivando `fit`
 
-Round the content bounding box **up** to the next multiple of 4, then add the fixed chrome: 40px outer margin on every side, plus 60px at the bottom for the legend strip. Never let the content touch the viewBox edge.
+Arredonde a caixa delimitadora do conteúdo **para cima** até o próximo múltiplo de 4 e então adicione a moldura fixa: margem externa de 40px em todos os lados, mais 60px embaixo para a faixa da legenda. Nunca deixe o conteúdo encostar na borda do viewBox.
 
-### Type ramp per size class
+### Escala tipográfica por classe de tamanho
 
-Node names shrink relative to the canvas as it grows — resist that. Scale the ramp with the preset so a projected slide stays readable from the back row.
+Os nomes dos nós encolhem em relação à tela à medida que ela cresce — resista a isso. Escale a tipografia com o preset para que um slide projetado continue legível da última fileira.
 
-| Role | standard | presentation | print |
+| Papel | standard | presentation | print |
 |---|---|---|---|
-| Title (Amazon Ember 700) | 28 | 40 | 32 |
-| Node name (Amazon Ember 600) | 12 | 16 | 12 |
+| Título (Amazon Ember 700) | 28 | 40 | 32 |
+| Nome do nó (Amazon Ember 600) | 12 | 16 | 12 |
 | Sublabel (Amazon Ember Mono) | 9 | 12 | 9 |
-| Arrow label (Amazon Ember Mono) | 8 | 12 | 8 |
+| Rótulo de seta (Amazon Ember Mono) | 8 | 12 | 8 |
 | Eyebrow / tag (Amazon Ember Mono) | 8 | 8 | 8 |
-| Node box min height | 48 | 64 | 48 |
-| Min gap between nodes | 24 | 40 | 24 |
+| Altura mínima da caixa do nó | 48 | 64 | 48 |
+| Espaço mínimo entre nós | 24 | 40 | 24 |
 
-Presentation ramp implies fewer nodes — 16px names in 64px boxes eat the canvas. If a `slide-16x9` layout won't fit, that's the size dial telling you the detail dial is set too high; drop a level rather than shrinking the type.
+A escala de apresentação implica menos nós — nomes de 16px em caixas de 64px consomem a tela. Se um layout `slide-16x9` não couber, é o controle de tamanho avisando que o controle de detalhe está alto demais; desça um nível em vez de diminuir a tipografia.
 
-### Safe areas
+### Áreas seguras
 
-- **All presets:** 40px outer margin; legend strip is the bottom 60px and nothing else lives there.
-- **`social-og`:** keep the outer 64px clear on every side — link-card crops are unpredictable across platforms.
-- **`slide-*`:** keep the bottom 80px clear if the deck template has a footer bar; ask if unsure.
-
----
-
-## 3. Detail level
-
-How much of the source survives. This is a *count* dial — it governs how many elements make it through, not how they're worded (that's §4).
-
-| Level | Nodes | Edges | Sublabels | What survives |
-|---|---|---|---|---|
-| `faithful` (詳細) | ≤24, zoned | ≤32 | every port, protocol, version | Every distinct component in the source. Only exact duplicates merge. |
-| `balanced` (default) | ≤12 | ≤16 | technical sublabel on ≤4 nodes | Components that carry the story; leaf clusters collapse to one node each. |
-| `simplified` (簡略) | ≤7 | ≤9 | none | Capabilities and their sequence. Infrastructure disappears. |
-
-`balanced` and `simplified` sit inside the standard complexity budget (SKILL.md §7). **`faithful` deliberately exceeds it** — that's the trade, and it comes with conditions:
-
-1. **Zoning is mandatory.** Above 9 nodes, every node belongs to a labeled zone (2–4 zones, hairline-bordered, `paper-2` fill, mono uppercase zone label at top-left). An unzoned 20-node diagram is a wiring diagram, not a schematic.
-2. **Connector rules don't relax.** SKILL.md §6 rules 1–5 still apply at 24 nodes. If you can't route it without overlaps, you're over the real ceiling — split.
-3. **Above 24 nodes, split.** Produce an overview (zones as nodes, `balanced` grammar) plus one detail diagram per zone. Name them `<base>-overview.html`, `<base>-<zone>.html`. Never ship a 40-node single canvas.
-4. **Accent stays at 2.** More nodes never buys more focal elements.
-
-### Degrade ladder
-
-When the source has more than the level allows, cut in this order and stop as soon as you're under budget. Never cut ad hoc.
-
-1. **Decorative cells** — sticky notes, free-floating text, title blocks, watermarks, the source's own legend. (Notes worth keeping become annotation callouts — max 2, see [primitive-annotation.md](primitive-annotation.md).)
-2. **Exact duplicates** — N identical workers/replicas/shards become one node labeled `Worker ×N`.
-3. **Leaf clusters** — a container whose children are all leaves collapses to the container: `Core Services` replaces its three boxes. The extractor lists these under *collapsible groups*.
-4. **Degree-1 sinks that don't change the story** — a monitoring hook, a log bucket, an archive tier.
-5. **Cross-cutting infrastructure** — logging, metrics, secrets, CI. At `simplified` these go without asking; at `balanced` keep at most one, and only if the diagram is about it.
-6. **Still over?** Split into overview + detail. Splitting beats shrinking.
-
-Anything cut in steps 2–6 goes in the fidelity ledger (§5). Step 1 doesn't need reporting.
+- **Todos os presets:** margem externa de 40px; a faixa da legenda ocupa os 60px inferiores e nada mais fica ali.
+- **`social-og`:** mantenha livres os 64px externos em todos os lados — os cortes dos cards de link são imprevisíveis entre plataformas.
+- **`slide-*`:** mantenha livres os 80px inferiores se o template da apresentação tiver uma barra de rodapé; pergunte se não tiver certeza.
 
 ---
 
-## 4. Audience level
+## 3. Nível de detalhe
 
-Independent of the detail dial: the same 12 nodes get named differently for a platform team than for a steering committee. Detail sets *how many*; audience sets *what they're called*.
+Quanto da origem sobrevive. Este é um controle de *quantidade* — ele governa quantos elementos passam, não como são redigidos (isso é o §4).
 
-| Audience | Node names | Sublabels | Edge labels | Never |
+| Nível | Nós | Arestas | Sublabels | O que sobrevive |
 |---|---|---|---|---|
-| `engineer` | exact service / component names | protocol, port, version, image tag | `POST /v2/orders`, `SQL`, `gRPC` | Vague verbs like "connects to" |
-| `mixed` (default) | component names, expanded acronyms | technology only where it changes a decision | plain verbs — `verifies`, `writes`, `notifies` | Ports, versions, internal codenames |
-| `executive` | capabilities and outcomes | none | business verbs — `approves`, `pays out` | Vendor names, infrastructure, protocols |
+| `faithful` (詳細) | ≤24, em zonas | ≤32 | cada porta, protocolo, versão | Cada componente distinto da origem. Apenas duplicatas exatas são mescladas. |
+| `balanced` (padrão) | ≤12 | ≤16 | sublabel técnico em ≤4 nós | Componentes que carregam a história; clusters de folhas colapsam em um nó cada. |
+| `simplified` (簡略) | ≤7 | ≤9 | nenhum | Capacidades e sua sequência. A infraestrutura desaparece. |
 
-Worked example — the same node through all three:
+`balanced` e `simplified` ficam dentro do orçamento (limite) de complexidade padrão (SKILL.md §7). **`faithful` o excede deliberadamente** — essa é a troca, e ela vem com condições:
 
-| Audience | Node name | Sublabel |
+1. **Zonas são obrigatórias.** Acima de 9 nós, todo nó pertence a uma zona rotulada (2–4 zonas, borda de linha fina (hairline), preenchimento `paper-2`, rótulo de zona mono em maiúsculas no canto superior esquerdo). Um diagrama de 20 nós sem zonas é um diagrama de fiação, não um schematic.
+2. **As regras de conectores não relaxam.** As regras 1–5 do SKILL.md §6 continuam valendo com 24 nós. Se você não consegue rotear sem sobreposições, está acima do teto real — divida.
+3. **Acima de 24 nós, divida.** Produza uma visão geral (zonas como nós, gramática `balanced`) mais um diagrama de detalhe por zona. Nomeie-os `<base>-overview.html`, `<base>-<zone>.html`. Nunca entregue uma tela única de 40 nós.
+4. **O accent fica em 2.** Mais nós nunca compram mais elementos focais.
+
+### Escada de degradação
+
+Quando a origem tem mais do que o nível permite, corte nesta ordem e pare assim que estiver dentro do orçamento. Nunca corte de forma improvisada.
+
+1. **Células decorativas** — notas adesivas, texto solto, blocos de título, marcas d'água, a própria legenda da origem. (Notas que valham a pena manter viram callouts de anotação — no máximo 2, veja [primitive-annotation.md](primitive-annotation.md).)
+2. **Duplicatas exatas** — N workers/réplicas/shards idênticos viram um nó rotulado `Worker ×N`.
+3. **Clusters de folhas** — um contêiner cujos filhos são todos folhas colapsa no contêiner: `Core Services` substitui suas três caixas. O extrator lista esses casos em *collapsible groups*.
+4. **Sinks de grau 1 que não mudam a história** — um hook de monitoramento, um bucket de logs, uma camada de arquivamento.
+5. **Infraestrutura transversal** — logging, métricas, segredos, CI. Em `simplified` saem sem perguntar; em `balanced` mantenha no máximo um, e só se o diagrama for sobre ele.
+6. **Ainda acima?** Divida em visão geral + detalhe. Dividir é melhor que encolher.
+
+Tudo o que for cortado nas etapas 2–6 vai para o *fidelity ledger* (registro de fidelidade, §5). A etapa 1 não precisa ser relatada.
+
+---
+
+## 4. Nível de público
+
+Independente do controle de detalhe: os mesmos 12 nós recebem nomes diferentes para um time de plataforma e para um comitê diretivo. O detalhe define *quantos*; o público define *como se chamam*.
+
+| Público | Nomes dos nós | Sublabels | Rótulos de arestas | Nunca |
+|---|---|---|---|---|
+| `engineer` | nomes exatos de serviço / componente | protocolo, porta, versão, tag de imagem | `POST /v2/orders`, `SQL`, `gRPC` | Verbos vagos como "conecta-se a" |
+| `mixed` (padrão) | nomes de componentes, siglas expandidas | tecnologia apenas onde ela muda uma decisão | verbos simples — `verifies`, `writes`, `notifies` | Portas, versões, codinomes internos |
+| `executive` | capacidades e resultados | nenhum | verbos de negócio — `approves`, `pays out` | Nomes de fornecedores, infraestrutura, protocolos |
+
+Exemplo prático — o mesmo nó nos três níveis:
+
+| Público | Nome do nó | Sublabel |
 |---|---|---|
 | `engineer` | `Auth Service` | `JWT · RS256 · :8443` |
 | `mixed` | `Auth Service` | `token check` |
 | `executive` | `Sign-in` | — |
 
-Two rules that hold at every audience level:
+Duas regras que valem em todos os níveis de público:
 
-- **Never invent detail to fill a slot.** If the source says `svc-04`, `executive` output says what it does only if you can tell from context — otherwise ask, don't guess a business name.
-- **Keep the source's vocabulary for proper nouns.** Renaming `Kafka` to `Message Bus` is fine at `executive`; renaming it to `Event Grid` (a different product) is a factual error.
+- **Nunca invente detalhes para preencher um espaço.** Se a origem diz `svc-04`, a saída `executive` diz o que ele faz somente se for possível deduzir pelo contexto — caso contrário pergunte, não adivinhe um nome de negócio.
+- **Mantenha o vocabulário da origem para nomes próprios.** Renomear `Kafka` para `Message Bus` tudo bem em `executive`; renomeá-lo para `Event Grid` (um produto diferente) é um erro factual.
 
-### Non-Latin labels
+### Rótulos não latinos
 
-Amazon Ember has no CJK coverage. When labels contain Japanese, Chinese, or Korean text, extend the family on those `<text>` elements — don't swap the whole skin:
+Amazon Ember não tem cobertura CJK. Quando os rótulos contêm texto em japonês, chinês ou coreano, estenda a família nesses elementos `<text>` — não troque a skin inteira:
 
 ```svg
 <text font-family="'Amazon Ember', 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic', sans-serif">認証サービス</text>
 ```
 
-For mono sublabels use `'Amazon Ember Mono', 'Noto Sans Mono CJK JP', monospace`. CJK glyphs render ~10% wider than Latin at the same size — budget box width accordingly, and prefer 12px names over 8px sublabels for CJK, which goes muddy below 10px.
+Para sublabels mono use `'Amazon Ember Mono', 'Noto Sans Mono CJK JP', monospace`. Glifos CJK são renderizados ~10% mais largos que os latinos no mesmo tamanho — dimensione a largura das caixas de acordo, e prefira nomes de 12px a sublabels de 8px para CJK, que fica borrado abaixo de 10px.
 
 ---
 
 ## 5. Fidelity ledger
 
-Any time output is smaller than input — every `balanced` and `simplified` run, and most `faithful` ones — report what you cut, in chat, after the file path. Short and specific:
+Sempre que a saída for menor que a entrada — toda execução `balanced` e `simplified`, e a maioria das `faithful` — relate o que você cortou, no chat, depois do caminho do arquivo. Curto e específico:
 
 ```
 Detail: balanced · 18 source nodes → 9 drawn
@@ -160,22 +160,22 @@ Dropped: 2 sticky notes, CI pipeline (cross-cutting)
 Kept in full: the request path (Client → Gateway → Orders → Postgres)
 ```
 
-The reader of the diagram can't see what's missing. The person who asked for it needs to.
+Quem lê o diagrama não consegue ver o que está faltando. Quem o pediu precisa saber.
 
 ---
 
 ## 6. Checklist
 
-Run alongside the SKILL.md §9 taste gate.
+Execute junto com o *taste gate* do SKILL.md §9.
 
-- [ ] All four dials set — explicitly requested, inferred from the destination, or defaulted and stated?
-- [ ] `viewBox` matches the size preset exactly, values divisible by 4?
-- [ ] Type ramp matches the size class — not the standard ramp on a slide?
-- [ ] 40px outer margin honoured (64px for `social-og`)?
-- [ ] Node count inside the detail level's ceiling?
-- [ ] `faithful` above 9 nodes → zoned, and split above 24?
-- [ ] Node names, sublabels, and edge labels all at the same audience level?
-- [ ] CJK labels given a font fallback?
-- [ ] Fidelity ledger reported for anything cut?
-- [ ] Diagram `<svg>` has `role="img"`, resolving `aria-labelledby`, a non-empty first-child `<title>`, a non-empty `<desc>`, and per-diagram/variant prefixed IDs?
-- [ ] Requested non-HTML formats produced via [`export.md`](export.md), not hand-authored?
+- [ ] Os quatro controles foram definidos — pedidos explicitamente, inferidos do destino ou assumidos como padrão e informados?
+- [ ] O `viewBox` corresponde exatamente ao preset de tamanho, com valores divisíveis por 4?
+- [ ] A escala tipográfica corresponde à classe de tamanho — e não a escala standard em um slide?
+- [ ] Margem externa de 40px respeitada (64px para `social-og`)?
+- [ ] Quantidade de nós dentro do teto do nível de detalhe?
+- [ ] `faithful` acima de 9 nós → em zonas, e dividido acima de 24?
+- [ ] Nomes dos nós, sublabels e rótulos de arestas todos no mesmo nível de público?
+- [ ] Rótulos CJK com fallback de fonte?
+- [ ] *Fidelity ledger* relatado para tudo o que foi cortado?
+- [ ] O `<svg>` do diagrama tem `role="img"`, `aria-labelledby` que resolve, um `<title>` não vazio como primeiro filho, um `<desc>` não vazio e IDs prefixados por diagrama/variante?
+- [ ] Formatos não HTML solicitados foram produzidos via [`export.md`](export.md), e não escritos à mão?

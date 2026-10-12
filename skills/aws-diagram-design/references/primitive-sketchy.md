@@ -1,8 +1,8 @@
-# Sketchy Filter (hand-drawn variant)
+# Filtro esboçado (Sketchy Filter — variante desenhada à mão)
 
-Optional displacement filter that wobbles every stroke and edge slightly — turns any minimal variant into a hand-drawn "editorial" register without changing layout. Use when the diagram accompanies an essay rather than technical docs.
+Filtro de deslocamento opcional que faz cada traço e borda ondular levemente — transforma qualquer variante minimal em um registro "editorial" desenhado à mão, sem alterar o layout. Use quando o diagrama acompanha um ensaio, e não documentação técnica.
 
-## Grammar
+## Gramática
 
 ```svg
 <defs>
@@ -21,23 +21,23 @@ Optional displacement filter that wobbles every stroke and edge slightly — tur
 <text ...>Labels go here</text>
 ```
 
-## Tuning
+## Ajuste
 
-| Parameter | Range | Effect |
+| Parâmetro | Faixa | Efeito |
 |---|---|---|
-| `baseFrequency` | 0.01–0.04 | Lower = lazy wavy lines; higher = jittery. 0.02 default. |
-| `numOctaves` | 1–3 | More = more noise detail. 2 is plenty. |
-| `scale` | 1–6 | 1 barely-there, 1.5 default, 2 visible, 4+ cartoon. |
-| `seed` | integer | Swap for a different random pattern. |
+| `baseFrequency` | 0.01–0.04 | Menor = linhas onduladas preguiçosas; maior = tremidas. 0.02 é o padrão. |
+| `numOctaves` | 1–3 | Mais = mais detalhe de ruído. 2 é suficiente. |
+| `scale` | 1–6 | 1 quase imperceptível, 1.5 padrão, 2 visível, 4+ caricato. |
+| `seed` | inteiro | Troque para obter um padrão aleatório diferente. |
 
-## Critical rule
-Filter shapes, NOT text. Displacement-mapped text becomes illegible. Structure your SVG so text is in a sibling group outside the filtered group.
+## Regra crítica
+Aplique o filtro às formas, NÃO ao texto. Texto com mapa de deslocamento fica ilegível. Estruture seu SVG de forma que o texto fique em um grupo irmão, fora do grupo filtrado.
 
-## When to use
-- Essay / blog post / newsletter where the diagram is the hero of a narrative page.
-- "Working sketch" register — showing something is mid-thought, not final architecture.
+## Quando usar
+- Ensaio / post de blog / newsletter em que o diagrama é o protagonista de uma página narrativa.
+- Registro de "esboço de trabalho" — mostrar que algo ainda está em elaboração, não é a arquitetura final.
 
-## When not to use
-- Technical documentation (precision matters).
-- Diagrams with dense labels or tight alignments (filter reads as noise).
-- Dark variants — wobble reads as artifact on dark backgrounds. Test first.
+## Quando não usar
+- Documentação técnica (a precisão importa).
+- Diagramas com rótulos densos ou alinhamentos justos (o filtro é percebido como ruído).
+- Variantes escuras — a ondulação parece um artefato em fundos escuros. Teste antes.

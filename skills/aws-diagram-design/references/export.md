@@ -1,38 +1,38 @@
-# Export to PNG / SVG
+# Exportação para PNG / SVG
 
-Convert a generated diagram HTML file into a portable `.svg` and/or `.png` next to it. **Manual only — never run unprompted.**
+Converta um arquivo HTML de diagrama gerado em um `.svg` e/ou `.png` portátil ao lado dele. **Somente manual — nunca execute sem que seja solicitado.**
 
-## Trigger
+## Gatilho
 
-Load this file when:
+Carregue este arquivo quando:
 
-- The user invokes `/aws-diagram-design:export-diagram <html-file>` (the plugin's slash command — defined in `commands/export-diagram.md` at the repo root).
-- The user asks in natural language to export, save, rasterize, convert, or download a diagram in `.svg` or `.png` form. Typical phrasings:
-  - "export this as PNG"
-  - "save as SVG"
-  - "give me a PNG of that diagram"
-  - "rasterize it"
-  - "convert to png and svg"
+- O usuário invocar `/aws-diagram-design:export-diagram <html-file>` (o slash command do plugin — definido em `commands/export-diagram.md` na raiz do repositório).
+- O usuário pedir em linguagem natural para exportar, salvar, rasterizar, converter ou baixar um diagrama no formato `.svg` ou `.png`. Formulações típicas:
+  - "exporte isto como PNG"
+  - "salve como SVG"
+  - "me dê um PNG desse diagrama"
+  - "rasterize"
+  - "converta para png e svg"
 
-The slash command is a thin wrapper that delegates here — both paths run the same procedure below.
+O slash command é um wrapper fino que delega para cá — ambos os caminhos executam o mesmo procedimento abaixo.
 
-## Scope
+## Escopo
 
-Both formats are **diagram-only** — just the `<svg>` node. Editorial wrappers (header, summary cards, footer in `-full` variants) are intentionally dropped: the export deliverable is the diagram itself, suitable for Figma, slides, social cards, or blog images.
+Ambos os formatos são **somente o diagrama** — apenas o nó `<svg>`. Envoltórios editoriais (cabeçalho, cards de resumo, rodapé nas variantes `-full`) são descartados intencionalmente: o entregável da exportação é o próprio diagrama, adequado para Figma, slides, cards de redes sociais ou imagens de blog.
 
-The SVG-only export keeps the source `<title>` and `<desc>` with the diagram. Their per-diagram and per-variant prefixed IDs are what make multiple exported SVGs safe to inline in the same page without one figure resolving to another figure's accessible name.
+A exportação somente SVG mantém o `<title>` e o `<desc>` da fonte junto com o diagrama. Seus IDs com prefixo por diagrama e por variante são o que tornam seguro incorporar inline vários SVGs exportados na mesma página, sem que uma figura resolva para o nome acessível de outra figura.
 
-If the user explicitly asks for "a screenshot of the whole page including the cards", that's a different request — fall back to a normal full-page screenshot via the user's OS or browser.
+Se o usuário pedir explicitamente "uma captura de tela da página inteira, incluindo os cards", trata-se de um pedido diferente — recorra a uma captura de tela normal da página inteira pelo sistema operacional ou navegador do usuário.
 
-## SVG export procedure
+## Procedimento de exportação SVG
 
-1. Read the source HTML file.
-2. Extract the **first** `<svg ...>...</svg>` block. Use a multiline regex anchored on `<svg` and `</svg>`. Most generated diagrams have only one SVG; if there are multiple, the first is the diagram (gallery files are an exception — see *Edge cases*).
-3. Make it standalone:
-   - Ensure the opening tag has `xmlns="http://www.w3.org/2000/svg"`. Add it if missing.
-   - Ensure a `viewBox` is present. The skill's templates always include one; warn the user if absent rather than guessing.
-   - Preserve `role="img"`, `aria-labelledby`, and the first-child `<title>` / `<desc>` exactly as authored.
-   - Inject the Amazon Ember / Amazon Ember Mono `@font-face` block (canonical form in [`assets/fonts/README.md`](../assets/fonts/README.md)) into a `<style>` so the SVG renders with correct typography where the font files are reachable. Point the `url()` sources at a path that resolves **from the SVG's own location** (e.g. `../../skills/aws-diagram-design/assets/fonts/woff2` for an SVG inside this repo), and always keep the `local()` sources first — a machine with the fonts installed needs no file access at all. If the SVG will travel alone, either copy the woff2 files next to it, drop the `url()` sources and rely on `local()` + the fallback stack, or recommend the PNG export. No external font CDN is referenced.
+1. Leia o arquivo HTML de origem.
+2. Extraia o **primeiro** bloco `<svg ...>...</svg>`. Use uma regex multilinha ancorada em `<svg` e `</svg>`. A maioria dos diagramas gerados tem apenas um SVG; se houver vários, o primeiro é o diagrama (arquivos de galeria são uma exceção — veja *Casos de borda*).
+3. Torne-o autônomo:
+   - Garanta que a tag de abertura tenha `xmlns="http://www.w3.org/2000/svg"`. Adicione-o se estiver faltando.
+   - Garanta que um `viewBox` esteja presente. Os templates da skill sempre incluem um; avise o usuário se estiver ausente em vez de adivinhar.
+   - Preserve `role="img"`, `aria-labelledby` e o `<title>` / `<desc>` do primeiro filho exatamente como foram escritos.
+   - Injete o bloco `@font-face` de Amazon Ember / Amazon Ember Mono (forma canônica em [`assets/fonts/README.md`](../assets/fonts/README.md)) em um `<style>` para que o SVG seja renderizado com a tipografia correta onde os arquivos de fonte estiverem acessíveis. Aponte as fontes `url()` para um caminho que resolva **a partir da própria localização do SVG** (ex.: `../../skills/aws-diagram-design/assets/fonts/woff2` para um SVG dentro deste repositório), e sempre mantenha as fontes `local()` primeiro — uma máquina com as fontes instaladas não precisa de nenhum acesso a arquivos. Se o SVG for circular sozinho, copie os arquivos woff2 para junto dele, remova as fontes `url()` e conte com `local()` + a pilha de fallback, ou recomende a exportação PNG. Nenhum CDN externo de fontes é referenciado.
      ```svg
      <defs>
        <style>
@@ -41,40 +41,40 @@ If the user explicitly asks for "a screenshot of the whole page including the ca
        </style>
      </defs>
      ```
-     If the SVG already contains a `<defs>` block (or a `<style>` inside it), **merge** into it — don't add a second `<defs>`. Any CSS value containing `&` must be XML-escaped as `&amp;` — a standalone `.svg` is parsed as strict XML.
-4. Prepend `<?xml version="1.0" encoding="UTF-8"?>\n` so the file is well-formed XML.
-5. Write to `<basename>.svg` next to the source (e.g. `example-architecture.html` → `example-architecture.svg`). Honour an explicit output path if the user provides one.
+     Se o SVG já contiver um bloco `<defs>` (ou um `<style>` dentro dele), **mescle** nele — não adicione um segundo `<defs>`. Qualquer valor CSS que contenha `&` deve ser escapado em XML como `&amp;` — um `.svg` autônomo é analisado como XML estrito.
+4. Adicione no início `<?xml version="1.0" encoding="UTF-8"?>\n` para que o arquivo seja um XML bem formado.
+5. Grave em `<basename>.svg` ao lado da fonte (ex.: `example-architecture.html` → `example-architecture.svg`). Respeite um caminho de saída explícito se o usuário fornecer um.
 
-### Caveat to surface to the user
+### Ressalva a comunicar ao usuário
 
-Tools that don't load linked fonts at import time (offline Illustrator, some Figma import paths, older SVG viewers) will substitute typography. The SVG renders correctly in any modern browser. For pixel-perfect portability, recommend the PNG export.
+Ferramentas que não carregam fontes vinculadas no momento da importação (Illustrator offline, alguns caminhos de importação do Figma, visualizadores SVG mais antigos) vão substituir a tipografia. O SVG é renderizado corretamente em qualquer navegador moderno. Para portabilidade perfeita em pixels, recomende a exportação PNG.
 
-## PNG export procedure
+## Procedimento de exportação PNG
 
-Render **the original HTML** (not the extracted SVG) and screenshot only the `<svg>` element's bounding box. This keeps font loading reliable (already wired in the source HTML) while satisfying the "diagram only" rule. The PNG always has a **transparent background** (`omit_background=True`) so it can be placed on any slide or doc colour without a white halo. For motion-enabled HTML, append `?motion=static`, await `document.fonts.ready`, and assert the motion root has `data-frame="static"` before capture; never export at an arbitrary wall-clock delay.
+Renderize **o HTML original** (não o SVG extraído) e capture a tela apenas da caixa delimitadora do elemento `<svg>`. Isso mantém o carregamento de fontes confiável (já configurado no HTML de origem) e, ao mesmo tempo, atende à regra de "somente o diagrama". O PNG sempre tem **fundo transparente** (`omit_background=True`), para que possa ser colocado sobre qualquer cor de slide ou documento sem um halo branco. Para HTML com movimento habilitado, acrescente `?motion=static`, aguarde `document.fonts.ready` e confirme que a raiz de movimento tem `data-frame="static"` antes da captura; nunca exporte após um atraso arbitrário de tempo de relógio.
 
-### Detection
+### Detecção
 
-Before running anything, verify Playwright is installed:
+Antes de executar qualquer coisa, verifique se o Playwright está instalado:
 
 ```
 python -c "import playwright" 2>NUL || python -c "import playwright"
 ```
 
-If the import fails, surface this exact instruction to the user and stop:
+Se a importação falhar, apresente exatamente esta instrução ao usuário e pare:
 
-> Playwright isn't installed. To enable PNG export, run:
+> O Playwright não está instalado. Para habilitar a exportação PNG, execute:
 > ```
 > pip install playwright
 > playwright install chromium
 > ```
-> Then ask me to export again.
+> Depois, peça para eu exportar novamente.
 
-Don't auto-install. The user asked for one feature, not a system change.
+Não instale automaticamente. O usuário pediu um recurso, não uma mudança no sistema.
 
-### Rasterize
+### Rasterizar
 
-Write the snippet below to a temp file and run it with `python <tmp.py> <src.html> <out.png>`:
+Grave o trecho abaixo em um arquivo temporário e execute-o com `python <tmp.py> <src.html> <out.png>`:
 
 ```python
 from playwright.sync_api import sync_playwright
@@ -92,48 +92,48 @@ with sync_playwright() as p:
     browser.close()
 ```
 
-Default `device_scale_factor=2` for crisp output. Accept `1` for compact assets or `3` for print/retina hero use, passed as a third CLI arg.
+Padrão `device_scale_factor=2` para uma saída nítida. Aceite `1` para assets compactos ou `3` para impressão/uso hero em retina, passado como terceiro argumento de CLI.
 
-### Output naming
+### Nomenclatura da saída
 
-`example-architecture.html` → `example-architecture.png`, written next to the source. Honour explicit user-provided paths.
+`example-architecture.html` → `example-architecture.png`, gravado ao lado da fonte. Respeite caminhos explícitos fornecidos pelo usuário.
 
-## Sizing the export
+## Dimensionando a exportação (Sizing the export)
 
-The PNG's pixel dimensions are the SVG's `viewBox` × `device_scale_factor`. So the size decision was already made when the diagram was drawn — see [`output-spec.md` §2](output-spec.md) for the presets. Export only picks the multiplier.
+As dimensões em pixels do PNG são o `viewBox` do SVG × `device_scale_factor`. Portanto, a decisão de tamanho já foi tomada quando o diagrama foi desenhado — veja [`output-spec.md` §2](output-spec.md) para os presets. A exportação apenas escolhe o multiplicador.
 
-| Destination | Scale | Result from a 1280×720 `viewBox` |
+| Destino | Escala | Resultado a partir de um `viewBox` 1280×720 |
 |---|---|---|
-| Docs, README, wiki | 2 | 2560×1440 |
-| Slide deck (projected) | 2 | 2560×1440 |
-| Print / PDF handout | 3 | 3840×2160 |
-| Inline thumbnail, email | 1 | 1280×720 |
+| Documentação, README, wiki | 2 | 2560×1440 |
+| Apresentação de slides (projetada) | 2 | 2560×1440 |
+| Impressão / apostila em PDF | 3 | 3840×2160 |
+| Miniatura inline, e-mail | 1 | 1280×720 |
 
-### Hitting an exact pixel size
+### Atingindo um tamanho exato em pixels
 
-When the user needs specific dimensions (an OG card at exactly 1200×630, a slide image at 1920×1080), compute the scale factor instead of guessing — Playwright accepts fractional values:
+Quando o usuário precisar de dimensões específicas (um card OG com exatamente 1200×630, uma imagem de slide em 1920×1080), calcule o fator de escala em vez de adivinhar — o Playwright aceita valores fracionários:
 
 ```
 scale = target_width / viewBox_width
 ```
 
-A 960-wide `viewBox` at a 1200px target is `scale=1.25`. Two rules:
+Um `viewBox` de 960 de largura para um alvo de 1200px é `scale=1.25`. Duas regras:
 
-- **Never scale below 1** to hit a small target — that soft-focuses the type. Redraw at a smaller preset instead.
-- **Never scale past 4** — beyond that you're upscaling a layout that was designed for a smaller canvas; redraw at `slide-16x9` or a print preset.
+- **Nunca use escala abaixo de 1** para atingir um alvo pequeno — isso desfoca a tipografia. Redesenhe em um preset menor.
+- **Nunca use escala acima de 4** — além disso você está ampliando um layout que foi projetado para uma tela menor; redesenhe em `slide-16x9` ou em um preset de impressão.
 
-If the target aspect ratio doesn't match the `viewBox` aspect ratio, say so and offer to redraw at the matching preset. Padding or cropping a finished diagram to fit a frame is not an export operation — it breaks the 40px safe margin.
+Se a proporção do alvo não corresponder à proporção do `viewBox`, diga isso e ofereça redesenhar no preset correspondente. Adicionar preenchimento ou recortar um diagrama finalizado para caber em um quadro não é uma operação de exportação — isso quebra a margem de segurança de 40px.
 
-## Edge cases
+## Casos de borda
 
-- **Source is `assets/index.html`** (the gallery, multiple SVGs in one file): refuse the export and ask the user which specific diagram file they meant. Don't guess.
-- **No `<svg>` block found**: the source isn't a diagram file. Tell the user; don't write anything.
-- **Surrounding HTML matters to the user**: they want cards/header in the image. Tell them this skill exports diagrams only, and recommend a browser-based full-page screenshot (or a separate PDF print).
-- **Source is missing fonts at runtime**: Playwright will substitute, the screenshot will look off. Check that the source HTML carries the Amazon Ember / Ember Mono `@font-face` block (with resolvable `url()` paths) or that the fonts are OS-installed (`./install.sh fonts`). If neither holds, fix the source rather than working around it in export.
+- **A fonte é `assets/index.html`** (a galeria, vários SVGs em um arquivo): recuse a exportação e pergunte ao usuário a qual arquivo de diagrama específico ele se referia. Não adivinhe.
+- **Nenhum bloco `<svg>` encontrado**: a fonte não é um arquivo de diagrama. Informe o usuário; não grave nada.
+- **O HTML ao redor importa para o usuário**: ele quer os cards/cabeçalho na imagem. Diga que esta skill exporta somente diagramas e recomende uma captura de tela da página inteira pelo navegador (ou uma impressão em PDF separada).
+- **A fonte não tem as fontes tipográficas em tempo de execução**: o Playwright vai substituí-las e a captura ficará estranha. Verifique se o HTML de origem contém o bloco `@font-face` de Amazon Ember / Ember Mono (com caminhos `url()` resolvíveis) ou se as fontes estão instaladas no sistema operacional (`./install.sh fonts`). Se nenhuma das duas condições for verdadeira, corrija a fonte em vez de contornar o problema na exportação.
 
-## What this command never does
+## O que este comando nunca faz
 
-- Modifies the source HTML.
-- Adds export buttons or `<script>` tags. Static diagrams remain script-free; an already motion-enabled source may retain the scoped controller from [`animation.md`](animation.md), but export never injects another controller.
-- Auto-emits `.svg` or `.png` alongside HTML generation. Manual on every call.
-- Embeds an HTML wrapper (cards, headers) into the SVG via `foreignObject`. Too fragile across renderers.
+- Modificar o HTML de origem.
+- Adicionar botões de exportação ou tags `<script>`. Diagramas estáticos permanecem sem scripts; uma fonte que já tenha movimento habilitado pode manter o controlador com escopo de [`animation.md`](animation.md), mas a exportação nunca injeta outro controlador.
+- Emitir automaticamente `.svg` ou `.png` junto com a geração do HTML. Manual em toda chamada.
+- Incorporar um envoltório HTML (cards, cabeçalhos) no SVG via `foreignObject`. Frágil demais entre renderizadores.
