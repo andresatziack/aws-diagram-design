@@ -1,18 +1,18 @@
-# Onboarding — generate your skin from a design source
+# Onboarding — gere sua skin (tema) a partir de uma fonte de design
 
-**Goal:** point the skill at a design source — a website, an installed skill, or a local folder — and have it extract the palette + typography, then rewrite `style-guide.md` so every future diagram inherits that skin.
+**Objetivo:** apontar a skill para uma fonte de design — um site, uma skill instalada ou uma pasta local — e fazê-la extrair a paleta + tipografia, depois reescrever `style-guide.md` para que todo diagrama futuro herde essa skin.
 
-Takes about 60 seconds.
+Leva cerca de 60 segundos.
 
-Three source methods are supported. Jump to the relevant section:
+Três métodos de origem são suportados. Vá para a seção relevante:
 
-- [§ URL](#url) — fetch a live website
-- [§ Skill](#skill) — read an installed Agent Skill that carries design tokens
-- [§ Folder](#folder) — read a local design-system directory (CSS, JSON, Markdown)
+- [§ URL](#url) — buscar um site ao vivo
+- [§ Skill](#skill) — ler uma Agent Skill instalada que contém design tokens
+- [§ Folder](#folder) — ler um diretório local de design system (CSS, JSON, Markdown)
 
 ---
 
-## The flow (all methods)
+## O fluxo (todos os métodos)
 
 ```
 Source you provide (URL / skill name / folder path)
@@ -36,15 +36,15 @@ future diagrams use your tokens
 
 ## § URL
 
-### Invocation
+### Invocação
 
-> *"Onboard Schematic to my site — `https://example.com`"*
+> *"Faça o onboarding do Schematic para o meu site — `https://example.com`"*
 
 ---
 
-### Step 1 — fetch the page
+### Etapa 1 — buscar a página
 
-Use `agent-browser` (preferred) or a plain `fetch`. If the site has multiple pages worth sampling (landing + blog + product), fetch 2–3 and merge the palette signals.
+Use `agent-browser` (preferido) ou um `fetch` simples. Se o site tiver várias páginas que valham a amostragem (landing + blog + produto), busque 2–3 e combine os sinais de paleta.
 
 ```bash
 agent-browser navigate https://example.com --screenshot out.png --html out.html
@@ -52,74 +52,74 @@ agent-browser navigate https://example.com --screenshot out.png --html out.html
 
 ---
 
-## Step 2 — extract colors and fonts
+## Etapa 2 — extrair cores e fontes
 
-### Colors
+### Cores
 
-Parse the rendered CSS and screenshot:
+Analise o CSS renderizado e a captura de tela:
 
-- **Background color** of `<body>` or the dominant large region → `paper`
-- **Primary text color** (body text) → `ink`
-- **Secondary text color** (captions, meta) → `muted`
-- **Most-used brand color** (CTA button, link, heading accent) → `accent`
-- **Container / card background** slightly darker than paper → `paper-2`
-- **Border / hairline color** → `rule` (convert to rgba of ink at ~0.12 opacity)
+- **Cor de fundo** do `<body>` ou da região grande dominante → `paper`
+- **Cor primária do texto** (texto do corpo) → `ink`
+- **Cor secundária do texto** (legendas, metadados) → `muted`
+- **Cor de marca mais usada** (botão de CTA, link, destaque de título) → `accent`
+- **Fundo de contêiner / card** um pouco mais escuro que o paper → `paper-2`
+- **Cor de borda / linha fina (hairline)** → `rule` (converta para rgba de ink com opacidade ~0.12)
 
-Prefer CSS custom properties when the site exposes them (`:root { --accent: …; }`). Otherwise pull via rendered `getComputedStyle` samples or a color-histogram pass over the screenshot.
+Prefira propriedades personalizadas de CSS quando o site as expuser (`:root { --accent: …; }`). Caso contrário, extraia por meio de amostras de `getComputedStyle` renderizado ou de uma passada de histograma de cores sobre a captura de tela.
 
-### Fonts
+### Fontes
 
-Read the rendered `font-family` stack of:
+Leia a pilha `font-family` renderizada de:
 
-- `<h1>` → `title` family
-- `<body>` → `node-name` family  
-- `<code>`, `<pre>`, or any mono-styled element → `sublabel` family
+- `<h1>` → família de `title`
+- `<body>` → família de `node-name`  
+- `<code>`, `<pre>` ou qualquer elemento com estilo mono → família de `sublabel`
 
-If the site has only one family, keep the schematic defaults for the missing roles (Amazon Ember for title, Amazon Ember Mono for mono). Don't force-pick a mono font that isn't on the site.
+Se o site tiver apenas uma família, mantenha os padrões do schematic para os papéis ausentes (Amazon Ember para o título, Amazon Ember Mono para mono). Não force a escolha de uma fonte mono que não esteja no site.
 
-### Exact-font gate for brand-matched output
+### Portão de fonte exata para saída alinhada à marca
 
-Do not replace a detected brand family with `serif`, `system-ui`, or `ui-monospace` merely to make the file dependency-free. A public font is part of the visual system.
+Não substitua uma família de marca detectada por `serif`, `system-ui` ou `ui-monospace` apenas para deixar o arquivo livre de dependências. Uma fonte pública faz parte do sistema visual.
 
-1. Record the computed family and weight used by the sampled heading, body, and technical-label elements.
-2. Trace each family to its source: an existing Google Fonts stylesheet, an installed/system stack, or a custom-hosted `@font-face`.
-3. If it is available through Google Fonts, carry the exact family name, weights, and approved stylesheet into the style guide and generated HTML. The single-file allowlist accepts only a parsed HTTPS URL whose hostname is exactly `fonts.googleapis.com` and whose path is exactly `/css2`; prefix/lookalike hosts and other paths fail. Preserve an intentional system stack in order and verify the resolved family on the target machine.
-4. A custom-hosted or paid font is not compatible with the default single-file allowlist. Label that role `fallback` unless the user separately approves and packages the font; never silently add a remote font URL or claim an exact match.
-5. Verify the rendered output with `getComputedStyle`; a declared family that failed to load does not pass.
+1. Registre a família e o peso computados usados pelos elementos de título, corpo e rótulo técnico amostrados.
+2. Rastreie cada família até sua origem: uma folha de estilo existente do Google Fonts, uma pilha instalada/do sistema ou um `@font-face` hospedado de forma personalizada.
+3. Se estiver disponível pelo Google Fonts, leve o nome exato da família, os pesos e a folha de estilo aprovada para o guia de estilo e o HTML gerado. A allowlist de arquivo único aceita apenas uma URL HTTPS analisada cujo hostname seja exatamente `fonts.googleapis.com` e cujo caminho seja exatamente `/css2`; hosts com prefixo/semelhantes e outros caminhos falham. Preserve uma pilha de sistema intencional na ordem e verifique a família resolvida na máquina de destino.
+4. Uma fonte hospedada de forma personalizada ou paga não é compatível com a allowlist padrão de arquivo único. Rotule esse papel como `fallback`, a menos que o usuário aprove e empacote a fonte separadamente; nunca adicione silenciosamente uma URL de fonte remota nem alegue correspondência exata.
+5. Verifique a saída renderizada com `getComputedStyle`; uma família declarada que não carregou não passa.
 
-For a page containing bespoke diagrams or editorial figures, inspect their rendered font roles as well as the surrounding article. A figure-specific stylesheet may intentionally differ from the site's global heading/body stack.
+Para uma página que contenha diagramas sob medida ou figuras editoriais, inspecione os papéis de fonte renderizados delas, além do artigo ao redor. Uma folha de estilo específica da figura pode diferir intencionalmente da pilha global de título/corpo do site.
 
 ---
 
-## Step 3 — map to semantic roles
+## Etapa 3 — mapear para papéis semânticos
 
-Propose a diff by filling this table:
+Proponha um diff preenchendo esta tabela:
 
-| Role | Detected | Confidence |
+| Papel | Detectado | Confiança |
 |---|---|---|
-| paper | `#f8f6f0` | high |
-| ink | `#111111` | high |
-| muted | `#6b6b68` | medium |
-| accent | `#c73a2b` | high |
+| paper | `#f8f6f0` | alta |
+| ink | `#111111` | alta |
+| muted | `#6b6b68` | média |
+| accent | `#c73a2b` | alta |
 | … | … | … |
 
-Flag low-confidence guesses so the user can correct before applying.
+Sinalize palpites de baixa confiança para que o usuário possa corrigi-los antes de aplicar.
 
-### Constraint checks
+### Verificações de restrições
 
-Before writing, validate:
+Antes de escrever, valide:
 
-- **AA contrast**: `ink` on `paper` ≥ 4.5:1. `muted` on `paper` ≥ 4.5:1 for body text.
-- **Accent is the most saturated color**: not muted-ish, not near-grey.
-- **paper ≠ pure white**: if the site uses `#ffffff`, fall back to `#fafaf7` to preserve Schematic's warm-neutral feel — or ask the user to confirm pure-white is intentional.
+- **Contraste AA**: `ink` sobre `paper` ≥ 4.5:1. `muted` sobre `paper` ≥ 4.5:1 para texto do corpo.
+- **Accent é a cor mais saturada**: não meio apagada, não próxima do cinza.
+- **paper ≠ branco puro**: se o site usar `#ffffff`, recorra a `#fafaf7` para preservar a sensação neutra e quente do Schematic — ou peça ao usuário que confirme que o branco puro é intencional.
 
-If any check fails, propose an adjusted value and explain why.
+Se alguma verificação falhar, proponha um valor ajustado e explique o porquê.
 
 ---
 
-## Step 4 — preview the diff
+## Etapa 4 — pré-visualizar o diff
 
-Show the user what will change in `style-guide.md`. Only the tokens table — everything else stays the same.
+Mostre ao usuário o que vai mudar em `style-guide.md`. Apenas a tabela de tokens — todo o resto permanece igual.
 
 ```diff
 -| `paper`  | `#f5f4ed` | `#1c1a17` |
@@ -130,126 +130,131 @@ Show the user what will change in `style-guide.md`. Only the tokens table — ev
 +| `accent` | `#c73a2b` | `#e05440` |
 ```
 
-Also regenerate the dark variant via the inversion rule (`rgba(11,13,11, X)` → `rgba(ink-rgb, X)`).
+Regenere também a variante escura pela regra de inversão (`rgba(11,13,11, X)` → `rgba(ink-rgb, X)`).
 
-Include a compact **brand fidelity receipt** with the preview:
+Inclua um **recibo de fidelidade à marca** compacto junto com a pré-visualização:
 
-- sampled URLs;
-- detected paper, ink, muted, accent, surface, and rule values;
-- title, body, and technical-label families with weights and source URLs;
-- `exact` or `fallback` for each font role;
-- any page-specific figure styling that should override the global site skin.
+- URLs amostradas;
+- valores detectados de paper, ink, muted, accent, superfície e rule;
+- famílias de título, corpo e rótulo técnico com pesos e URLs de origem;
+- `exact` ou `fallback` para cada papel de fonte;
+- qualquer estilo de figura específico da página que deva sobrescrever a skin global do site.
 
-The receipt is required when the user says “match this site,” “use their branding,” or provides a page as the visual reference.
-
----
-
-## Step 5 — apply
-
-Write the new tokens to `style-guide.md`. Suggest running the `/regenerate-examples` flow (if it exists) or rebuilding one example to verify the new skin reads cleanly.
-
-After onboarding, the user should:
-
-1. Open `assets/index.html` (gallery) and confirm the new palette feels coherent across all 27 types.
-2. If any type looks off, they usually need to tune `muted` (often too dark or too light against the new `paper`).
+O recibo é obrigatório quando o usuário diz “combine com este site”, “use a identidade visual deles” ou fornece uma página como referência visual.
 
 ---
 
-## When URL onboarding fails
+## Etapa 5 — aplicar
 
-- **Site uses webfonts you can't replicate** (custom-hosted, paid): keep the schematic defaults for typography and skin only the colors.
-- **Brand has 6+ colors** and you can't identify a clear hierarchy: pick one as `accent`, demote the rest to `muted` variants or ignore them. The schematic grammar only uses 5–7 roles.
-- **Site is dark-mode first**: flip the inversion — treat their dark paper as the default `paper`, and generate a light variant via inversion.
-- **Homepage is all imagery, no text**: ask for a blog or docs URL instead — text-heavy pages expose the type hierarchy.
+Escreva os novos tokens em `style-guide.md`. Sugira executar o fluxo `/regenerate-examples` (se existir) ou reconstruir um exemplo para verificar se a nova skin fica legível.
+
+Após o onboarding, o usuário deve:
+
+1. Abrir `assets/index.html` (galeria) e confirmar que a nova paleta parece coerente em todos os 27 tipos.
+2. Se algum tipo parecer estranho, geralmente é preciso ajustar `muted` (muitas vezes escuro ou claro demais em relação ao novo `paper`).
+
+---
+
+## Quando o onboarding por URL falha
+
+- **O site usa webfonts que você não consegue replicar** (hospedadas de forma personalizada, pagas): mantenha os padrões do schematic para tipografia e aplique a skin apenas às cores.
+- **A marca tem 6+ cores** e você não consegue identificar uma hierarquia clara: escolha uma como `accent`, rebaixe as demais para variantes de `muted` ou ignore-as. A gramática do schematic usa apenas 5–7 papéis.
+- **O site é dark-mode first**: inverta a inversão — trate o paper escuro deles como o `paper` padrão e gere uma variante clara por inversão.
+- **A página inicial é só imagens, sem texto**: peça uma URL de blog ou de documentação — páginas com muito texto expõem a hierarquia tipográfica.
 
 ---
 
 ## § Skill
 
-Extract tokens from an installed Agent Skill that carries its own design system (e.g. a `brand-design` or `ui-kit` skill).
+Extraia tokens de uma Agent Skill instalada que traga seu próprio design system (por exemplo, uma skill `brand-design` ou `ui-kit`).
 
-### Invocation
+### Invocação
 
-> *"Onboard Schematic from my `acme-design` skill"*
+> *"Faça o onboarding do Schematic a partir da minha skill `acme-design`"*
 
-Or the gate offers this as option (b) and the user names the skill.
+Ou o portão oferece isto como opção (b) e o usuário informa o nome da skill.
 
-### Step 1 — locate the skill
+### Etapa 1 — localizar a skill
 
-Use the installed-skill location exposed by the current agent when available. Otherwise search locations for the active harness:
+Use o local de skills instaladas exposto pelo agente atual quando disponível. Caso contrário, procure nos locais do harness ativo:
 
 **Pi:**
 
-1. `~/.pi/agent/skills/<skill-name>/` and `~/.agents/skills/<skill-name>/` (user installs)
-2. `.pi/skills/<skill-name>/` in the current directory, plus `.agents/skills/<skill-name>/` from the current directory through the repo root (project installs)
-3. Package paths listed in `~/.pi/agent/settings.json` or `.pi/settings.json`; managed packages live under `~/.pi/agent/git/`, `~/.pi/agent/npm/`, `.pi/git/`, or `.pi/npm/`
+1. `~/.pi/agent/skills/<skill-name>/` e `~/.agents/skills/<skill-name>/` (instalações do usuário)
+2. `.pi/skills/<skill-name>/` no diretório atual, além de `.agents/skills/<skill-name>/` do diretório atual até a raiz do repositório (instalações do projeto)
+3. Caminhos de pacotes listados em `~/.pi/agent/settings.json` ou `.pi/settings.json`; pacotes gerenciados ficam em `~/.pi/agent/git/`, `~/.pi/agent/npm/`, `.pi/git/` ou `.pi/npm/`
 
 **Claude Code:**
 
-1. `~/.claude/skills/<skill-name>/` (user install)
-2. `.claude/skills/<skill-name>/` (project install)
+1. `~/.claude/skills/<skill-name>/` (instalação do usuário)
+2. `.claude/skills/<skill-name>/` (instalação do projeto)
 
-Finally, check any path the user provides explicitly. If the skill is still not found, ask the user to confirm the name or provide its path.
+**Kiro:**
 
-### Step 2 — read token sources
+1. `.kiro/skills/<skill-name>/` na raiz do workspace (instalação do projeto — tem prioridade quando o nome se repete)
+2. `~/.kiro/skills/<skill-name>/` (instalação do usuário; não disponível no Kiro Web)
 
-Glob the skill directory for any of these files and read them all:
+Por fim, verifique qualquer caminho que o usuário fornecer explicitamente. Se a skill ainda não for encontrada, peça ao usuário que confirme o nome ou forneça o caminho.
 
-| Priority | Pattern | What to look for |
+### Etapa 2 — ler as fontes de tokens
+
+Faça glob no diretório da skill buscando qualquer um destes arquivos e leia todos:
+
+| Prioridade | Padrão | O que procurar |
 |---|---|---|
-| 1 | `*.css`, `colors*.css`, `tokens.css` | CSS custom properties in `:root { --color-*: …; }` |
-| 2 | `tokens.json`, `design-tokens.json`, `*.tokens.json` | Style Dictionary / Figma token JSON |
-| 3 | `SKILL.md`, `README.md` | Markdown tables listing colors, fonts, hex values |
-| 4 | `style-guide.md`, `*design*.md` | Any narrative design documentation |
-| 5 | `*.html` (preview/example files) | Inline `<style>` blocks — scan `:root` and `body` rules |
+| 1 | `*.css`, `colors*.css`, `tokens.css` | Propriedades personalizadas de CSS em `:root { --color-*: …; }` |
+| 2 | `tokens.json`, `design-tokens.json`, `*.tokens.json` | JSON de tokens do Style Dictionary / Figma |
+| 3 | `SKILL.md`, `README.md` | Tabelas Markdown listando cores, fontes, valores hex |
+| 4 | `style-guide.md`, `*design*.md` | Qualquer documentação de design narrativa |
+| 5 | `*.html` (arquivos de pré-visualização/exemplo) | Blocos `<style>` inline — examine as regras de `:root` e `body` |
 
-Read all matches and merge — CSS custom properties take priority over inferred values from HTML.
+Leia todas as correspondências e combine — propriedades personalizadas de CSS têm prioridade sobre valores inferidos do HTML.
 
-### Step 3 — extract colors and fonts
+### Etapa 3 — extrair cores e fontes
 
-**From CSS custom properties:**
-Map variable names to semantic roles using name-heuristics:
+**De propriedades personalizadas de CSS:**
+Mapeie nomes de variáveis para papéis semânticos usando heurísticas de nome:
 
-| If the variable name contains… | Map to role |
+| Se o nome da variável contiver… | Mapear para o papel |
 |---|---|
 | `background`, `bg`, `paper`, `surface`, `canvas` | `paper` |
 | `foreground`, `text`, `body`, `ink`, `on-surface` | `ink` |
 | `muted`, `subtle`, `secondary`, `caption` | `muted` |
 | `accent`, `brand`, `primary`, `cta`, `highlight` | `accent` |
 | `border`, `rule`, `divider`, `outline` | `rule` |
-| `mono`, `code`, `pre` | `sublabel` font |
+| `mono`, `code`, `pre` | fonte de `sublabel` |
 
-**From JSON tokens:** follow the same heuristics on key names. If the JSON follows Style Dictionary format (`{ "color": { "brand": { "value": "#…" } } }`), flatten the path and apply heuristics to the leaf key.
+**De tokens JSON:** siga as mesmas heurísticas nos nomes das chaves. Se o JSON seguir o formato Style Dictionary (`{ "color": { "brand": { "value": "#…" } } }`), achate o caminho e aplique as heurísticas à chave folha.
 
-**From Markdown tables:** look for rows with hex values (`#rrggbb`) adjacent to role-like words. A row like `| accent | #eb6c36 |` maps directly.
+**De tabelas Markdown:** procure linhas com valores hex (`#rrggbb`) adjacentes a palavras com cara de papel. Uma linha como `| accent | #eb6c36 |` mapeia diretamente.
 
-**Fonts:** look for `font-family` rules, `@import` or `@font-face` declarations, and Markdown mentions of font names alongside size/weight.
+**Fontes:** procure regras `font-family`, declarações `@import` ou `@font-face` e menções em Markdown a nomes de fontes junto com tamanho/peso.
 
-### Step 4 — map, validate, propose diff
+### Etapa 4 — mapear, validar, propor diff
 
-Same as the URL method: fill the role table, run contrast checks, show the diff, ask for approval before writing.
+Igual ao método por URL: preencha a tabela de papéis, execute as verificações de contraste, mostre o diff e peça aprovação antes de escrever.
 
-### When skill extraction is ambiguous
+### Quando a extração da skill é ambígua
 
-- **Skill has no CSS or token files**: fall back to reading all `.md` files and look for hex values mentioned in prose. Surface what you found and ask the user to confirm mappings before applying.
-- **Multiple accent candidates**: list them and ask the user to pick one. Don't guess.
-- **Skill is dark-mode first**: ask whether to treat the dark values as the `paper`/`ink` defaults or to invert.
+- **A skill não tem arquivos CSS ou de tokens**: recorra à leitura de todos os arquivos `.md` e procure valores hex mencionados na prosa. Mostre o que encontrou e peça ao usuário que confirme os mapeamentos antes de aplicar.
+- **Vários candidatos a accent**: liste-os e peça ao usuário que escolha um. Não adivinhe.
+- **A skill é dark-mode first**: pergunte se os valores escuros devem ser tratados como os padrões de `paper`/`ink` ou se deve inverter.
 
 ---
 
 ## § Folder
 
-Extract tokens from a local directory — a checked-out design system repo, a Figma export, or any folder the user points you at.
+Extraia tokens de um diretório local — um repositório de design system clonado, uma exportação do Figma ou qualquer pasta para a qual o usuário apontar.
 
-### Invocation
+### Invocação
 
-> *"Onboard Schematic from my design system at `~/projects/brand/design-tokens/`"*
+> *"Faça o onboarding do Schematic a partir do meu design system em `~/projects/brand/design-tokens/`"*
 
-Or the gate offers this as option (c) and the user provides the path.
+Ou o portão oferece isto como opção (c) e o usuário fornece o caminho.
 
-### Step 1 — discover files
+### Etapa 1 — descobrir arquivos
 
-Glob the folder (recursively, up to 3 levels deep) for:
+Faça glob na pasta (recursivamente, até 3 níveis de profundidade) buscando:
 
 ```
 **/*.css
@@ -264,34 +269,34 @@ Glob the folder (recursively, up to 3 levels deep) for:
 **/*.html        (scan <style> blocks only)
 ```
 
-If the result set is large (>20 files), prefer files in the root and files whose names contain `color`, `token`, `brand`, `palette`, `style`, or `theme`.
+Se o conjunto de resultados for grande (>20 arquivos), prefira arquivos na raiz e arquivos cujos nomes contenham `color`, `token`, `brand`, `palette`, `style` ou `theme`.
 
-### Step 2 — read and merge
+### Etapa 2 — ler e combinar
 
-Read every discovered file. Apply the same extraction logic as the Skill method (§ Skill → Step 3). CSS custom properties and JSON tokens take priority over inferred values from prose.
+Leia todos os arquivos descobertos. Aplique a mesma lógica de extração do método Skill (§ Skill → Etapa 3). Propriedades personalizadas de CSS e tokens JSON têm prioridade sobre valores inferidos da prosa.
 
-**SCSS variables:** treat `$variable-name: value;` the same as a CSS custom property — apply name heuristics to `$variable-name`.
+**Variáveis SCSS:** trate `$variable-name: value;` da mesma forma que uma propriedade personalizada de CSS — aplique as heurísticas de nome a `$variable-name`.
 
-**Figma token JSON** (Figma Tokens Plugin format):
+**JSON de tokens do Figma** (formato do Figma Tokens Plugin):
 
 ```json
 { "colors": { "brand": { "primary": { "value": "#eb6c36", "type": "color" } } } }
 ```
 
-Walk the tree; the leaf `value` fields are the colors, the path segments supply the role heuristic.
+Percorra a árvore; os campos `value` das folhas são as cores, e os segmentos do caminho fornecem a heurística de papel.
 
-### Step 3 — map, validate, propose diff
+### Etapa 3 — mapear, validar, propor diff
 
-Same as the URL method: run contrast checks, show the full diff against current `style-guide.md`, and write only after the user approves.
+Igual ao método por URL: execute as verificações de contraste, mostre o diff completo em relação ao `style-guide.md` atual e escreva somente depois que o usuário aprovar.
 
-### When folder extraction is ambiguous
+### Quando a extração da pasta é ambígua
 
-- **No structured token files, only prose docs**: read every `.md` in the root and extract hex values found near role-like words. Show the user a table of what you inferred — don't silently apply uncertain mappings.
-- **Multiple themes / color schemes found**: list them, ask the user which one to use as the diagram skin.
-- **Folder has zero readable files**: tell the user and ask for a more specific path or switch to manual token entry.
+- **Nenhum arquivo de tokens estruturado, apenas documentação em prosa**: leia todos os `.md` na raiz e extraia os valores hex encontrados perto de palavras com cara de papel. Mostre ao usuário uma tabela do que você inferiu — não aplique silenciosamente mapeamentos incertos.
+- **Vários temas / esquemas de cores encontrados**: liste-os e pergunte ao usuário qual usar como skin do diagrama.
+- **A pasta não tem nenhum arquivo legível**: avise o usuário e peça um caminho mais específico ou mude para a entrada manual de tokens.
 
 ---
 
-## Future: per-project skins
+## Futuro: skins por projeto
 
-If the user wants multiple skins (one per project), duplicate `style-guide.md` as `style-guides/<project>.md` and add a header comment pointing the build to the active one. That's a v5.2 feature — for now, one skin per skill install.
+Se o usuário quiser várias skins (uma por projeto), duplique `style-guide.md` como `style-guides/<project>.md` e adicione um comentário de cabeçalho apontando o build para a skin ativa. Esse é um recurso da v5.2 — por enquanto, uma skin por instalação da skill.
