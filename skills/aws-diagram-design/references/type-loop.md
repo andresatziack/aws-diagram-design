@@ -1,14 +1,14 @@
-# Loop
+# Loop (ciclo de reforço)
 
-**Best for:** reinforcing cycles, flywheels, feedback loops, and operating loops — anything where the last step feeds the first and a shared hub accumulates state. Use Loop when the reader must see both motions at once: work advances clockwise around the ring, while each pass writes durable state back to one common center.
+**Ideal para:** ciclos de reforço, flywheels, loops de feedback e loops operacionais — qualquer coisa em que a última etapa alimenta a primeira e um hub compartilhado acumula estado. Use Loop quando o leitor precisar ver os dois movimentos ao mesmo tempo: o trabalho avança no sentido horário ao redor do anel, enquanto cada passagem grava estado durável de volta em um centro comum.
 
-Prefer **Flowchart** when the path ends, branches toward an outcome, or never truly returns to its first step. Prefer **Cycle** when the center does not accumulate shared state. The dashed write-back spokes are the defining signal here: remove them and the figure is only a circular process.
+Prefira **Flowchart** quando o caminho termina, ramifica em direção a um resultado ou nunca retorna de fato à sua primeira etapa. Prefira **Cycle** quando o centro não acumula estado compartilhado. Os raios tracejados de gravação de volta (write-back) são o sinal definidor aqui: remova-os e a figura passa a ser apenas um processo circular.
 
-This type is **parametric**. The inputs in §1 determine station count, angles, edge intersections, connector paths, and viewBox bounds. Identical inputs should produce identical geometry.
+Este tipo é **paramétrico**. As entradas em §1 determinam a quantidade de estações, os ângulos, as interseções com as bordas, os caminhos dos conectores e os limites do *viewBox*. Entradas idênticas devem produzir geometria idêntica.
 
 ---
 
-## 1. Inputs — the parameter contract
+## 1. Entradas — o contrato de parâmetros
 
 ```yaml
 title: "The self-improving loop"
@@ -35,19 +35,19 @@ margin: 64
 dark: false
 ```
 
-**Budget (hard):** **5–8 stations plus exactly one hub.** Above 8 stations, split the subject into an overview Loop and one or more detail diagrams. Exactly one hub — a loop with two hubs is two diagrams. At most one station may set `focal: true`; zero is allowed when no editorial gate deserves emphasis.
+**Orçamento (limite rígido):** **5–8 estações mais exatamente um hub.** Acima de 8 estações, divida o assunto em um Loop de visão geral e um ou mais diagramas de detalhe. Exatamente um hub — um loop com dois hubs são dois diagramas. No máximo uma estação pode definir `focal: true`; zero é permitido quando nenhum ponto de decisão editorial merece ênfase.
 
-Station order is semantic. `stations[0]` is the top station, then entries proceed clockwise. The last station always connects back to station 0; if that return would be false, use a Flowchart instead.
+A ordem das estações é semântica. `stations[0]` é a estação do topo, e as entradas seguem no sentido horário. A última estação sempre se conecta de volta à estação 0; se esse retorno for falso, use um Flowchart.
 
 ---
 
-## 2. Layout math — deterministic geometry
+## 2. Matemática do layout — geometria determinística
 
-Use SVG coordinates, where positive y points downward. Let the hub center be `C = (cx, cy)`, station count be `N`, station ring radius be `R`, station half-size be `a = station_w/2`, `b = station_h/2`, and hub half-size be `A = hub_w/2`, `B = hub_h/2`.
+Use coordenadas SVG, em que y positivo aponta para baixo. Seja o centro do hub `C = (cx, cy)`, a quantidade de estações `N`, o raio do anel de estações `R`, a meia-dimensão da estação `a = station_w/2`, `b = station_h/2`, e a meia-dimensão do hub `A = hub_w/2`, `B = hub_h/2`.
 
-### 2.1 Station centers
+### 2.1 Centros das estações
 
-For zero-indexed station `k`:
+Para a estação `k` (indexada a partir de zero):
 
 ```text
 theta_k = -90deg + k * (360deg / N)
@@ -60,32 +60,32 @@ station_x(k)        = station_center_x(k) - station_w/2
 station_y(k)        = station_center_y(k) - station_h/2
 ```
 
-Thus station 1 sits at the top, and increasing `k` moves clockwise. Round station rectangles to the nearest 4px grid point after computing the ideal geometry; preserve symmetry when rounding paired stations. Keep ring-circle intersection points to three decimal places so every arc remains on the same circle.
+Assim, a estação 1 fica no topo, e aumentar `k` move no sentido horário. Arredonde os retângulos das estações para o ponto mais próximo da grade de 4px depois de calcular a geometria ideal; preserve a simetria ao arredondar estações em pares. Mantenha os pontos de interseção entre o anel e o círculo com três casas decimais, para que todo arco permaneça no mesmo círculo.
 
-### 2.2 Solid ring-flow endpoints
+### 2.2 Extremidades do fluxo sólido do anel
 
-Ring connectors travel from station `k` to station `j = (k + 1) mod N` as circular SVG arcs on the station circle itself. Every segment uses the same center `C`, radius `R`, and clockwise sweep. The station boxes interrupt the circle; connectors begin at the circle's clockwise exit from the source box and end just before its counterclockwise entry into the destination box, so the marker tip lands on the destination stroke.
+Os conectores do anel vão da estação `k` para a estação `j = (k + 1) mod N` como arcos SVG circulares sobre o próprio círculo das estações. Todo segmento usa o mesmo centro `C`, raio `R` e varredura no sentido horário. As caixas das estações interrompem o círculo; os conectores começam na saída horária do círculo a partir da caixa de origem e terminam logo antes da entrada anti-horária na caixa de destino, de modo que a ponta do marcador caia sobre o traço do destino.
 
-Find the circle/rectangle intersections against all four edges of station `k`. For vertical edge `x = x_e`:
+Encontre as interseções círculo/retângulo com as quatro bordas da estação `k`. Para a borda vertical `x = x_e`:
 
 ```text
 y = cy +/- sqrt(R^2 - (x_e - cx)^2)
 ```
 
-Keep only candidates whose `y` lies within the edge. For horizontal edge `y = y_e`:
+Mantenha apenas os candidatos cujo `y` esteja dentro da borda. Para a borda horizontal `y = y_e`:
 
 ```text
 x = cx +/- sqrt(R^2 - (y_e - cy)^2)
 ```
 
-Keep only candidates whose `x` lies within the edge. The two surviving points are classified by their normalized polar angles around `C`:
+Mantenha apenas os candidatos cujo `x` esteja dentro da borda. Os dois pontos restantes são classificados por seus ângulos polares normalizados em torno de `C`:
 
 ```text
 q_entry(k) = circle/box intersection immediately before theta_k clockwise
 q_exit(k)  = circle/box intersection immediately after  theta_k clockwise
 ```
 
-Compensate for the marker tip before emitting the destination endpoint. With the canonical marker (`refX=7`, polygon tip at `x=8`) and ring stroke width `1.2`, `marker_overhang = 1.2`:
+Compense a ponta do marcador antes de emitir a extremidade de destino. Com o marcador canônico (`refX=7`, ponta do polígono em `x=8`) e largura de traço do anel `1.2`, `marker_overhang = 1.2`:
 
 ```text
 phi_entry = atan2(q_entry(j).y - cy, q_entry(j).x - cx)
@@ -96,13 +96,13 @@ M q_exit(k).x q_exit(k).y
 A R R 0 0 1 q_end.x q_end.y
 ```
 
-The large-arc flag is `0` because adjacent-station gaps are less than 180 degrees; the sweep flag is always `1` for clockwise motion in SVG coordinates. The arrowhead overhang completes the final 1.2px to `q_entry(j)`, landing on the box edge without crossing its stroke. The closing connector from station `N-1` to station 0 uses the identical formula.
+A flag large-arc é `0` porque os intervalos entre estações adjacentes são menores que 180 graus; a flag sweep é sempre `1` para movimento horário em coordenadas SVG. O avanço da ponta da seta completa o 1.2px final até `q_entry(j)`, caindo sobre a borda da caixa sem atravessar seu traço. O conector de fechamento da estação `N-1` para a estação 0 usa a fórmula idêntica.
 
-Loop's circular ring arcs are a documented type-specific exception to SKILL.md §6 rule 1, following the same precedent as Medallion's promotion arcs. A Loop never mixes cubic, straight, or rounded-orthogonal segments into its ring: the six visible gaps must read as pieces of one continuous circle.
+Os arcos circulares do anel do Loop são uma exceção documentada, específica deste tipo, a SKILL.md §6 regra 1, seguindo o mesmo precedente dos arcos de promoção do Medallion. Um Loop nunca mistura segmentos cúbicos, retos ou ortogonais arredondados no seu anel: os seis intervalos visíveis devem ser lidos como pedaços de um único círculo contínuo.
 
-### 2.3 Dashed write-back spoke endpoints
+### 2.3 Extremidades dos raios tracejados de write-back
 
-Each spoke runs inward from the station edge toward the hub. Use the same ray/box intersection formula, now on the radial vector `u_k`:
+Cada raio vai para dentro, da borda da estação em direção ao hub. Use a mesma fórmula de interseção raio/caixa, agora sobre o vetor radial `u_k`:
 
 ```text
 box_distance(v, half_w, half_h) = min(half_w / abs(v.x), half_h / abs(v.y))
@@ -117,13 +117,13 @@ hub_edge(k)    = C   + d_hub     * u_k
 spoke_end(k)   = C   + (d_hub + marker_gap) * u_k
 ```
 
-Because the arrow travels from the station toward `C`, adding `marker_gap` leaves the endpoint just outside the hub boundary. The lighter arrowhead stops before the hub stroke instead of colliding with it. Radial spokes are the type-specific exception to the general ban on slanted straight connectors; they must remain true radii, must not cross one another, and may touch only their source station and the hub.
+Como a seta vai da estação em direção a `C`, somar `marker_gap` deixa a extremidade logo fora do limite do hub. A ponta de seta mais leve para antes do traço do hub em vez de colidir com ele. Os raios radiais são a exceção específica deste tipo à proibição geral de conectores retos inclinados; eles devem permanecer raios verdadeiros, não devem cruzar uns aos outros e só podem tocar sua estação de origem e o hub.
 
-Labels are optional when the station sublabel already names the write-back. When used, they follow the `arrow-label` role, stay to one side of the spoke, and receive an opaque `paper` mask with a visible 6–10px gap from the stroke. Label a curated subset rather than forcing six labels into the hub halo.
+Os rótulos são opcionais quando o sublabel da estação já nomeia o write-back. Quando usados, seguem o papel `arrow-label`, ficam de um lado do raio e recebem uma máscara `paper` opaca com um espaço visível de 6–10px em relação ao traço. Rotule um subconjunto selecionado em vez de forçar seis rótulos no halo do hub.
 
-### 2.4 ViewBox sizing
+### 2.4 Dimensionamento do viewBox
 
-The viewBox must include the full station rectangles, outer ring curves, arrowheads, and at least `margin` breathing room:
+O *viewBox* deve incluir os retângulos completos das estações, as curvas externas do anel, as pontas de seta e pelo menos `margin` de respiro:
 
 ```text
 left   <= cx - R - station_w/2 - margin
@@ -135,89 +135,89 @@ viewBox_w = right - left
 viewBox_h = bottom - top
 ```
 
-Include the full circle extrema `cx +/- R`, `cy +/- R` plus station bounds and marker clearance when checking these limits. Never shrink the canvas until a station stroke, marker, or ring arc clips. For the six-station canonical example, `viewBox="0 0 1040 680"`, `C=(520,340)`, `R=240`, station size `160×64`, and hub size `200×104` leave generous outer clearance.
+Inclua os extremos completos do círculo `cx +/- R`, `cy +/- R`, mais os limites das estações e a folga dos marcadores, ao verificar esses limites. Nunca reduza o canvas a ponto de cortar um traço de estação, um marcador ou um arco do anel. Para o exemplo canônico de seis estações, `viewBox="0 0 1040 680"`, `C=(520,340)`, `R=240`, tamanho de estação `160×64` e tamanho de hub `200×104` deixam uma folga externa generosa.
 
 ---
 
-## 3. Visual grammar
+## 3. Gramática visual
 
-| Element | Treatment |
+| Elemento | Tratamento |
 |---|---|
-| Station | Standard node: `paper` fill, `ink` stroke, `radius-md`; name in `node-name`, sublabel in `sublabel` |
-| Hub | The one dark element: `ink` fill, `paper` text; slightly larger than a station |
-| Focal station | At most one: `accent-tint` fill, `accent` stroke; station name may use `accent` |
-| Ring flow | Circular `A R R 0 0 1` arcs on the station circle, solid `muted` stroke, default arrowhead at the destination; clockwise only |
-| Write-back spoke | Dashed `soft` stroke at reduced emphasis, `stroke-dasharray="5,4"`, with a `soft` arrowhead |
-| Spoke label | `arrow-label` role, `soft`, uppercase, paper mask, 6–10px clear of the connector |
+| Estação | Nó padrão: preenchimento `paper`, traço `ink`, `radius-md`; nome em `node-name`, sublabel em `sublabel` |
+| Hub | O único elemento escuro: preenchimento `ink`, texto `paper`; ligeiramente maior que uma estação |
+| Estação focal | No máximo uma: preenchimento `accent-tint`, traço `accent`; o nome da estação pode usar `accent` |
+| Fluxo do anel | Arcos circulares `A R R 0 0 1` sobre o círculo das estações, traço sólido `muted`, ponta de seta padrão no destino; somente sentido horário |
+| Raio de write-back | Traço tracejado `soft` com ênfase reduzida, `stroke-dasharray="5,4"`, com ponta de seta `soft` |
+| Rótulo do raio | Papel `arrow-label`, `soft`, maiúsculas, máscara `paper`, 6–10px afastado do conector |
 
-Draw in this order: paper or optional dot grid → ring arrows → dashed spokes → spoke-label masks and labels → station boxes → hub → text. The nodes mask microscopic connector overshoot, while every intended endpoint still lands on an edge.
+Desenhe nesta ordem: `paper` ou grade de pontos opcional → setas do anel → raios tracejados → máscaras e rótulos dos raios → caixas das estações → hub → texto. Os nós mascaram ultrapassagens microscópicas dos conectores, enquanto toda extremidade pretendida ainda cai sobre uma borda.
 
-The hub is not a seventh process step. It is accumulated state: memory, standards, evidence, policy, or a shared operating record. Keep its copy to one name plus one short sublabel.
-
----
-
-## 4. Connector rules (mandatory)
-
-SKILL.md §6 applies in full except for the two Loop-specific connector primitives: circular ring arcs (§2.2) and straight radial spokes (§2.3). Like Medallion's promotion arcs, these replace §6 rule 1 for this diagram type:
-
-- Ring arrows are same-radius circular arcs, solid, and clockwise. Every path uses `A R R 0 0 1`; destination markers land on station edges and no connector ends at a center point.
-- Spokes are dashed and point inward. A solid spoke destroys the visual distinction between operating flow and write-back.
-- Labels use opaque masks and maintain a visible 6–10px connector gap. Never place text on the stroke.
-- No ring connector or spoke may overlap another connector. Ring paths remain outside the hub; spokes occupy distinct radial routes.
-- When two spokes must leave the same station edge, fan their attach points by the §6 formula with at least 12px separation. The normal Loop has one spoke per station; use a second only when the semantics cannot be merged.
-- If a ring route would cross the hub, increase `R` or split the diagram. Do not thread flow through shared state or substitute an orthogonal route.
+O hub não é uma sétima etapa do processo. Ele é estado acumulado: memória, padrões, evidências, políticas ou um registro operacional compartilhado. Limite seu texto a um nome mais um sublabel curto.
 
 ---
 
-## 5. Dark variant — token swap
+## 4. Regras de conectores (obrigatórias)
 
-Apply the style-guide inversion rule; do not invent a second palette.
+SKILL.md §6 se aplica integralmente, exceto pelos dois primitivos de conector específicos do Loop: arcos circulares do anel (§2.2) e raios radiais retos (§2.3). Assim como os arcos de promoção do Medallion, estes substituem §6 regra 1 para este tipo de diagrama:
 
-| Role | Light | Dark |
+- As setas do anel são arcos circulares de mesmo raio, sólidas e no sentido horário. Todo caminho usa `A R R 0 0 1`; os marcadores de destino caem sobre as bordas das estações e nenhum conector termina em um ponto central.
+- Os raios são tracejados e apontam para dentro. Um raio sólido destrói a distinção visual entre fluxo operacional e write-back.
+- Os rótulos usam máscaras opacas e mantêm um espaço visível de 6–10px em relação ao conector. Nunca coloque texto sobre o traço.
+- Nenhum conector do anel ou raio pode se sobrepor a outro conector. Os caminhos do anel ficam fora do hub; os raios ocupam rotas radiais distintas.
+- Quando dois raios precisarem sair da mesma borda de estação, distribua (fan-out) seus pontos de conexão pela fórmula de §6, com pelo menos 12px de separação. O Loop normal tem um raio por estação; use um segundo somente quando a semântica não puder ser mesclada.
+- Se uma rota do anel fosse cruzar o hub, aumente `R` ou divida o diagrama. Não passe o fluxo pelo estado compartilhado nem substitua por uma rota ortogonal.
+
+---
+
+## 5. Variante escura — troca de tokens
+
+Aplique a regra de inversão do style guide; não invente uma segunda paleta.
+
+| Papel | Claro | Escuro |
 |---|---|---|
-| Canvas and station fill | `paper` | dark `paper` |
-| Primary text and station stroke | `ink` | inverted `ink` |
-| Hub fill / hub text | `ink` / `paper` | inverted `ink` / dark `paper` |
-| Ring flow | `muted` | dark `muted` |
-| Write-back spokes and labels | `soft` | dark `soft` |
-| Focal fill / stroke | `accent-tint` / `accent` | dark `accent-tint` / brighter dark `accent` |
-| Rule and dot grid | `rule` | inverted `rule` at the same opacity |
+| Canvas e preenchimento das estações | `paper` | `paper` escuro |
+| Texto principal e traço das estações | `ink` | `ink` invertido |
+| Preenchimento do hub / texto do hub | `ink` / `paper` | `ink` invertido / `paper` escuro |
+| Fluxo do anel | `muted` | `muted` escuro |
+| Raios de write-back e rótulos | `soft` | `soft` escuro |
+| Preenchimento / traço focal | `accent-tint` / `accent` | `accent-tint` escuro / `accent` escuro mais brilhante |
+| Linha e grade de pontos | `rule` | `rule` invertido com a mesma opacidade |
 
-The semantic relationship stays unchanged in dark mode: one `ink`-filled hub, one optional `accent` station, neutral solid ring arrows, and lighter dashed write-backs.
-
----
-
-## 6. Reproducibility checklist
-
-1. Station count is 5–8 and hub count is exactly one.
-2. Station 0 is at `-90deg`; all others use equal `360/N` steps clockwise.
-3. Every solid ring arrow connects adjacent stations with `A R R 0 0 1`, using the same `R`; the last returns to the first.
-4. Every ring marker lands on a station edge, not its center.
-5. Every dashed spoke begins on a station's inner edge and stops `marker_gap` before the hub stroke.
-6. Ring connectors stay outside the hub; spokes do not cross or overlap.
-7. At most one station uses `accent-tint` + `accent`; the hub alone uses the dark `ink` fill.
-8. Spoke labels, if present, use `arrow-label`, an opaque mask, and a 6–10px gap.
-9. The viewBox includes station boxes, strokes, curves, markers, and margins without clipping.
+A relação semântica permanece inalterada no modo escuro: um hub preenchido com `ink`, uma estação `accent` opcional, setas sólidas neutras no anel e write-backs tracejados mais leves.
 
 ---
 
-## 7. Anti-patterns
+## 6. Checklist de reprodutibilidade
 
-| Anti-pattern | Why it fails / correction |
+1. A quantidade de estações é 5–8 e a quantidade de hubs é exatamente um.
+2. A estação 0 está em `-90deg`; todas as outras usam passos iguais de `360/N` no sentido horário.
+3. Toda seta sólida do anel conecta estações adjacentes com `A R R 0 0 1`, usando o mesmo `R`; a última retorna à primeira.
+4. Todo marcador do anel cai sobre a borda de uma estação, não sobre seu centro.
+5. Todo raio tracejado começa na borda interna de uma estação e para `marker_gap` antes do traço do hub.
+6. Os conectores do anel ficam fora do hub; os raios não se cruzam nem se sobrepõem.
+7. No máximo uma estação usa `accent-tint` + `accent`; somente o hub usa o preenchimento escuro `ink`.
+8. Os rótulos dos raios, se presentes, usam `arrow-label`, uma máscara opaca e um espaço de 6–10px.
+9. O *viewBox* inclui as caixas das estações, traços, curvas, marcadores e margens sem cortes.
+
+---
+
+## 7. Antipadrões
+
+| Antipadrão | Por que falha / correção |
 |---|---|
-| Two hubs | Two accumulated states create two systems. Draw two diagrams. |
-| Solid spokes | They look like primary flow and kill the dashed return signal. Use dashed `soft` write-backs. |
-| Stations at uneven angles without reason | The ring stops reading as one operating cadence. Use equal `360/N` spacing unless a documented phase grouping requires a deliberate gap. |
-| Mixed arc + orthogonal ring segments | The ring becomes a rounded rectangle. Every segment must be a circular arc of the same radius so the ring reads as one continuous circle. |
-| Connectors crossing the hub | Flow becomes confused with state. Route the ring outside or enlarge the radius. |
-| Accent on multiple stations | The editorial gate disappears. Keep one focal station at most. |
-| More than 8 stations | Labels and spokes crowd the hub. Split into overview + detail. |
-| A cycle that never actually returns | That is a Flowchart arranged in a circle. Use Flowchart and show the real endpoint. |
+| Dois hubs | Dois estados acumulados criam dois sistemas. Desenhe dois diagramas. |
+| Raios sólidos | Parecem fluxo principal e eliminam o sinal tracejado de retorno. Use write-backs tracejados `soft`. |
+| Estações em ângulos desiguais sem motivo | O anel deixa de ser lido como uma única cadência operacional. Use espaçamento igual de `360/N`, a menos que um agrupamento de fases documentado exija um intervalo deliberado. |
+| Segmentos de anel mistos arco + ortogonais | O anel vira um retângulo arredondado. Todo segmento deve ser um arco circular de mesmo raio, para que o anel seja lido como um único círculo contínuo. |
+| Conectores cruzando o hub | O fluxo se confunde com o estado. Passe o anel por fora ou aumente o raio. |
+| Accent em várias estações | O ponto de decisão editorial desaparece. Mantenha no máximo uma estação focal. |
+| Mais de 8 estações | Rótulos e raios congestionam o hub. Divida em visão geral + detalhe. |
+| Um ciclo que nunca retorna de fato | Isso é um Flowchart disposto em círculo. Use Flowchart e mostre o ponto final real. |
 
 ---
 
-## 8. Examples
+## 8. Exemplos
 
-- `assets/example-loop.html` — minimal light: six-station self-improving operating loop.
-- `assets/example-loop-dark.html` — the same geometry under the dark token inversion.
-- `assets/example-loop-full.html` — editorial page with the flagship loop, three summary cards, and colophon.
+- `assets/example-loop.html` — mínimo claro: loop operacional de autoaperfeiçoamento com seis estações.
+- `assets/example-loop-dark.html` — a mesma geometria sob a inversão de tokens escura.
+- `assets/example-loop-full.html` — página editorial com o loop principal, três cartões de resumo e colofão.

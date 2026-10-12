@@ -1,14 +1,14 @@
-# DP security matrix
+# Matriz de segurança DP (DP security matrix)
 
-**Best for:** documenting per-role / per-component access permissions for a data platform — a grid where each row is a platform component (Keycloak, MinIO bucket, Trino catalog, JupyterHub, NiFi, …) and each column is a role / AD group (Data Administrators, Data Engineers, Data Scientists, Data Consumers, …). Each intersection cell holds a permission value (Admin / Full / R/W / Read / SELECT / Login / No access) with a visual category that matches the permission level. One cell may be marked focal to flag a critical access rule (e.g., "Data Consumers can ONLY `SELECT` from the aggregated catalog — sole consumer access").
+**Ideal para:** documentar permissões de acesso por papel / por componente de uma plataforma de dados — uma grade em que cada linha é um componente da plataforma (Keycloak, bucket MinIO, catálogo Trino, JupyterHub, NiFi, …) e cada coluna é um papel / grupo do AD (Data Administrators, Data Engineers, Data Scientists, Data Consumers, …). Cada célula de interseção contém um valor de permissão (Admin / Full / R/W / Read / SELECT / Login / No access) com uma categoria visual que corresponde ao nível de permissão. Uma célula pode ser marcada como focal para sinalizar uma regra de acesso crítica (ex.: "Data Consumers podem SOMENTE fazer `SELECT` no catálogo agregado — único acesso de consumidor").
 
-Use when stakeholders need to audit *who can do what* across the platform. Prefer **DP integration** when the question is *who can talk to what* (topology/protocol) rather than *who can write/read what* (permissions).
+Use quando os stakeholders precisarem auditar *quem pode fazer o quê* em toda a plataforma. Prefira **DP integration** quando a pergunta for *quem pode falar com o quê* (topologia/protocolo) em vez de *quem pode escrever/ler o quê* (permissões).
 
-This type is **parametric** — the inputs schema in §1 drives every coordinate via the formulas in §2. The rule shape mirrors `type-medallion.md` / `type-process.md` / `type-data-flow.md` so the focal rule, color override, dark mode, and reproducibility checklist read identically across types.
+Este tipo é **paramétrico** — o schema de entradas em §1 determina cada coordenada por meio das fórmulas em §2. O formato das regras espelha `type-medallion.md` / `type-process.md` / `type-data-flow.md`, para que a regra focal, a sobrescrita de cor, o modo escuro e o checklist de reprodutibilidade sejam lidos de forma idêntica entre os tipos.
 
 ---
 
-## 1. Inputs — the parameter contract
+## 1. Entradas — o contrato de parâmetros
 
 ```yaml
 title:    "Platform Access Matrix"
@@ -59,19 +59,19 @@ none_label: "No access"                 # default text rendered when a cell is o
 dark: false
 ```
 
-**Reserved field semantics:**
-- `roles[j].name` — primary role label (`node-name` role at 11px, white text on the ink banner)
-- `roles[j].code` — secondary AD-group identifier (`sublabel` role, white text at 0.85 opacity)
-- `components[i].hint` — optional right-aligned `sublabel` text in the label cell (e.g., `"SSO"`, `"S3 API"`)
-- `cells[k].level` — closed vocabulary `full | rw | read | none`. Drives fill/stroke/text-color per §2.4.
-- `cells[k].value` — free-form display text. Domain-specific labels (`"R/W"`, `"SELECT"`, `"Login"`) work without inventing new levels.
-- `cells[k].focal: true` — exactly **one** cell may declare this. Overrides `level` to focal styling.
-- `cells[k].sub` — optional 2nd-line text (used with focal). Renders in the `sublabel` role at 8px below the primary value.
-- `cells[k].color: "#hex"` — optional per-cell color override (§4).
+**Semântica dos campos reservados:**
+- `roles[j].name` — rótulo principal do papel (papel `node-name` em 11px, texto branco sobre o banner `ink`)
+- `roles[j].code` — identificador secundário do grupo do AD (papel `sublabel`, texto branco com opacidade 0.85)
+- `components[i].hint` — texto `sublabel` opcional, alinhado à direita na célula de rótulo (ex.: `"SSO"`, `"S3 API"`)
+- `cells[k].level` — vocabulário fechado `full | rw | read | none`. Determina preenchimento/traço/cor do texto conforme §2.4.
+- `cells[k].value` — texto de exibição livre. Rótulos específicos do domínio (`"R/W"`, `"SELECT"`, `"Login"`) funcionam sem inventar novos níveis.
+- `cells[k].focal: true` — exatamente **uma** célula pode declarar isto. Sobrescreve `level` com o estilo focal.
+- `cells[k].sub` — texto opcional de 2ª linha (usado com focal). Renderizado no papel `sublabel` em 8px abaixo do valor principal.
+- `cells[k].color: "#hex"` — sobrescrita de cor opcional por célula (§4).
 
 ---
 
-## 2. Layout formulas — deterministic geometry
+## 2. Fórmulas de layout — geometria determinística
 
 ```
 # Constants
@@ -109,40 +109,40 @@ role_col_x(j)    = left_pad + comp_col_w + comp_role_gap
 role_col_cx(j)   = role_col_x(j) + role_col_w / 2                                 # 306, 470, 634, 798
 ```
 
-### 2.1 Background
+### 2.1 Fundo
 
-Solid paper fill across the full viewBox. No dot pattern.
+Preenchimento sólido `paper` em todo o *viewBox*. Sem padrão de pontos.
 
-### 2.2 Header row (`y = 72, h = 52`)
+### 2.2 Linha de cabeçalho (`y = 72, h = 52`)
 
-**Component-column header cell:**
-- Rect: `(comp_col_x, header_y, comp_col_w, header_h)`, fill white, stroke `ink @ 0.12` 0.8, `rx=6`
-- Two-line label centered at `(comp_col_x + comp_col_w/2, header_y+24)` and `(…, header_y+40)`:
-  - Line 1: `"Component"` — `node-name` role at 11px, ink
-  - Line 2: `"vs. AD group"` — `sublabel` role, muted
+**Célula de cabeçalho da coluna de componentes:**
+- Rect: `(comp_col_x, header_y, comp_col_w, header_h)`, preenchimento branco, traço `ink @ 0.12` 0.8, `rx=6`
+- Rótulo de duas linhas centralizado em `(comp_col_x + comp_col_w/2, header_y+24)` e `(…, header_y+40)`:
+  - Linha 1: `"Component"` — papel `node-name` em 11px, `ink`
+  - Linha 2: `"vs. AD group"` — papel `sublabel`, `muted`
 
-**Role banners (one per role):**
-- Rect: `(role_col_x(j), header_y, role_col_w, header_h)`, fill `ink`, `rx=6`
-- Two-line label centered:
-  - Line 1 at `y=92`: `roles[j].name` — `node-name` role at 11px, white
-  - Line 2 at `y=108`: `roles[j].code` — `sublabel` role, white at opacity 0.85
+**Banners de papel (um por papel):**
+- Rect: `(role_col_x(j), header_y, role_col_w, header_h)`, preenchimento `ink`, `rx=6`
+- Rótulo de duas linhas centralizado:
+  - Linha 1 em `y=92`: `roles[j].name` — papel `node-name` em 11px, branco
+  - Linha 2 em `y=108`: `roles[j].code` — papel `sublabel`, branco com opacidade 0.85
 
-### 2.3 Data row (`y = row_y(k), h = 36`)
+### 2.3 Linha de dados (`y = row_y(k), h = 36`)
 
-**Component label cell:**
-- Rect: `(comp_col_x, row_y(k), comp_col_w, row_h)`, fill white, stroke `ink @ 0.12` 0.8, `rx=4`
-- Name at `(comp_col_x + 12, row_y(k) + 22)`: `node-name` role at 11px, ink, left-aligned
-- Hint (if present) at `(comp_col_x + comp_col_w − 12, row_y(k) + 22)`: `sublabel` role, muted, right-aligned
+**Célula de rótulo do componente:**
+- Rect: `(comp_col_x, row_y(k), comp_col_w, row_h)`, preenchimento branco, traço `ink @ 0.12` 0.8, `rx=4`
+- Nome em `(comp_col_x + 12, row_y(k) + 22)`: papel `node-name` em 11px, `ink`, alinhado à esquerda
+- Hint (se presente) em `(comp_col_x + comp_col_w − 12, row_y(k) + 22)`: papel `sublabel`, `muted`, alinhado à direita
 
-**Value cells (one per role × component):**
-- Rect: `(role_col_x(j), row_y(k), role_col_w, row_h)`, `rx=4`, stroke `ink @ 0.12` 0.6
-- Fill and text-color depend on `level` (or focal flag) — see §2.4
-- Value text centered at `(role_col_cx(j), row_y(k) + 22)`: `node-name` role at 10px
-- Focal cell uses a slightly raised primary text at `y=18` and a sub-line at `y=30` (`sublabel` role at 8px)
+**Células de valor (uma por papel × componente):**
+- Rect: `(role_col_x(j), row_y(k), role_col_w, row_h)`, `rx=4`, traço `ink @ 0.12` 0.6
+- O preenchimento e a cor do texto dependem de `level` (ou da flag focal) — veja §2.4
+- Texto do valor centralizado em `(role_col_cx(j), row_y(k) + 22)`: papel `node-name` em 10px
+- A célula focal usa o texto principal ligeiramente elevado em `y=18` e uma sublinha em `y=30` (papel `sublabel` em 8px)
 
-### 2.4 Cell style table
+### 2.4 Tabela de estilos das células
 
-| `level` | Fill | Stroke | Text color | Text weight |
+| `level` | Preenchimento | Traço | Cor do texto | Peso do texto |
 |---|---|---|---|---|
 | `full` | `ink @ 0.08` | `ink @ 0.12` | `ink` | 600 |
 | `rw` | `#FFFFFF` | `ink @ 0.12` | `ink` | 400 |
@@ -150,156 +150,156 @@ Solid paper fill across the full viewBox. No dot pattern.
 | `none` | `paper` | `ink @ 0.12` | `soft` | 400 |
 | **focal** | `accent @ 0.07` | `accent` (1.4) | `accent` | 600 |
 
-The focal cell can carry a 2nd line (`sub:`) rendered in `accent` with the `sublabel` role at 8px and 0.85 opacity.
+A célula focal pode ter uma 2ª linha (`sub:`) renderizada em `accent` com o papel `sublabel` em 8px e opacidade 0.85.
 
-### 2.5 Legend (`y_top = legend_y_top, h ≈ 30`)
+### 2.5 Legenda (`y_top = legend_y_top, h ≈ 30`)
 
-Hairline separator at `legend_y_top`. Below the separator, one row of style swatches with their labels — only the styles actually used in the diagram appear in the legend.
+Separador de linha fina (hairline) em `legend_y_top`. Abaixo do separador, uma linha de amostras de estilo com seus rótulos — somente os estilos efetivamente usados no diagrama aparecem na legenda.
 
-- "LEGEND" eyebrow at `(left_pad, legend_y_top + 20)`: `eyebrow` role, muted, letter-spacing 0.14em
-- Each style: swatch rect (14×12 `rx=2`) followed by a `sublabel` role label
-- Item x-positions are tabulated left-to-right with ~120-px stride; legend wraps onto a second visual row only if `n_roles ≥ 6` (otherwise fits in one line)
-
----
-
-## 3. Cells, not connectors
-
-A matrix diagram has **no connectors** — there are no arrows between cells, no flow lines. The diagram's information is entirely in the cell content + cell styling. The only "connector-like" element is the focal cell's accent border, which visually "calls out" a specific intersection.
-
-Cells emit **no edges**. Don't add arrows pointing into cells or between cells — they belong in a different diagram type.
+- Eyebrow "LEGEND" em `(left_pad, legend_y_top + 20)`: papel `eyebrow`, `muted`, letter-spacing 0.14em
+- Cada estilo: rect de amostra (14×12 `rx=2`) seguido de um rótulo no papel `sublabel`
+- As posições x dos itens são tabuladas da esquerda para a direita com passo de ~120 px; a legenda quebra para uma segunda linha visual somente se `n_roles ≥ 6` (caso contrário, cabe em uma linha)
 
 ---
 
-## 4. Color overrides
+## 3. Células, não conectores
 
-Three independent override axes — per-cell, per-component (row), per-role (column). All optional, all use the same `color: "#hex"` field, all draw from the same recommended palette. Mirrors §3.4 of `type-high-level.md`, §4 of `type-process.md`, §4 of `type-medallion.md`.
+Um diagrama de matriz **não tem conectores** — não há setas entre células, nem linhas de fluxo. A informação do diagrama está inteiramente no conteúdo + estilo das células. O único elemento "parecido com conector" é a borda `accent` da célula focal, que visualmente "destaca" uma interseção específica.
 
-### 4.1 Per-cell `color`
+As células **não emitem arestas**. Não adicione setas apontando para células ou entre células — elas pertencem a outro tipo de diagrama.
 
-Tints a specific intersection cell. Applied to:
+---
 
-| Element | Light | Dark |
+## 4. Sobrescritas de cor
+
+Três eixos de sobrescrita independentes — por célula, por componente (linha), por papel (coluna). Todos opcionais, todos usam o mesmo campo `color: "#hex"`, todos tiram da mesma paleta recomendada. Espelha §3.4 de `type-high-level.md`, §4 de `type-process.md`, §4 de `type-medallion.md`.
+
+### 4.1 `color` por célula
+
+Tinge uma célula de interseção específica. Aplicado a:
+
+| Elemento | Claro | Escuro |
 |---|---|---|
-| Cell fill | `rgba(C, 0.08)` | `rgba(C_light, 0.12)` |
-| Cell stroke | `rgba(C, 0.45)` width 1.0 | `rgba(C_light, 0.55)` width 1.0 |
-| Value text | `C` | `C_light` |
-| Sub text (if present) | `rgba(C, 0.85)` | `rgba(C_light, 0.95)` |
+| Preenchimento da célula | `rgba(C, 0.08)` | `rgba(C_light, 0.12)` |
+| Traço da célula | `rgba(C, 0.45)` largura 1.0 | `rgba(C_light, 0.55)` largura 1.0 |
+| Texto do valor | `C` | `C_light` |
+| Texto sub (se presente) | `rgba(C, 0.85)` | `rgba(C_light, 0.95)` |
 
-`C_light` = the same hex lightened ~15% for dark-mode contrast.
+`C_light` = o mesmo hex clareado ~15% para contraste no modo escuro.
 
-### 4.2 Per-component `color`  (`components[i].color`)
+### 4.2 `color` por componente  (`components[i].color`)
 
-Tints the row's **label cell only** (left column). The data cells in that row keep their per-cell `level` styling — the row color flags *what* this component is, not *what permissions live in it*.
+Tinge **somente a célula de rótulo** da linha (coluna da esquerda). As células de dados dessa linha mantêm o estilo de `level` por célula — a cor da linha sinaliza *o que* é este componente, não *quais permissões existem nele*.
 
-| Element | Light | Dark |
+| Elemento | Claro | Escuro |
 |---|---|---|
-| Label cell fill | `rgba(C, 0.06)` | `rgba(C_light, 0.10)` |
-| Label cell stroke | `rgba(C, 0.45)` width 0.8 | `rgba(C_light, 0.55)` width 0.8 |
-| Component name | `C` | `C_light` |
-| Hint text | unchanged (muted) | unchanged (muted) |
+| Preenchimento da célula de rótulo | `rgba(C, 0.06)` | `rgba(C_light, 0.10)` |
+| Traço da célula de rótulo | `rgba(C, 0.45)` largura 0.8 | `rgba(C_light, 0.55)` largura 0.8 |
+| Nome do componente | `C` | `C_light` |
+| Texto do hint | inalterado (`muted`) | inalterado (`muted`) |
 
-### 4.3 Per-role `color`  (`roles[j].color`)
+### 4.3 `color` por papel  (`roles[j].color`)
 
-Tints the **column banner only** (top row). Cells underneath keep their `level` styling. Replaces the default navy banner fill with the chosen hex.
+Tinge **somente o banner da coluna** (linha superior). As células abaixo mantêm o estilo de `level`. Substitui o preenchimento azul-marinho padrão do banner pelo hex escolhido.
 
-| Element | Light & Dark (banner is the same in both modes) |
+| Elemento | Claro e Escuro (o banner é igual em ambos os modos) |
 |---|---|
-| Banner fill | `C` |
-| Role name + code text | `#FFFFFF` if `C` is dark (luminance ≤ 0.5), else `ink` |
+| Preenchimento do banner | `C` |
+| Texto do nome + código do papel | `#FFFFFF` se `C` for escuro (luminância ≤ 0.5), senão `ink` |
 
-If you pick a mid-luminance hex (e.g., yellow `#c9a23a`), the text auto-flips to ink for contrast. Pair `roles[j].text_color: "#hex"` to override this auto-pick.
+Se você escolher um hex de luminância média (ex.: amarelo `#c9a23a`), o texto muda automaticamente para `ink` para dar contraste. Combine com `roles[j].text_color: "#hex"` para sobrescrever essa escolha automática.
 
-### 4.4 Rules
+### 4.4 Regras
 
-- **Focal cell wins.** A focal cell ignores `color` overrides — accent always.
-- **Per-cell `color` overrides `level` styling** for that one cell.
-- **Per-component / per-role overrides are scoped:** component → row label only; role → banner only. They do **not** spread into the matrix body. To flag a specific intersection, use per-cell.
-- **Cap:** keep total custom-colored entities ≤ 5 per diagram (combining cells + components + roles). Above 5, the matrix reads as colored noise — split into multiple diagrams or rethink which color carries which concern.
+- **A célula focal vence.** Uma célula focal ignora sobrescritas de `color` — sempre `accent`.
+- **`color` por célula sobrescreve o estilo de `level`** para aquela célula.
+- **Sobrescritas por componente / por papel têm escopo:** componente → somente o rótulo da linha; papel → somente o banner. Elas **não** se espalham pelo corpo da matriz. Para sinalizar uma interseção específica, use por célula.
+- **Limite:** mantenha o total de entidades com cor personalizada ≤ 5 por diagrama (somando células + componentes + papéis). Acima de 5, a matriz vira ruído colorido — divida em vários diagramas ou repense qual cor carrega qual preocupação.
 
-### 4.5 Recommended palette (same as the other parametric types)
+### 4.5 Paleta recomendada (a mesma dos outros tipos paramétricos)
 
-- `#b85450` rust-red — Security elevation / break-glass / SoX-flagged
-- `#5a7d9a` slate-blue — Quality / monitoring / observability gate
-- `#7a8c47` olive-green — Approved / governance-cleared / publication-ready
-- `#c9a23a` warm yellow — Working / sandbox / data-scientist zone
-- `#8c6d3f` warm-brown — Archive / cold / DR
-
----
-
-## 5. Focal rule
-
-Exactly **one** focal cell per diagram (or zero). The focal cell:
-- Uses focal styling (accent fill + accent stroke 1.4 + accent text bold)
-- May carry a 2-line content: primary `value` at `y = row_y(k) + 18`, `sub` at `y = row_y(k) + 30`
-- Calls out the diagram's central security claim — the *one* access rule that distinguishes this platform's posture from a generic permissions table
-
-If zero or >1 `focal: true` cells are declared, halt and ask the user.
+- `#b85450` vermelho-ferrugem — Elevação de segurança / break-glass / sinalizado por SoX
+- `#5a7d9a` azul-ardósia — Gate de qualidade / monitoramento / observabilidade
+- `#7a8c47` verde-oliva — Aprovado / liberado pela governança / pronto para publicação
+- `#c9a23a` amarelo quente — Trabalho / sandbox / zona de data scientists
+- `#8c6d3f` marrom quente — Arquivo / frio / DR
 
 ---
 
-## 6. Dark mode
+## 5. Regra focal
 
-| Token | Light | Dark |
+Exatamente **uma** célula focal por diagrama (ou zero). A célula focal:
+- Usa o estilo focal (preenchimento `accent` + traço `accent` 1.4 + texto `accent` em negrito)
+- Pode ter conteúdo de 2 linhas: `value` principal em `y = row_y(k) + 18`, `sub` em `y = row_y(k) + 30`
+- Destaca a afirmação central de segurança do diagrama — a *única* regra de acesso que distingue a postura desta plataforma de uma tabela genérica de permissões
+
+Se forem declaradas zero ou >1 células com `focal: true`, pare e pergunte ao usuário.
+
+---
+
+## 6. Modo escuro
+
+| Token | Claro | Escuro |
 |---|---|---|
 | Paper | `paper` | `ink` |
 | Ink | `ink` | `paper` |
 | Muted | `muted` | `soft` |
-| Soft (no-access text) | `soft` | `muted` |
+| Soft (texto sem acesso) | `soft` | `muted` |
 | Accent | `accent` | `accent` |
-| Role-banner fill | `ink` | `ink` |
-| Header / row stroke | `ink @ 0.12` | `paper @ 0.18` |
-| Full / Admin fill | `ink @ 0.08` | `paper @ 0.10` |
-| R/W fill | `#FFFFFF` | `paper @ 0.06` |
-| Read fill | `muted @ 0.08` | `soft @ 0.12` |
-| No-access fill | `paper` | `paper @ 0.02` |
-| Focal fill | `accent @ 0.07` | `accent @ 0.12` |
-| Focal stroke | `accent` | `accent` |
-| Custom component colors | `C` | `C_light` (lighten ~15%) |
+| Preenchimento do banner de papel | `ink` | `ink` |
+| Traço de cabeçalho / linha | `ink @ 0.12` | `paper @ 0.18` |
+| Preenchimento Full / Admin | `ink @ 0.08` | `paper @ 0.10` |
+| Preenchimento R/W | `#FFFFFF` | `paper @ 0.06` |
+| Preenchimento Read | `muted @ 0.08` | `soft @ 0.12` |
+| Preenchimento No-access | `paper` | `paper @ 0.02` |
+| Preenchimento focal | `accent @ 0.07` | `accent @ 0.12` |
+| Traço focal | `accent` | `accent` |
+| Cores personalizadas de componentes | `C` | `C_light` (clarear ~15%) |
 
 ---
 
-## 7. Reproducibility checklist (taste gate)
+## 7. Checklist de reprodutibilidade (*taste gate*)
 
-Before emitting SVG, verify **every** item:
+Antes de emitir o SVG, verifique **cada** item:
 
-1. `viewBox = "0 0 {viewBox_w} {viewBox_h}"` derived via §2 (4 roles × 8 components → 920 × 520).
-2. Header row at `y=72 h=52`. Component header cell white-filled with two-line `Component / vs. AD group` label. Role banners filled `ink` with name + AD-group code in white.
-3. Data rows start at `y=140`, stride 40, height 36. `rows_bottom = 140 + (n_components−1)·40 + 36`.
-4. Component label cell `rx=4`, name left-aligned at `x=24`, optional `hint` right-aligned at `x = comp_col_x + comp_col_w − 12`.
-5. Every value cell `rx=4`, stroke `ink @ 0.12` 0.6, fill + text matching §2.4 for its `level`.
-6. Exactly **one** focal cell (or zero). Focal cell stroke `accent` width 1.4. Primary value at `y = row_y(k) + 18`; `sub` (if present) at `y = row_y(k) + 30`.
-7. Cells omitted from `cells:` render as `level: "none"` with `none_label` text (default `"No access"`).
-8. Custom-colored cells ≤ 2 (in addition to the focal cell).
-9. No connector elements anywhere in the SVG.
-10. Legend strip at `legend_y_top`, one swatch per `level` actually used, hairline separator above.
-11. `viewBox_h` grows with `n_components`; `viewBox_w` grows with `n_roles`.
-
----
-
-## 8. Anti-patterns
-
-- **More than one focal cell** — focal exists to mark *the* critical access rule; >1 erases the signal.
-- **Connectors anywhere** — matrix is value-driven; arrows belong in DP integration / process diagrams.
-- **Freeform `level` values** — closed vocabulary is `full | rw | read | none`. Use `value` for free-form displayed text + `color` override for arbitrary tinting.
-- **Per-row or per-column color tints** — apply `color` per cell only. Whole-row or whole-column highlighting tends to over-emphasize and collapses the matrix into a list.
-- **Using `none_label` as a placeholder for "TBD"** — `none` means *no access*. If the permission is unknown, leave the cell empty in inputs but document it elsewhere; don't render an ambiguous state.
-- **More than 6 roles** — split into two matrices (e.g., human roles vs service accounts) before exceeding 6 columns.
-- **More than 14 components** — split by domain (storage / compute / observability / governance) before exceeding 14 rows.
-- **Using the matrix to document *how* permissions are granted** — that belongs in a process or sequence diagram. The matrix shows *what* each role can do, not the grant flow.
+1. `viewBox = "0 0 {viewBox_w} {viewBox_h}"` derivado via §2 (4 papéis × 8 componentes → 920 × 520).
+2. Linha de cabeçalho em `y=72 h=52`. Célula de cabeçalho de componentes com preenchimento branco e rótulo de duas linhas `Component / vs. AD group`. Banners de papel preenchidos com `ink`, com nome + código do grupo do AD em branco.
+3. As linhas de dados começam em `y=140`, passo 40, altura 36. `rows_bottom = 140 + (n_components−1)·40 + 36`.
+4. Célula de rótulo do componente `rx=4`, nome alinhado à esquerda em `x=24`, `hint` opcional alinhado à direita em `x = comp_col_x + comp_col_w − 12`.
+5. Toda célula de valor com `rx=4`, traço `ink @ 0.12` 0.6, preenchimento + texto conforme §2.4 para seu `level`.
+6. Exatamente **uma** célula focal (ou zero). Traço da célula focal `accent` com largura 1.4. Valor principal em `y = row_y(k) + 18`; `sub` (se presente) em `y = row_y(k) + 30`.
+7. Células omitidas de `cells:` são renderizadas como `level: "none"` com o texto de `none_label` (padrão `"No access"`).
+8. Células com cor personalizada ≤ 2 (além da célula focal).
+9. Nenhum elemento conector em nenhum lugar do SVG.
+10. Faixa de legenda em `legend_y_top`, uma amostra por `level` efetivamente usado, separador de linha fina (hairline) acima.
+11. `viewBox_h` cresce com `n_components`; `viewBox_w` cresce com `n_roles`.
 
 ---
 
-## 9. Examples
+## 8. Antipadrões
 
-- `assets/example-dp-security-matrix.html` — minimal light (NatStat canonical: 4 roles × 8 components, focal at Data Consumers × Trino aggregated). Gallery default.
-- `assets/example-dp-security-matrix-dark.html` — same, dark skin.
-- `assets/example-dp-security-matrix-full.html` — same, editorial-card frame with subtitle + summary cards.
+- **Mais de uma célula focal** — o focal existe para marcar *a* regra de acesso crítica; >1 apaga o sinal.
+- **Conectores em qualquer lugar** — a matriz é guiada por valores; setas pertencem a diagramas de DP integration / processo.
+- **Valores de `level` livres** — o vocabulário fechado é `full | rw | read | none`. Use `value` para texto exibido livre + sobrescrita de `color` para tingimento arbitrário.
+- **Tingimento por linha ou por coluna** — aplique `color` somente por célula. Destacar a linha inteira ou a coluna inteira tende a enfatizar demais e reduz a matriz a uma lista.
+- **Usar `none_label` como placeholder para "TBD"** — `none` significa *sem acesso*. Se a permissão for desconhecida, deixe a célula vazia nas entradas, mas documente isso em outro lugar; não renderize um estado ambíguo.
+- **Mais de 6 papéis** — divida em duas matrizes (ex.: papéis humanos vs contas de serviço) antes de passar de 6 colunas.
+- **Mais de 14 componentes** — divida por domínio (armazenamento / computação / observabilidade / governança) antes de passar de 14 linhas.
+- **Usar a matriz para documentar *como* as permissões são concedidas** — isso pertence a um diagrama de processo ou de sequência. A matriz mostra *o que* cada papel pode fazer, não o fluxo de concessão.
 
 ---
 
-## 10. Worked YAML — full inputs for `example-dp-security-matrix.html`
+## 9. Exemplos
 
-The complete inputs that map to the shipped canonical example. Every coordinate in that SVG is derivable from §2 applied to these inputs.
+- `assets/example-dp-security-matrix.html` — mínimo claro (canônico NatStat: 4 papéis × 8 componentes, focal em Data Consumers × Trino aggregated). Padrão da galeria.
+- `assets/example-dp-security-matrix-dark.html` — o mesmo, skin (tema) escuro.
+- `assets/example-dp-security-matrix-full.html` — o mesmo, moldura de cartão editorial com subtítulo + cartões de resumo.
+
+---
+
+## 10. YAML completo — entradas completas para `example-dp-security-matrix.html`
+
+As entradas completas que correspondem ao exemplo canônico distribuído. Cada coordenada naquele SVG pode ser derivada de §2 aplicado a estas entradas.
 
 ```yaml
 title:    "Platform Access Matrix"
@@ -366,14 +366,14 @@ cells:
 dark: false
 ```
 
-### 10.1 What this YAML proves
+### 10.1 O que este YAML comprova
 
-Run §2 with these inputs:
-- `n_roles = 4`, `n_components = 8`, no color overrides, one focal cell.
+Execute §2 com estas entradas:
+- `n_roles = 4`, `n_components = 8`, sem sobrescritas de cor, uma célula focal.
 - `viewBox_w = 12 + 208 + 12 + 4·148 + 3·16 + 48 = 920` ✓
-- `row_y(k)` produces `140, 180, 220, 260, 300, 340, 380, 420` ✓
+- `row_y(k)` produz `140, 180, 220, 260, 300, 340, 380, 420` ✓
 - `rows_bottom = 420 + 36 = 456`; `legend_y_top = 476`; `viewBox_h = 520` ✓
 - `role_col_x(j) = [232, 396, 560, 724]` ✓
-- Focal cell at `(row=5, col=3)` → rect `(724, 340, 148, 36)` with accent stroke 1.4 ✓
+- Célula focal em `(row=5, col=3)` → rect `(724, 340, 148, 36)` com traço `accent` 1.4 ✓
 
-A fresh generation from this YAML produces a diagram visually indistinguishable from the shipped `example-dp-security-matrix.html`.
+Uma geração nova a partir deste YAML produz um diagrama visualmente indistinguível do `example-dp-security-matrix.html` distribuído.

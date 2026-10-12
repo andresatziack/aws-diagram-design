@@ -1,24 +1,24 @@
-# Tree / Hierarchy
+# Árvore / Hierarquia (Tree / Hierarchy)
 
-**Best for:** org charts, dependency trees, taxonomy, file trees, decision breakdowns, skill trees.
+**Ideal para:** organogramas, árvores de dependência, taxonomia, árvores de arquivos, decomposição de decisões, árvores de habilidades.
 
-## Layout conventions
-- Root at top, children fan out below (or root at left, children to right).
-- Nodes are small labeled rectangles (`rx=6`), Amazon Ember 12px 600 name + optional Amazon Ember Mono 9px sublabel. Width 120–180px, height 40–52px.
-- **Connectors are orthogonal (elbow-style), never diagonal.** Parent drops a short vertical line, then a horizontal bus connects siblings, then each child has a short vertical drop into its top edge. 1px muted stroke.
-- Leaf indicator: thinner stroke (0.8) or different fill — OR let terminal position do the work.
-- Max depth: 4 (root + 3 tiers). Max breadth per level: 5.
-- Coral on **one** node: root OR critical leaf. Not both.
-- Draw connectors before nodes.
+## Convenções de layout
+- Raiz no topo, filhos distribuídos (fan-out) abaixo (ou raiz à esquerda, filhos à direita).
+- Os nós são pequenos retângulos rotulados (`rx=6`), nome em Amazon Ember 12px 600 + sublabel opcional em Amazon Ember Mono 9px. Largura 120–180px, altura 40–52px.
+- **Os conectores são ortogonais (estilo cotovelo), nunca diagonais.** O pai desce uma linha vertical curta, depois um barramento horizontal conecta os irmãos, e então cada filho tem uma curta queda vertical até sua borda superior. Traço muted de 1px.
+- Indicador de folha: traço mais fino (0.8) ou preenchimento diferente — OU deixe a posição terminal fazer esse papel.
+- Profundidade máxima: 4 (raiz + 3 níveis). Largura máxima por nível: 5.
+- Coral em **um** nó: a raiz OU uma folha crítica. Não ambos.
+- Desenhe os conectores antes dos nós.
 
-## Anti-patterns
-- Tree 5+ levels deep on a single page (illegible — split).
-- Nodes of wildly varying widths — pick 2 widths max.
-- Diagonal connector lines.
-- Skipped levels (parent connected to grandchild with no middle).
-- Coral on root AND a leaf.
+## Antipadrões
+- Árvore com 5+ níveis de profundidade em uma única página (ilegível — divida).
+- Nós com larguras muito variadas — escolha no máximo 2 larguras.
+- Linhas de conector diagonais.
+- Níveis pulados (pai conectado ao neto sem o nível do meio).
+- Coral na raiz E em uma folha.
 
-## Examples
-- `assets/example-tree.html` — minimal light
-- `assets/example-tree-dark.html` — minimal dark
-- `assets/example-tree-full.html` — full editorial
+## Exemplos
+- `assets/example-tree.html` — minimal claro
+- `assets/example-tree-dark.html` — minimal escuro
+- `assets/example-tree-full.html` — editorial completo

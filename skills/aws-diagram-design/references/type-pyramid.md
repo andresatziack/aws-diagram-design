@@ -1,33 +1,33 @@
-# Pyramid / Funnel
+# Pirâmide / Funil (Pyramid / Funnel)
 
-**Best for:** hierarchy of needs, prioritization ranks, value pyramids, conversion funnels, content importance stacks.
+**Ideal para:** hierarquia de necessidades, ranking de prioridades, pirâmides de valor, funis de conversão, pilhas de importância de conteúdo.
 
-## Two orientations — pick one
-- **Pyramid** (point up) — narrow apex = most important / rarest / most valuable. Base is broadest / foundational.
-- **Funnel** (point down) — narrow end = conversion (smallest group). Top is widest / audience.
+## Duas orientações — escolha uma
+- **Pirâmide** (ponta para cima) — ápice estreito = mais importante / mais raro / mais valioso. A base é a mais ampla / fundamental.
+- **Funil** (ponta para baixo) — extremidade estreita = conversão (menor grupo). O topo é o mais largo / público.
 
-Don't mix orientations on one diagram.
+Não misture orientações em um mesmo diagrama.
 
-## Layout conventions
-- 4–6 layers. Each layer is a trapezoid built from an SVG `<polygon>` with 4 points.
-- Consistent layer height (56–72px).
-- Widths decrease linearly from base to apex (pyramid) or top to bottom (funnel). When showing real funnel data, widths must be honest (proportional to count/percentage).
-- Each layer has:
-  - **Name label** centered inside the trapezoid — Amazon Ember 12–14px 600.
-  - **Sublabel** below or beside the name — Amazon Ember Mono 9–10px.
-  - **Side annotation** (right or left) — optional. For funnels: drop-off percentage here (`−40%`).
-- Fill: subtle graded tints OR all paper-2 with hairline dividers (cleaner). Pick one.
-- Stroke: 1px hairline between layers; outer silhouette 1px muted or ink.
-- **Coral on ONE layer only**: apex of pyramid, conversion layer of funnel, or critical bottleneck.
-- Optional left-margin axis arrow + Amazon Ember Mono label (`rarer ↑`, `drop-off ↓`).
+## Convenções de layout
+- 4–6 camadas. Cada camada é um trapézio construído a partir de um `<polygon>` SVG com 4 pontos.
+- Altura de camada consistente (56–72px).
+- As larguras diminuem linearmente da base ao ápice (pirâmide) ou do topo à base (funil). Ao mostrar dados reais de funil, as larguras devem ser honestas (proporcionais à contagem/porcentagem).
+- Cada camada tem:
+  - **Rótulo de nome** centralizado dentro do trapézio — Amazon Ember 12–14px 600.
+  - **Sublabel** abaixo ou ao lado do nome — Amazon Ember Mono 9–10px.
+  - **Anotação lateral** (direita ou esquerda) — opcional. Para funis: a porcentagem de queda vai aqui (`−40%`).
+- Preenchimento: tons graduados sutis OU tudo em paper-2 com divisores em linha fina (hairline) (mais limpo). Escolha um.
+- Traço: linha fina (hairline) de 1px entre camadas; silhueta externa de 1px em muted ou ink.
+- **Coral em UMA camada apenas**: ápice da pirâmide, camada de conversão do funil ou gargalo crítico.
+- Seta de eixo opcional na margem esquerda + rótulo em Amazon Ember Mono (`rarer ↑`, `drop-off ↓`).
 
-## Anti-patterns
-- 7+ layers (illegible — compress or split).
-- Pyramid for non-hierarchical data (use a tree or bar chart).
-- Dishonest widths (fake equal spacing when drops are unequal).
-- Coral on the base layer (dilutes the "apex = rare" signal).
+## Antipadrões
+- 7+ camadas (ilegível — comprima ou divida).
+- Pirâmide para dados não hierárquicos (use uma árvore ou um gráfico de barras).
+- Larguras desonestas (espaçamento igual falso quando as quedas são desiguais).
+- Coral na camada da base (dilui o sinal de "ápice = raro").
 
-## Examples
-- `assets/example-pyramid.html` — minimal light
-- `assets/example-pyramid-dark.html` — minimal dark
-- `assets/example-pyramid-full.html` — full editorial
+## Exemplos
+- `assets/example-pyramid.html` — minimal claro
+- `assets/example-pyramid-dark.html` — minimal escuro
+- `assets/example-pyramid-full.html` — editorial completo

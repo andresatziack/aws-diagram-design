@@ -1,6 +1,6 @@
 # AWS Diagram Design Skill (aws-diagram-design)
 
-[한국어](README.md) | **English**
+[Português](README.md) | [한국어](README.ko.md) | **English**
 
 **Describe it in words, get an AWS diagram.**
 

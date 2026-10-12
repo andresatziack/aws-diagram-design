@@ -1,8 +1,8 @@
-# Annotation Callout (italic aside)
+# Callout de anotação (aparte em itálico)
 
-Use for editorial asides — the "italic pointer" that marks a detail without competing with the primary diagram grammar. Think marginalia: *"structure IS the index"*, *"no imports, no configuration"*.
+Use para apartes editoriais — o "ponteiro em itálico" que marca um detalhe sem competir com a gramática principal do diagrama. Pense em notas de margem: *"structure IS the index"*, *"no imports, no configuration"*.
 
-## Grammar
+## Gramática
 
 ```svg
 <!-- 1. Italic Amazon Ember text -->
@@ -16,22 +16,22 @@ Use for editorial asides — the "italic pointer" that marks a detail without co
 <circle cx="520" cy="216" r="2" fill="#232F3E"/>
 ```
 
-## Rules
-- Italic Amazon Ember signals "editorial voice" against the diagram's upright sans/mono body. Don't substitute upright text or italic mono — the italic is load-bearing.
-- Dashed path (`stroke-dasharray="4,3"`) distinguishes the callout leader from primary arrows (which are solid).
-- Place callouts in margins (top-right, bottom-left). Never inside the active diagram area.
-- Max 2 callouts per diagram. More becomes commentary, not signal.
+## Regras
+- Amazon Ember em itálico sinaliza "voz editorial" em contraste com o corpo sans/mono reto do diagrama. Não substitua por texto reto ou mono em itálico — o itálico é estrutural.
+- O caminho tracejado (`stroke-dasharray="4,3"`) distingue a linha guia do callout das setas principais (que são sólidas).
+- Posicione os callouts nas margens (canto superior direito, canto inferior esquerdo). Nunca dentro da área ativa do diagrama.
+- Máximo de 2 callouts por diagrama. Mais do que isso vira comentário, não sinal.
 
-## Colors
+## Cores
 
-| Intent | Text | Leader |
+| Intenção | Texto | Linha guia |
 |---|---|---|
-| Neutral aside | ink `#232F3E` | `rgba(35,47,62,0.40)` |
+| Aparte neutro | ink `#232F3E` | `rgba(35,47,62,0.40)` |
 | Focal / accent | coral `#EC7211` | `rgba(255,153,0,0.50)` |
-| Tertiary (muted) | muted `#545B64` | `rgba(35,47,62,0.30)` |
+| Terciário (muted) | muted `#545B64` | `rgba(35,47,62,0.30)` |
 
-## Anti-patterns
-- Solid arrow leader (reads as a flow arrow).
-- Upright text or italic mono — the italic is load-bearing.
-- Callouts crossing primary arrows / lifelines — offset to a clear margin.
-- Using a callout to label something the diagram should label directly — put the label on the element.
+## Antipadrões
+- Linha guia em seta sólida (é lida como seta de fluxo).
+- Texto reto ou mono em itálico — o itálico é estrutural.
+- Callouts cruzando setas principais / linhas de vida — desloque para uma margem livre.
+- Usar um callout para rotular algo que o próprio diagrama deveria rotular diretamente — coloque o rótulo no elemento.

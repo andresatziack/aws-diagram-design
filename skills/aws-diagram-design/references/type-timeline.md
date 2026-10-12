@@ -1,20 +1,20 @@
-# Timeline
+# Linha do tempo (Timeline)
 
-**Best for:** release history, project milestones, incident timelines, roadmaps, changelog visualizations.
+**Ideal para:** histórico de releases, marcos de projeto, linhas do tempo de incidentes, roadmaps, visualizações de changelog.
 
-## Layout conventions
-- Horizontal hairline baseline across the middle (`stroke-width=1`).
-- Tick marks at time boundaries (quarters, months, sprints) with date labels below in Amazon Ember Mono.
-- Events: small filled circles (`r=4`) on the baseline. Labels alternate above and below to prevent collision, connected to the circle with a 1px hairline drop.
-- Major milestones: coral circle (`r=6`) + bold Amazon Ember label.
-- Time scale must be honest: if intervals are non-equal, space the circles non-equally. Don't fake linear spacing for aesthetics. Break the axis visibly if a region is too dense.
+## Convenções de layout
+- Linha de base em linha fina (hairline) horizontal atravessando o meio (`stroke-width=1`).
+- Marcas de escala nos limites de tempo (trimestres, meses, sprints) com rótulos de data abaixo, em Amazon Ember Mono.
+- Eventos: pequenos círculos preenchidos (`r=4`) sobre a linha de base. Os rótulos alternam acima e abaixo para evitar colisão, conectados ao círculo por uma queda em linha fina (hairline) de 1px.
+- Marcos principais: círculo coral (`r=6`) + rótulo em Amazon Ember negrito.
+- A escala de tempo deve ser honesta: se os intervalos não forem iguais, espace os círculos de forma desigual. Não finja espaçamento linear por estética. Quebre o eixo de forma visível se uma região estiver densa demais.
 
-## Anti-patterns
-- Equal-spacing events that aren't equally spaced in time.
-- Missing axis labels ("what unit is this?").
-- Crowded labels without vertical offset — illegible.
+## Antipadrões
+- Eventos igualmente espaçados que não são igualmente espaçados no tempo.
+- Rótulos de eixo ausentes ("qual é a unidade disto?").
+- Rótulos amontoados sem deslocamento vertical — ilegível.
 
-## Examples
-- `assets/example-timeline.html` — minimal light
-- `assets/example-timeline-dark.html` — minimal dark
-- `assets/example-timeline-full.html` — full editorial
+## Exemplos
+- `assets/example-timeline.html` — minimal claro
+- `assets/example-timeline-dark.html` — minimal escuro
+- `assets/example-timeline-full.html` — editorial completo

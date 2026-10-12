@@ -1,12 +1,12 @@
-# AWS Architecture Icons — asset index
+# AWS Architecture Icons — índice de assets
 
-Official AWS Architecture Icons, release 07312026. Copied from the AWS icon
-package (SVG, 48px light variants; group icons 32px). Look up the file here,
-then Read it and inline its contents per `references/primitive-aws-icons.md`.
+AWS Architecture Icons oficiais, release 07312026. Copiados do pacote de ícones
+da AWS (SVG, variantes claras de 48px; ícones de grupo de 32px). Localize o arquivo aqui,
+depois leia-o (Read) e incorpore seu conteúdo inline conforme `references/primitive-aws-icons.md`.
 
-Totals: 305 service, 466 resource, 15 group, 26 category icons.
+Totais: 305 ícones de serviço, 466 de recurso, 15 de grupo, 26 de categoria.
 
-## Service icons (`service/<Category>/`)
+## Ícones de serviço (`service/<Category>/`)
 
 ### Analytics (#8C4FFF)
 
@@ -385,7 +385,7 @@ Totals: 305 service, 466 resource, 15 group, 26 category icons.
 - `service/Storage/Arch_Amazon-Simple-Storage-Service-Glacier_48.svg`
 - `service/Storage/Arch_Amazon-Simple-Storage-Service_48.svg`
 
-## Resource icons (`resource/<Category>/`)
+## Ícones de recurso (`resource/<Category>/`)
 
 ### Analytics
 
@@ -910,7 +910,7 @@ Totals: 305 service, 466 resource, 15 group, 26 category icons.
 - `resource/Storage/Res_Amazon-Simple-Storage-Service_S3-Vectors_48.svg`
 - `resource/Storage/Res_Amazon-Simple-Storage-Service_VPC-Access-Points_48.svg`
 
-## Group icons (`group/`)
+## Ícones de grupo (`group/`)
 
 - `group/AWS-Account_32.svg`
 - `group/AWS-Cloud-logo_32.svg`
@@ -928,7 +928,7 @@ Totals: 305 service, 466 resource, 15 group, 26 category icons.
 - `group/Spot-Fleet_32.svg`
 - `group/Virtual-private-cloud-VPC_32.svg`
 
-## Category icons (`category/`)
+## Ícones de categoria (`category/`)
 
 - `category/Arch-Category_Analytics_48.svg`
 - `category/Arch-Category_Application-Integration_48.svg`

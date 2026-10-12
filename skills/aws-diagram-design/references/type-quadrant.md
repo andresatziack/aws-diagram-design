@@ -1,81 +1,82 @@
-# Quadrant
+# Quadrante (Quadrant)
 
-**Best for:** prioritization (Impact × Effort), positioning (Reach × Frequency), portfolio maps, 2×2 decision frames.
+**Melhor para:** priorização (Impacto × Esforço), posicionamento (Alcance × Frequência), mapas de portfólio, quadros de decisão 2×2.
 
-## Layout conventions
-- 2×2 grid. Axis lines: 1px ink cross through the center.
-- **Axis labels: Jobs-minimal.** One single word at each arrow tip — no glyphs baked into the label (no `↑` / `→` / `←` / `↓`), no parentheticals, no "HIGH / LOW" modifiers. Amazon Ember Mono 9px regular weight, tracked 0.18em, uppercase. Flank the arrow tips — never sit labels on top of the axis line. Shorten the arrow enough (~60–80px inside the viewBox edge) to leave breathing room for the labels beyond the tips.
-- Never label at the midpoint.
-- Items: small labeled dots (`r=4`) positioned in the quadrants. Labels 8–10px away; don't let labels cross axis lines.
-- Coral on the "do first" item (typically top-right).
-- Limit to ~12 items; cluster or split beyond that.
+## Convenções de layout
+- Grade 2×2. Linhas de eixo: cruz de ink de 1px passando pelo centro.
+- **Rótulos dos eixos: minimalismo estilo Jobs.** Uma única palavra em cada ponta de seta — nenhum glifo embutido no rótulo (sem `↑` / `→` / `←` / `↓`), sem parênteses, sem modificadores "HIGH / LOW". Amazon Ember Mono 9px, peso regular, espaçamento 0.18em, maiúsculas. Ladeie as pontas das setas — nunca coloque rótulos sobre a linha do eixo. Encurte a seta o suficiente (~60–80px para dentro da borda do viewBox) para deixar respiro para os rótulos além das pontas.
+- Nunca rotule no ponto médio.
+- Itens: pequenos pontos rotulados (`r=4`) posicionados nos quadrantes. Rótulos a 8–10px de distância; não deixe os rótulos cruzarem as linhas dos eixos.
+- Coral no item "fazer primeiro" (tipicamente no canto superior direito).
+- Limite a ~12 itens; agrupe ou divida além disso.
 
-## Anti-patterns
-- Four filled quadrants in different colors — position + label does the work; color noise weakens it.
-- Items placed on axis lines (ambiguous quadrant).
-- Missing axis names.
+## Antipadrões
+- Quatro quadrantes preenchidos com cores diferentes — posição + rótulo fazem o trabalho; o ruído de cor o enfraquece.
+- Itens posicionados sobre as linhas dos eixos (quadrante ambíguo).
+- Nomes dos eixos ausentes.
 
-## Examples
-- `assets/example-quadrant.html` — minimal light
-- `assets/example-quadrant-dark.html` — minimal dark
+## Exemplos
+- `assets/example-quadrant.html` — minimal claro
+- `assets/example-quadrant-dark.html` — minimal escuro
 - `assets/example-quadrant-full.html` — full editorial
-- `assets/example-quadrant-consultant.html` — consultant special (see below)
+- `assets/example-quadrant-consultant.html` — consultant special (veja abaixo)
 
 ---
 
 ## Consultant special (2×2 scenario matrix)
+*Especial de consultoria (matriz de cenários 2×2)*
 
-A **layout variant** of the standard quadrant — same house skin (warm paper, dot pattern, Amazon Ember (700) title, Ember Mono eyebrows, coral focal rule). The grammar shifts: axes hold a **range** rather than a measurement; cells hold **named scenarios** rather than positioned items.
+Uma **variante de layout** do quadrante padrão — mesma skin (tema) da casa (paper quente, padrão de pontos, título em Amazon Ember (700), sobretítulos (eyebrows) em Ember Mono, regra focal em coral). A gramática muda: os eixos representam uma **faixa** em vez de uma medida; as células contêm **cenários nomeados** em vez de itens posicionados.
 
-**Use when:** you're framing four futures, archetypes, or strategic options across two independent drivers — classic scenario planning, positioning frames, or 2×2 strategy decks (BCG/McKinsey territory). The reader should come away with four named bets, not a point cloud.
+**Use quando:** você estiver enquadrando quatro futuros, arquétipos ou opções estratégicas ao longo de dois vetores independentes — planejamento de cenários clássico, quadros de posicionamento ou apresentações de estratégia 2×2 (território BCG/McKinsey). O leitor deve sair com quatro apostas nomeadas, não com uma nuvem de pontos.
 
-**Do not use** for prioritization, density maps, or anything where the *position inside* a cell carries meaning — that's the standard quadrant above.
+**Não use** para priorização, mapas de densidade ou qualquer coisa em que a *posição dentro* de uma célula carregue significado — esse é o quadrante padrão acima.
 
-### What makes it the consultant variant
+### O que a torna a variante de consultoria
 
-| Move | Standard quadrant | Consultant special |
+| Movimento | Quadrante padrão | Consultant special |
 |---|---|---|
-| Axis arrows | single-ended | **double-ended** — both axes have `marker-start` + `marker-end` |
-| Cell content | small dots with labels | **named scenario + 1–3 line description** |
-| Quadrant corner | short tag (e.g. DO FIRST) | **numbered tag + axis combination** (`01 · DIMENSION-A / DIMENSION-B`) |
-| Focal accent | coral on one *item* | coral on one *quadrant* — tinted bg + coral stroke + coral corner tag |
-| Axes | 1px muted ink | **1.2px ink** (slightly heavier — the axes carry more of the figure) |
+| Setas dos eixos | uma ponta | **duas pontas** — ambos os eixos têm `marker-start` + `marker-end` |
+| Conteúdo da célula | pequenos pontos com rótulos | **cenário nomeado + descrição de 1–3 linhas** |
+| Canto do quadrante | etiqueta curta (ex.: DO FIRST) | **etiqueta numerada + combinação dos eixos** (`01 · DIMENSION-A / DIMENSION-B`) |
+| Destaque focal | coral em um *item* | coral em um *quadrante* — fundo tingido + traço coral + etiqueta de canto coral |
+| Eixos | ink muted de 1px | **ink de 1.2px** (um pouco mais pesado — os eixos carregam mais da figura) |
 
-Both variants use the same Jobs-minimal axis labels: one word at each arrow tip, no glyphs, no parentheticals. The only axis difference is that the consultant variant uses double-ended arrows instead of single-ended.
+Ambas as variantes usam os mesmos rótulos de eixo minimalistas estilo Jobs: uma palavra em cada ponta de seta, sem glifos, sem parênteses. A única diferença nos eixos é que a variante de consultoria usa setas com duas pontas em vez de uma.
 
-Everything else — paper, dot pattern, typography, legend strip, 4px grid, complexity budget — is the house default. Don't invent new colors or fonts for this variant.
+Todo o resto — paper, padrão de pontos, tipografia, faixa de legenda, grade de 4px, orçamento de complexidade — é o padrão da casa. Não invente novas cores ou fontes para esta variante.
 
-### Style tokens (in-house)
+### Tokens de estilo (da casa)
 
-- **Paper / bg / pattern**: defaults from `style-guide.md` (`paper`, 22×22 dot pattern at 10% ink).
-- **Axis lines**: `ink` (`#232F3E`), `stroke-width: 1.2`, `marker-start` + `marker-end` both pointing outward.
-- **Focal quadrant tint**: `rgba(255,153,0,0.04)` full rect behind the focal cell.
-- **Focal cell**: `accent-tint` fill, `accent` stroke at 1.2px. Corner tag in `accent`, weight 600.
-- **Non-focal cells**: `store` treatment (`ink @ 0.04` fill, `muted @ 0.28` stroke).
-- **Cell title**: Amazon Ember, 16px, weight 600, `ink`.
-- **Cell description**: Amazon Ember, 11px, `muted`, 1–3 lines, left-aligned inside the cell.
-- **Corner tag**: Amazon Ember Mono, 8px, uppercase, tracked `0.18em`, `muted` (or `accent` on focal). Format: `NN · DIMENSION-A / DIMENSION-B` — the two axis-dimension words must match the axis labels exactly.
-- **Axis labels**: Amazon Ember Mono 9px **regular weight** (not bold), tracked `0.18em`, uppercase, `ink`. **One word per tip.** No arrow glyphs in the label, no `HIGH / LOW` parentheticals, no multi-line sublabels. The word itself *is* the label. Position labels *beyond* the arrow tips (not on the axis line):
-  - Top tip: `text-anchor="middle"`, ~12px above the arrow tip
-  - Bottom tip: `text-anchor="middle"`, ~20px below the arrow tip
-  - Left tip: `text-anchor="end"`, ~12px left of the arrow tip, `dominant-baseline="middle"`
-  - Right tip: `text-anchor="start"`, ~12px right of the arrow tip, `dominant-baseline="middle"`
+- **Paper / fundo / padrão**: padrões do `style-guide.md` (`paper`, padrão de pontos 22×22 a 10% de ink).
+- **Linhas dos eixos**: `ink` (`#232F3E`), `stroke-width: 1.2`, `marker-start` + `marker-end` ambos apontando para fora.
+- **Tingimento do quadrante focal**: `rgba(255,153,0,0.04)` em um retângulo completo atrás da célula focal.
+- **Célula focal**: preenchimento `accent-tint`, traço `accent` de 1.2px. Etiqueta de canto em `accent`, peso 600.
+- **Células não focais**: tratamento `store` (preenchimento `ink @ 0.04`, traço `muted @ 0.28`).
+- **Título da célula**: Amazon Ember, 16px, peso 600, `ink`.
+- **Descrição da célula**: Amazon Ember, 11px, `muted`, 1–3 linhas, alinhada à esquerda dentro da célula.
+- **Etiqueta de canto**: Amazon Ember Mono, 8px, maiúsculas, espaçamento `0.18em`, `muted` (ou `accent` na focal). Formato: `NN · DIMENSION-A / DIMENSION-B` — as duas palavras de dimensão dos eixos devem corresponder exatamente aos rótulos dos eixos.
+- **Rótulos dos eixos**: Amazon Ember Mono 9px **peso regular** (não negrito), espaçamento `0.18em`, maiúsculas, `ink`. **Uma palavra por ponta.** Sem glifos de seta no rótulo, sem parênteses `HIGH / LOW`, sem sublabels de várias linhas. A própria palavra *é* o rótulo. Posicione os rótulos *além* das pontas das setas (não sobre a linha do eixo):
+  - Ponta superior: `text-anchor="middle"`, ~12px acima da ponta da seta
+  - Ponta inferior: `text-anchor="middle"`, ~20px abaixo da ponta da seta
+  - Ponta esquerda: `text-anchor="end"`, ~12px à esquerda da ponta da seta, `dominant-baseline="middle"`
+  - Ponta direita: `text-anchor="start"`, ~12px à direita da ponta da seta, `dominant-baseline="middle"`
 
-### Layout conventions
+### Convenções de layout
 
-- Four cells, equal size (240×160 or 280×180 are good defaults), arranged with a 40–60px gap from the axis cross.
-- Axis cross passes *between* the cells, not through them.
-- Arrow tips live ~20–40px outside the outermost cell edge; single-word axis labels sit ~12px beyond each tip (see Axis labels above).
-- Exactly one focal cell. Picking none makes it a placeholder template; picking two erases the signal.
-- Keep the legend strip + horizontal rule at the bottom — same as the standard quadrant. Legend swatches should show both "headline bet" (coral) and "candidate future" (neutral).
+- Quatro células de tamanho igual (240×160 ou 280×180 são bons padrões), dispostas com um vão de 40–60px a partir da cruz dos eixos.
+- A cruz dos eixos passa *entre* as células, não através delas.
+- As pontas das setas ficam ~20–40px fora da borda da célula mais externa; os rótulos de eixo de uma palavra ficam ~12px além de cada ponta (veja Rótulos dos eixos acima).
+- Exatamente uma célula focal. Não escolher nenhuma a transforma em um template de espaço reservado; escolher duas apaga o sinal.
+- Mantenha a faixa de legenda + a linha horizontal na base — igual ao quadrante padrão. As amostras da legenda devem mostrar tanto "aposta principal" (coral) quanto "futuro candidato" (neutro).
 
-### Anti-patterns (variant-specific)
+### Antipadrões (específicos da variante)
 
-- Plain white background — the warm paper + dot pattern is load-bearing across the skill; dropping it to "look consultant" turns the diagram generic.
-- Body-weight H1 — keep Amazon Ember (700) for the page title. The title/diagram contrast is the house signature.
-- Unnamed cells ("Scenario 1/2/3/4") in a shipped diagram — OK as a blank template; not OK as a finished artifact.
-- Coral on more than one cell — same focal rule as everywhere else in the skill.
-- 3×3 or 2×3 grids — those are different diagrams, not this variant.
-- Positioning dots *inside* the cells — if position matters, use the standard quadrant.
-- Bolded axis labels, arrow glyphs in the text (`↑ DRIVER`), or "HIGH / LOW" parentheticals — all forbidden. Jobs-minimal is non-negotiable on this variant.
-- Corner tags that disagree with the axis labels (e.g. axis says `REMOTE / IN-PERSON` but the tag reads `HIGH REMOTE / LOW AI`). Reader parses this as a bug in three seconds.
+- Fundo branco liso — o paper quente + padrão de pontos é essencial em toda a skill; removê-lo para "parecer de consultoria" torna o diagrama genérico.
+- H1 com peso de corpo de texto — mantenha Amazon Ember (700) para o título da página. O contraste título/diagrama é a assinatura da casa.
+- Células sem nome ("Cenário 1/2/3/4") em um diagrama entregue — OK como template em branco; não OK como artefato finalizado.
+- Coral em mais de uma célula — mesma regra focal de todo o resto da skill.
+- Grades 3×3 ou 2×3 — esses são diagramas diferentes, não esta variante.
+- Posicionar pontos *dentro* das células — se a posição importa, use o quadrante padrão.
+- Rótulos de eixo em negrito, glifos de seta no texto (`↑ DRIVER`) ou parênteses "HIGH / LOW" — todos proibidos. O minimalismo estilo Jobs é inegociável nesta variante.
+- Etiquetas de canto que discordam dos rótulos dos eixos (ex.: o eixo diz `REMOTE / IN-PERSON`, mas a etiqueta diz `HIGH REMOTE / LOW AI`). O leitor interpreta isso como um bug em três segundos.

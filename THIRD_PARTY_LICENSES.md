@@ -1,79 +1,81 @@
-# Third-party licenses
+> Os textos das licenças são mantidos no idioma original, pois são juridicamente vinculantes.
 
-aws-diagram-design is MIT-licensed (see [`LICENSE`](LICENSE)). It is a derivative of
+# Licenças de terceiros
+
+O aws-diagram-design é licenciado sob MIT (veja [`LICENSE`](LICENSE)). Ele é um derivado de
 [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) (MIT, © Cathryn Lavery),
-re-skinned to the AWS brand with the official AWS Architecture Icons bundled. It redistributes
-content from the following third-party sources under their respective licenses.
+com novo visual (re-skin) na marca AWS e com os AWS Architecture Icons oficiais incluídos. Ele redistribui
+conteúdo das seguintes fontes de terceiros sob suas respectivas licenças.
 
-## diagram-design (upstream base)
+## diagram-design (base upstream)
 
-- **License:** MIT
-- **Upstream:** https://github.com/cathrynlavery/diagram-design (base version 2.3.2)
-- **Used in:** the entire skill structure — `skills/aws-diagram-design/` (SKILL.md, references, templates, examples, scripts), `commands/`, and `scripts/`.
+- **Licença:** MIT
+- **Upstream:** https://github.com/cathrynlavery/diagram-design (versão base 2.3.2)
+- **Usado em:** toda a estrutura da skill — `skills/aws-diagram-design/` (SKILL.md, referências, templates, exemplos, scripts), `commands/` e `scripts/`.
 
 ## AWS Architecture Icons
 
-- **License / terms:** AWS Architecture Icons terms — https://aws.amazon.com/architecture/icons/
+- **Licença / termos:** AWS Architecture Icons terms — https://aws.amazon.com/architecture/icons/
 - **Copyright:** © Amazon Web Services, Inc. or its affiliates.
-- **Release:** Icon package 07312026.
-- **Used in:** `skills/aws-diagram-design/assets/aws-icons/` (812 SVGs: 305 service, 466 resource, 15 group, 26 category), the gallery `assets/aws-icons.html`, and `references/primitive-aws-icons.md`.
+- **Release:** pacote de ícones 07312026.
+- **Usado em:** `skills/aws-diagram-design/assets/aws-icons/` (812 SVGs: 305 de serviço, 466 de recurso, 15 de grupo, 26 de categoria), a galeria `assets/aws-icons.html` e `references/primitive-aws-icons.md`.
 
-Provided by AWS for use in architecture diagrams per the terms above. The icons must not be
-altered, recolored, or used to imply AWS sponsorship of non-AWS products.
+Fornecidos pela AWS para uso em diagramas de arquitetura conforme os termos acima. Os ícones não podem ser
+alterados, recoloridos ou usados para sugerir patrocínio da AWS a produtos que não sejam da AWS.
 
-## Amazon Ember (font — bundled)
+## Amazon Ember (fonte — incluída)
 
-- **License / terms:** Amazon Ember Licensing Guidelines — shipped alongside the fonts at
+- **Licença / termos:** Amazon Ember Licensing Guidelines — distribuídas junto com as fontes em
   `skills/aws-diagram-design/assets/fonts/Amazon-Ember-Licensing-Guidelines.pdf`.
 - **Copyright:** © Amazon Technologies, Inc.
-- **Source:** Amazon's public typography download,
+- **Origem:** download público de tipografia da Amazon,
   https://developer.amazon.com/en-US/alexa/branding/echo-guidelines/identity-guidelines/typography
-  (`Amazon_Typefaces_Complete_Font_Set_Mar2020.zip`), redistributed unmodified.
-- **Used in:** `skills/aws-diagram-design/assets/fonts/` — woff2 webfonts (Amazon Ember
-  300/400/400i/600/700/800, Amazon Ember Mono 400/700) referenced by generated diagrams via
-  `@font-face`, and desktop TTFs installable with `./install.sh fonts`.
+  (`Amazon_Typefaces_Complete_Font_Set_Mar2020.zip`), redistribuído sem modificações.
+- **Usado em:** `skills/aws-diagram-design/assets/fonts/` — webfonts woff2 (Amazon Ember
+  300/400/400i/600/700/800, Amazon Ember Mono 400/700) referenciadas pelos diagramas gerados via
+  `@font-face`, e TTFs para desktop instaláveis com `./install.sh fonts`.
 
-Diagrams always declare the full fallback stack
-(`'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif`); environments that cannot
-load the bundled files render the fallbacks. Review the licensing guidelines PDF before
-reusing the fonts outside this skill.
+Os diagramas sempre declaram a pilha de fallback completa
+(`'Amazon Ember', 'Helvetica Neue', Helvetica, Arial, sans-serif`); ambientes que não conseguem
+carregar os arquivos incluídos renderizam os fallbacks. Revise o PDF de diretrizes de licenciamento antes de
+reutilizar as fontes fora desta skill.
 
 ## Geist Mono
 
-- **License:** SIL Open Font License 1.1
-- **Upstream:** https://vercel.com/font (loaded at render time from Google Fonts)
-- **Used in:** legacy pre-baked example assets only (`skills/aws-diagram-design/assets/example-*.html`, built under earlier skins) and the opt-in terminal variant — loaded via `fonts.googleapis.com` at render time, not bundled. Newly generated diagrams use the bundled **Amazon Ember Mono** for all mono roles instead.
+- **Licença:** SIL Open Font License 1.1
+- **Upstream:** https://vercel.com/font (carregada no momento da renderização a partir do Google Fonts)
+- **Usado em:** apenas assets de exemplo legados pré-gerados (`skills/aws-diagram-design/assets/example-*.html`, construídos com skins anteriores) e a variante terminal opcional (opt-in) — carregada via `fonts.googleapis.com` no momento da renderização, não incluída. Diagramas gerados recentemente usam a **Amazon Ember Mono** incluída para todos os papéis mono.
 
 ## Tabler Icons
 
-- **License:** MIT
+- **Licença:** MIT
 - **Upstream:** https://github.com/tabler/tabler-icons
-- **Used in:** stroked icons embedded in `skills/aws-diagram-design/references/primitive-icons.md` and `skills/aws-diagram-design/assets/icons.html` (categories: Compute, People, Network, Data, Kubernetes, Action, DevOps, plus the stroked Brand outlines for Docker, Terraform, AWS, Azure, GitHub).
+- **Usado em:** ícones de traço (stroked) incorporados em `skills/aws-diagram-design/references/primitive-icons.md` e `skills/aws-diagram-design/assets/icons.html` (categorias: Compute, People, Network, Data, Kubernetes, Action, DevOps, além dos contornos de marca em traço para Docker, Terraform, AWS, Azure, GitHub).
 
 ## Simple Icons
 
-- **License:** CC0 1.0 Universal (Public Domain Dedication)
+- **Licença:** CC0 1.0 Universal (Public Domain Dedication)
 - **Upstream:** https://github.com/simple-icons/simple-icons
-- **Used in:** filled brand silhouettes embedded in `skills/aws-diagram-design/references/primitive-icons.md` and `skills/aws-diagram-design/assets/icons.html` (Kubernetes, Google Cloud, PostgreSQL, Nginx, Gitea, Keycloak, MinIO, Apache NiFi, Apache Airflow, Trino, Apache Superset, Jupyter, Python, R).
+- **Usado em:** silhuetas de marca preenchidas incorporadas em `skills/aws-diagram-design/references/primitive-icons.md` e `skills/aws-diagram-design/assets/icons.html` (Kubernetes, Google Cloud, PostgreSQL, Nginx, Gitea, Keycloak, MinIO, Apache NiFi, Apache Airflow, Trino, Apache Superset, Jupyter, Python, R).
 
 ## log-z/logos
 
-- **License:** MIT
+- **Licença:** MIT
 - **Upstream:** https://github.com/log-z/logos/tree/main/website-logos
-- **Used in:** filled brand silhouettes embedded in the same generic icon set — MySQL, Redis, StarRocks.
+- **Usado em:** silhuetas de marca preenchidas incorporadas no mesmo conjunto de ícones genéricos — MySQL, Redis, StarRocks.
 
 ## Devicon
 
-- **License:** MIT
+- **Licença:** MIT
 - **Upstream:** https://github.com/devicons/devicon
-- **Used in:** the RStudio and SPSS icons embedded in the generic icon set.
+- **Usado em:** os ícones de RStudio e SPSS incorporados no conjunto de ícones genéricos.
 
-## One-off sourced icons
+## Ícones de origem avulsa
 
-The generic icon set embeds one-off sourced icons for SAS, from [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:SAS_logo_horiz.svg) (public domain), and Stata, from the [IcePanel Technology Icons collection](https://icon.icepanel.io/Technology/svg/Stata.svg) published via techicons.dev.
+O conjunto de ícones genéricos incorpora ícones de origem avulsa para SAS, do [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:SAS_logo_horiz.svg) (domínio público), e Stata, da [coleção IcePanel Technology Icons](https://icon.icepanel.io/Technology/svg/Stata.svg) publicada via techicons.dev.
 
-## Trademarks
+## Marcas registradas
 
-Brand logos remain the trademarks of their respective owners. Their inclusion in this icon set
-is for documentation and illustrative use only. The presence of a brand mark in this repository
-does not imply endorsement, sponsorship, or affiliation.
+Os logotipos de marcas permanecem marcas registradas de seus respectivos proprietários. Sua inclusão neste conjunto de ícones
+é apenas para uso em documentação e ilustração. A presença de uma marca neste repositório
+não implica endosso, patrocínio ou afiliação.

@@ -1,21 +1,21 @@
-# Bar / Column Chart
+# Gráfico de barras / colunas (Bar / Column Chart)
 
-**Best for:** comparing discrete quantities across categories or time intervals — sprint velocity, monthly revenue, feature adoption, cohort counts. Use when each category has a single numeric value and the comparison between bars is the primary message.
+**Ideal para:** comparar quantidades discretas entre categorias ou intervalos de tempo — velocidade de sprint, receita mensal, adoção de funcionalidades, contagens de coortes. Use quando cada categoria tem um único valor numérico e a comparação entre as barras é a mensagem principal.
 
-## Layout conventions
+## Convenções de layout
 
-- **Orientation:** Vertical bars (columns) are default. Horizontal bars are appropriate when category labels are long or you have more than 8 categories.
-- **Plot area margins:** left 80px (y-axis labels), bottom 60px (x-axis labels), top 40px, right 40px — inside a `0 0 1000 500` viewBox.
-- **Bar count cap:** 4–8 bars. More than 8 → group into periods or split into two charts.
-- **Bar width:** ≥ 50% of the column pitch (the gap should never exceed the bar). Typical: pitch=110px, bar=72px.
-- **Y-axis gridlines:** 4–6 horizontal lines at regular intervals. Stroke `rgba(35,47,62,0.08)` (very faint), 0.8px. X-axis baseline at `rgba(35,47,62,0.25)`, 1px.
-- **Y-axis labels:** right-aligned Amazon Ember Mono 8px muted, at x=72 (8px left of the plot area).
-- **X-axis labels:** centered below each bar, Amazon Ember 11px 600 for category names.
-- **Value labels:** Amazon Ember Mono 8px above each bar. Focal bar label in accent; others in muted.
-- **Focal bar:** 1 bar max in accent fill/stroke. All others in `muted @ 0.15` fill + `muted` stroke.
-- **Y-axis line:** thin vertical `<line>` at x=80 from y=40 to y=420.
+- **Orientação:** barras verticais (colunas) são o padrão. Barras horizontais são adequadas quando os rótulos das categorias são longos ou quando há mais de 8 categorias.
+- **Margens da área de plotagem:** esquerda 80px (rótulos do eixo y), base 60px (rótulos do eixo x), topo 40px, direita 40px — dentro de um viewBox `0 0 1000 500`.
+- **Limite de quantidade de barras:** 4–8 barras. Mais de 8 → agrupe em períodos ou divida em dois gráficos.
+- **Largura da barra:** ≥ 50% do pitch da coluna (o espaço entre barras nunca deve exceder a barra). Típico: pitch=110px, barra=72px.
+- **Linhas de grade do eixo y:** 4–6 linhas horizontais em intervalos regulares. Traço `rgba(35,47,62,0.08)` (bem tênue), 0.8px. Linha de base do eixo x em `rgba(35,47,62,0.25)`, 1px.
+- **Rótulos do eixo y:** alinhados à direita, Amazon Ember Mono 8px muted, em x=72 (8px à esquerda da área de plotagem).
+- **Rótulos do eixo x:** centralizados abaixo de cada barra, Amazon Ember 11px 600 para os nomes das categorias.
+- **Rótulos de valor:** Amazon Ember Mono 8px acima de cada barra. Rótulo da barra focal em accent; os demais em muted.
+- **Barra focal:** no máximo 1 barra com preenchimento/traço accent. Todas as outras com preenchimento `muted @ 0.15` + traço `muted`.
+- **Linha do eixo y:** `<line>` vertical fina em x=80, de y=40 até y=420.
 
-### Bar element pattern
+### Padrão de elemento de barra
 
 ```svg
 <!-- Opaque paper mask prevents bleed from background -->
@@ -26,23 +26,23 @@
 <text x="X+W/2" y="Y-8" fill="#545B64" font-size="8" font-family="'Amazon Ember Mono', ui-monospace, monospace" text-anchor="middle">VALUE</text>
 ```
 
-Focal bar: replace fill with `rgba(255,153,0,0.12)`, stroke with `#EC7211`, label fill with `#EC7211`.
+Barra focal: substitua o preenchimento por `rgba(255,153,0,0.12)`, o traço por `#EC7211` e o preenchimento do rótulo por `#EC7211`.
 
-## Anti-patterns
+## Antipadrões
 
-- More than 8 bars without grouping (illegible at normal scale).
-- Truncated y-axis (not starting at 0) — distorts the magnitude comparison.
-- Accent on more than 1 bar ("everything is important" = nothing is).
-- 3-D bar extrusion — no shadows, no depth.
-- Category labels rotated more than 45°; prefer short labels or horizontal chart instead.
+- Mais de 8 barras sem agrupamento (ilegível em escala normal).
+- Eixo y truncado (não começando em 0) — distorce a comparação de magnitude.
+- Accent em mais de 1 barra ("tudo é importante" = nada é).
+- Extrusão 3-D das barras — sem sombras, sem profundidade.
+- Rótulos de categoria girados mais de 45°; prefira rótulos curtos ou um gráfico horizontal.
 
-## Variants
+## Variantes
 
-- **Grouped bars:** two bars per category, side by side. Use `accent` for the primary series and `series-1` for the secondary. Max 2 groups.
-- **Stacked bars:** segments stacked to total. Use `accent` for the focal segment; muted tints for others. Document the total at the top of each stack.
+- **Barras agrupadas:** duas barras por categoria, lado a lado. Use `accent` para a série principal e `series-1` para a secundária. Máximo de 2 grupos.
+- **Barras empilhadas:** segmentos empilhados até o total. Use `accent` para o segmento focal; tons de muted para os demais. Indique o total no topo de cada pilha.
 
-## Examples
+## Exemplos
 
-- `assets/example-bar.html` — minimal light
-- `assets/example-bar-dark.html` — minimal dark
-- `assets/example-bar-full.html` — full editorial
+- `assets/example-bar.html` — minimal claro
+- `assets/example-bar-dark.html` — minimal escuro
+- `assets/example-bar-full.html` — editorial completo

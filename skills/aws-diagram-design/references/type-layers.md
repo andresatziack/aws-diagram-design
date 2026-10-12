@@ -1,26 +1,26 @@
-# Layer Stack
+# Pilha de camadas (Layer Stack)
 
-**Best for:** OSI model, CSS cascade, context hierarchy, tech stack, abstraction layers, memory hierarchy.
+**Ideal para:** modelo OSI, cascata do CSS, hierarquia de contexto, stack tecnológico, camadas de abstração, hierarquia de memória.
 
-## Layout conventions
-- Horizontal bands stacked vertically. Each layer is a full-width rectangle (same x, same width). 4–6 layers total.
-- Layer height 56–72px, width typically 800–880px inside a 1000px viewBox.
-- Each row contains (left→right):
-  1. **Index tag** on the far left (`L3`, `07`, `APPLICATION`) — Amazon Ember Mono 8–9px eyebrow.
-  2. **Layer name** slightly right of center-left — Amazon Ember 14–16px 600.
-  3. **Sublabel / note** on the far right — Amazon Ember Mono 9–10px muted.
-- Border between layers: 1px hairline `rgba(35,47,62,0.12)`. Outer silhouette 1px ink or muted.
-- Fills: either alternating subtle shades (paper / paper-2) OR all paper with hairline dividers. Pick one and hold it.
-- Direction indicator on the LEFT margin (outside the stack): small up/down arrow + Amazon Ember Mono label (`abstraction ↑`, `packets ↓`).
-- Coral on **one** focal layer (stroke + subtle tint fill) — the bottleneck, the pay-rent layer, the one under discussion.
+## Convenções de layout
+- Faixas horizontais empilhadas verticalmente. Cada camada é um retângulo de largura total (mesmo x, mesma largura). 4–6 camadas no total.
+- Altura da camada 56–72px, largura tipicamente 800–880px dentro de um viewBox de 1000px.
+- Cada linha contém (esquerda→direita):
+  1. **Tag de índice** na extrema esquerda (`L3`, `07`, `APPLICATION`) — eyebrow em Amazon Ember Mono 8–9px.
+  2. **Nome da camada** um pouco à direita do centro-esquerda — Amazon Ember 14–16px 600.
+  3. **Sublabel / nota** na extrema direita — Amazon Ember Mono 9–10px muted.
+- Borda entre camadas: linha fina (hairline) de 1px `rgba(35,47,62,0.12)`. Silhueta externa de 1px em ink ou muted.
+- Preenchimentos: tons sutis alternados (paper / paper-2) OU tudo em paper com divisores em linha fina (hairline). Escolha um e mantenha-o.
+- Indicador de direção na margem ESQUERDA (fora da pilha): pequena seta para cima/baixo + rótulo em Amazon Ember Mono (`abstraction ↑`, `packets ↓`).
+- Coral em **uma** camada focal (traço + preenchimento com tom sutil) — o gargalo, a camada que "paga o aluguel", aquela em discussão.
 
-## Anti-patterns
-- Layers that aren't actually hierarchical (use swimlane or architecture).
-- Skipped numbering (missing L4 between L3 and L5 without explanation).
-- Every layer a different color — hierarchy invisible.
-- Inconsistent layer heights without reason.
+## Antipadrões
+- Camadas que não são de fato hierárquicas (use swimlane ou arquitetura).
+- Numeração pulada (L4 ausente entre L3 e L5 sem explicação).
+- Cada camada de uma cor diferente — a hierarquia fica invisível.
+- Alturas de camada inconsistentes sem motivo.
 
-## Examples
-- `assets/example-layers.html` — minimal light
-- `assets/example-layers-dark.html` — minimal dark
-- `assets/example-layers-full.html` — full editorial
+## Exemplos
+- `assets/example-layers.html` — minimal claro
+- `assets/example-layers-dark.html` — minimal escuro
+- `assets/example-layers-full.html` — editorial completo

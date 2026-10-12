@@ -1,18 +1,18 @@
-# Scatter Plot
+# Gráfico de dispersão (Scatter Plot)
 
-**Best for:** correlation and distribution — two continuous variables plotted against each other. Use when the relationship (or lack of one) between variables is the message, or when you need to identify clusters, outliers, and high/low performers.
+**Ideal para:** correlação e distribuição — duas variáveis contínuas plotadas uma contra a outra. Use quando a relação (ou a ausência dela) entre as variáveis é a mensagem, ou quando você precisa identificar agrupamentos, outliers e casos de alto/baixo desempenho.
 
-## Layout conventions
+## Convenções de layout
 
-- **Plot area margins:** left 80px, bottom 60px, top 40px, right 40px — inside `0 0 1000 500` viewBox.
-- **Point count:** 5–30 points. Fewer → just describe the relationship in prose; more → bin into a density contour.
-- **Axes:** X at y=420 (baseline), Y at x=80. Both use Amazon Ember Mono 8px gridline labels. Gridlines 4–6 per axis at equal intervals.
-- **Point shape:** `<circle>` r=5 for standard points, r=6 for focal. Focal point in `accent` fill. Others in `muted @ 0.20` fill + `muted` stroke.
-- **Labels on points (optional):** Amazon Ember Mono 8px next to a point. Use a paper-fill rect mask behind the label. Label at most 2–3 points; not all.
-- **Trend line (optional):** `<line>` from lower-left to upper-right, stroke `rgba(35,47,62,0.25)` dashed 4,3. Never force a perfect fit — only add if the trend is visually obvious.
-- **Quadrant dividers (optional):** light dashed lines at the median x and y to split into quadrants. Label each quadrant in Amazon Ember Mono 8px, muted.
+- **Margens da área de plotagem:** esquerda 80px, base 60px, topo 40px, direita 40px — dentro do viewBox `0 0 1000 500`.
+- **Quantidade de pontos:** 5–30 pontos. Menos → apenas descreva a relação em texto; mais → agrupe em um contorno de densidade.
+- **Eixos:** X em y=420 (linha de base), Y em x=80. Ambos usam rótulos de linhas de grade em Amazon Ember Mono 8px. 4–6 linhas de grade por eixo, em intervalos iguais.
+- **Forma do ponto:** `<circle>` r=5 para pontos padrão, r=6 para o focal. Ponto focal com preenchimento `accent`. Os demais com preenchimento `muted @ 0.20` + traço `muted`.
+- **Rótulos nos pontos (opcional):** Amazon Ember Mono 8px ao lado de um ponto. Use uma máscara retangular com preenchimento paper atrás do rótulo. Rotule no máximo 2–3 pontos; não todos.
+- **Linha de tendência (opcional):** `<line>` do canto inferior esquerdo ao superior direito, traço `rgba(35,47,62,0.25)` tracejado 4,3. Nunca force um ajuste perfeito — só adicione se a tendência for visualmente óbvia.
+- **Divisores de quadrante (opcional):** linhas tracejadas leves na mediana de x e de y para dividir em quadrantes. Rotule cada quadrante em Amazon Ember Mono 8px, muted.
 
-### Point pattern
+### Padrão de ponto
 
 ```svg
 <!-- Non-focal point — paper mask + circle -->
@@ -24,16 +24,16 @@
 <circle cx="X" cy="Y" r="6" fill="rgba(255,153,0,0.15)" stroke="#EC7211" stroke-width="1.2"/>
 ```
 
-## Anti-patterns
+## Antipadrões
 
-- More than 30 points without clustering (jitter/mush).
-- Forced trend line when the data is genuinely scattered — dishonest.
-- Point labels on every point (label the focal and 1–2 notable outliers only).
-- Bubble size encoding (use a third axis label or color instead; bubble area perception is unreliable).
-- Axes that don't include zero when the absolute position matters; axes that do include zero when the range is tiny and far from zero.
+- Mais de 30 pontos sem agrupamento (vira ruído/massa disforme).
+- Linha de tendência forçada quando os dados estão genuinamente dispersos — é desonesto.
+- Rótulos em todos os pontos (rotule apenas o focal e 1–2 outliers relevantes).
+- Codificação por tamanho de bolha (use um rótulo de terceiro eixo ou cor; a percepção de área de bolha não é confiável).
+- Eixos que não incluem o zero quando a posição absoluta importa; eixos que incluem o zero quando a faixa é minúscula e distante de zero.
 
-## Examples
+## Exemplos
 
-- `assets/example-scatter.html` — minimal light
-- `assets/example-scatter-dark.html` — minimal dark
-- `assets/example-scatter-full.html` — full editorial
+- `assets/example-scatter.html` — minimal claro
+- `assets/example-scatter-dark.html` — minimal escuro
+- `assets/example-scatter-full.html` — editorial completo

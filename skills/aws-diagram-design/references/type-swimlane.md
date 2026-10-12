@@ -1,20 +1,20 @@
-# Swimlane
+# Swimlane (raias)
 
-**Best for:** cross-functional processes, RACI-style flows, vendor handoffs, multi-team shipping workflows.
+**Ideal para:** processos multifuncionais, fluxos no estilo RACI, passagens de bastão (handoffs) entre fornecedores, fluxos de entrega com várias equipes.
 
-## Layout conventions
-- Horizontal lanes (or vertical columns) — one per actor/team. Label each lane in the left margin (or top) with a Amazon Ember Mono eyebrow.
-- Lane dividers: 1px hairlines.
-- Process steps are rectangles placed inside the lane of the actor performing them; arrows show flow.
-- Handoffs (arrows crossing lane boundaries) are the most important edges — consider coral on the handoff that introduces the most coupling or latency.
-- Don't force equal step count per lane; a lane with one step is fine.
+## Convenções de layout
+- Raias horizontais (ou colunas verticais) — uma por ator/equipe. Rotule cada raia na margem esquerda (ou no topo) com um eyebrow em Amazon Ember Mono.
+- Divisores de raia: linhas finas (hairlines) de 1px.
+- As etapas do processo são retângulos posicionados dentro da raia do ator que as executa; setas mostram o fluxo.
+- Handoffs (setas que cruzam os limites das raias) são as arestas mais importantes — considere coral no handoff que introduz mais acoplamento ou latência.
+- Não force o mesmo número de etapas por raia; uma raia com uma única etapa é aceitável.
 
-## Anti-patterns
-- Lanes without labels.
-- A step drawn across two lanes (pick one owner).
-- Arrows that snake back and forth — reorder steps so the flow is mostly straight.
+## Antipadrões
+- Raias sem rótulos.
+- Uma etapa desenhada atravessando duas raias (escolha um único responsável).
+- Setas que serpenteiam para frente e para trás — reordene as etapas para que o fluxo seja majoritariamente reto.
 
-## Examples
-- `assets/example-swimlane.html` — minimal light
-- `assets/example-swimlane-dark.html` — minimal dark
-- `assets/example-swimlane-full.html` — full editorial
+## Exemplos
+- `assets/example-swimlane.html` — minimal claro
+- `assets/example-swimlane-dark.html` — minimal escuro
+- `assets/example-swimlane-full.html` — editorial completo

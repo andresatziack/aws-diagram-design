@@ -1,17 +1,17 @@
-# Architecture
+# Arquitetura
 
-**Best for:** system overviews, data-flow diagrams, integration maps, infra topology.
+**Ideal para:** visões gerais de sistemas, diagramas de fluxo de dados, mapas de integração, topologia de infraestrutura.
 
-## Layout conventions
-- Group components by tier or trust boundary (frontend → backend → data; public → private).
-- Primary flow runs left→right or top→down. Pick one and hold it.
-- Draw arrows before boxes so z-order puts connections behind components.
-- 1–2 coral focal nodes: the primary integration point, the primary data store, or the key decision node.
-- Dashed boundary rectangles mark regions (VPC, security group, trust zone); labels sit on a paper-colored mask over the boundary line.
+## Convenções de layout
+- Agrupe componentes por camada ou fronteira de confiança (frontend → backend → dados; público → privado).
+- O fluxo principal corre da esquerda→direita ou de cima→baixo. Escolha um e mantenha-o.
+- Desenhe as setas antes das caixas, para que a ordem z coloque as conexões atrás dos componentes.
+- 1–2 nós focais em coral: o ponto de integração principal, o armazenamento de dados principal ou o nó de decisão-chave.
+- Retângulos de fronteira tracejados marcam regiões (VPC, security group, zona de confiança); os rótulos ficam sobre uma máscara da cor do paper sobre a linha da fronteira.
 
-## Connector style
+## Estilo dos conectores
 
-**Rounded right-angle (orthogonal) connectors are MANDATORY** for all non-horizontal/vertical connections — diagonal `<line>` between off-axis nodes is a hard fail (see SKILL.md §6 Mandatory connector rules). Two-bend elbow path with `r=8`:
+**Conectores em ângulo reto arredondado (ortogonais) são OBRIGATÓRIOS** para todas as conexões que não sejam horizontais/verticais — `<line>` diagonal entre nós fora do mesmo eixo é reprovação imediata (veja SKILL.md §6 Regras obrigatórias de conectores). Caminho em cotovelo com duas dobras e `r=8`:
 
 ```svg
 <!-- right+down: from (x1,y1) to (x2,y2), mid = (x1+x2)/2 -->
@@ -19,9 +19,9 @@
       fill="none" stroke="…" stroke-width="1.2" marker-end="url(#arrow)"/>
 ```
 
-Flip the vertical signs for right+up. Use a plain `<line>` only when endpoints share the same x or y. Arrow labels sit on the vertical segment, centered horizontally on `mid` and vertically between the two corners.
+Inverta os sinais verticais para direita+cima. Use um `<line>` simples apenas quando as extremidades compartilham o mesmo x ou y. Os rótulos das setas ficam no segmento vertical, centralizados horizontalmente em `mid` e verticalmente entre os dois cantos.
 
-**Port selection — use top/bottom for vertical connectors.** When the destination is noticeably above or below the source, exit the source's top/bottom edge and enter the destination's top/bottom edge. Use a single-bend L-path (horizontal → corner → vertical into the node), not a left/right side port:
+**Seleção de portas — use topo/base para conectores verticais.** Quando o destino está visivelmente acima ou abaixo da origem, saia pela borda superior/inferior da origem e entre pela borda superior/inferior do destino. Use um caminho em L com uma única dobra (horizontal → canto → vertical entrando no nó), não uma porta lateral esquerda/direita:
 
 ```svg
 <!-- entering a node from its bottom (destination above source) -->
@@ -29,15 +29,15 @@ Flip the vertical signs for right+up. Use a plain `<line>` only when endpoints s
       fill="none" stroke="…" stroke-width="1.2" marker-end="url(#arrow)"/>
 ```
 
-Reserve left/right ports for connections that travel primarily horizontally. Entering a node from the side on a mainly-vertical path looks like the arrow punctures the node face rather than arriving from above or below.
+Reserve as portas esquerda/direita para conexões que percorrem principalmente a horizontal. Entrar em um nó pela lateral em um caminho predominantemente vertical dá a impressão de que a seta perfura a face do nó, em vez de chegar por cima ou por baixo.
 
-**Dashed paths — same routing rules.** Optional, return, async, and passive flows use `stroke-dasharray="4,3"` and a lighter stroke weight (`stroke-width="1"`). Apply the **same orthogonal routing, port-selection, and bridge/hop rules** as solid paths — the dash pattern only communicates semantic weight, not a different routing grammar. When a dashed path and a solid path must cross, bridge the dashed one (it is by definition the less important connection).
+**Caminhos tracejados — mesmas regras de roteamento.** Fluxos opcionais, de retorno, assíncronos e passivos usam `stroke-dasharray="4,3"` e um traço mais leve (`stroke-width="1"`). Aplique as **mesmas regras de roteamento ortogonal, seleção de portas e bridge/hop** dos caminhos sólidos — o padrão tracejado comunica apenas peso semântico, não uma gramática de roteamento diferente. Quando um caminho tracejado e um sólido precisam se cruzar, faça a ponte (bridge) no tracejado (ele é, por definição, a conexão menos importante).
 
-**Zone label margin.** Leave ≥16px between the bottom of the zone eyebrow label and the top of the first enclosed node. Size the zone rect tall enough to contain this header gap (zone `y` = node_top − 32; label mask `y` = zone_y + 4).
+**Margem do rótulo de zona.** Deixe ≥16px entre a base do rótulo eyebrow da zona e o topo do primeiro nó contido. Dimensione o retângulo da zona com altura suficiente para conter esse espaço de cabeçalho (`y` da zona = node_top − 32; `y` da máscara do rótulo = zone_y + 4).
 
-## Crossing arrows — bridge / hop
+## Setas cruzadas (Crossing arrows) — bridge / hop
 
-When two orthogonal arrows must cross, add a small arc (hop/bridge) on the **less important** arrow at the crossing point. The more important arrow is drawn uninterrupted.
+Quando duas setas ortogonais precisam se cruzar, adicione um pequeno arco (hop/bridge) na seta **menos importante** no ponto de cruzamento. A seta mais importante é desenhada sem interrupção.
 
 ```svg
 <!-- Horizontal hop over a vertical crossing at x=cx, on a line at y -->
@@ -45,13 +45,13 @@ When two orthogonal arrows must cross, add a small arc (hop/bridge) on the **les
       fill="none" stroke="…" stroke-width="1.2" marker-end="url(#arrow)"/>
 ```
 
-`a 8,8 0 0,1 16,0` is an SVG arc: rx=ry=8, large-arc=0, sweep=1 (curves visually upward), advancing 16px right — creating an 8px-radius semicircular bump over the crossing. For a vertical hop over a horizontal, use `a 8,8 0 0,0 0,16` on the vertical path.
+`a 8,8 0 0,1 16,0` é um arco SVG: rx=ry=8, large-arc=0, sweep=1 (curva visualmente para cima), avançando 16px para a direita — criando uma saliência semicircular de raio 8px sobre o cruzamento. Para um hop vertical sobre uma horizontal, use `a 8,8 0 0,0 0,16` no caminho vertical.
 
-Decide which arrow to bridge: bridge the one that is less semantically important (passive, secondary, write-back), or the one with lighter stroke weight (dashed, muted). Never bridge both.
+Decida qual seta receberá a ponte: faça a ponte na que for semanticamente menos importante (passiva, secundária, write-back) ou na que tiver o traço mais leve (tracejada, muted). Nunca faça a ponte em ambas.
 
-## Zone grouping
+## Agrupamento em zonas
 
-Group 2+ nodes that serve the same tier or trust boundary with a zone rect — drawn **before** arrows and nodes (z-order: bg → zones → arrows → nodes):
+Agrupe 2+ nós que servem à mesma camada ou fronteira de confiança com um retângulo de zona — desenhado **antes** das setas e dos nós (ordem z: fundo → zonas → setas → nós):
 
 ```svg
 <rect x="{x}" y="{y}" width="{w}" height="{h}" rx="8"
@@ -61,18 +61,18 @@ Group 2+ nodes that serve the same tier or trust boundary with a zone rect — d
       font-family="'Amazon Ember Mono', ui-monospace, monospace" text-anchor="middle" letter-spacing="0.14em">LAYER</text>
 ```
 
-Rules:
-- Leave 12–16px above the first enclosed node — the eyebrow label sits in this margin.
-- Zone fill: `rgba(35,47,62,0.02)` (2% ink wash). Any stronger competes with node fills.
-- Max 3 zones per diagram. More and it reads like a swimlane (use that type instead).
-- Dark mode: swap `rgba(35,47,62,…)` → `rgba(255,255,255,…)` same opacities; label mask fill = `paper` (dark).
+Regras:
+- Deixe 12–16px acima do primeiro nó contido — o rótulo eyebrow fica nessa margem.
+- Preenchimento da zona: `rgba(35,47,62,0.02)` (véu de 2% de ink). Qualquer coisa mais forte compete com o preenchimento dos nós.
+- Máximo de 3 zonas por diagrama. Mais do que isso e passa a parecer um swimlane (use esse tipo).
+- Modo escuro: troque `rgba(35,47,62,…)` → `rgba(255,255,255,…)` com as mesmas opacidades; preenchimento da máscara do rótulo = `paper` (escuro).
 
-## Anti-patterns
-- Every box in coral ("this is important too") — hierarchy collapses.
-- Bidirectional arrow when one direction is obvious from context.
-- Legend floating inside the diagram area.
+## Antipadrões
+- Todas as caixas em coral ("isto também é importante") — a hierarquia desmorona.
+- Seta bidirecional quando uma direção é óbvia pelo contexto.
+- Legenda flutuando dentro da área do diagrama.
 
-## Examples
-- `assets/example-architecture.html` — minimal light
-- `assets/example-architecture-dark.html` — minimal dark
-- `assets/example-architecture-full.html` — full editorial
+## Exemplos
+- `assets/example-architecture.html` — minimal claro
+- `assets/example-architecture-dark.html` — minimal escuro
+- `assets/example-architecture-full.html` — editorial completo

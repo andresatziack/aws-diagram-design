@@ -1,14 +1,14 @@
-# Process
+# Processo (Process)
 
-**Best for:** sequential business processes with multiple actors/divisions where the reader needs to see *who* does *what*, *what data* enters and leaves each step, and *which tools* are used — not just the step order. Covers responsibility audits, data-quality gate reviews, cross-divisional handoff maps, and end-to-end workflow documentation.
+**Ideal para:** processos de negócio sequenciais com vários atores/divisões, nos quais o leitor precisa ver *quem* faz *o quê*, *quais dados* entram e saem de cada etapa e *quais ferramentas* são usadas — não apenas a ordem das etapas. Cobre auditorias de responsabilidade, revisões de portões de qualidade de dados, mapas de transferência entre divisões e documentação de fluxos de trabalho de ponta a ponta.
 
-Prefer swimlane (simpler) when the data types and tools don't matter. Prefer process when each step's input/output payload and responsible team must be legible at a glance.
+Prefira swimlane (raias, mais simples) quando os tipos de dados e as ferramentas não importam. Prefira process quando o payload de entrada/saída e a equipe responsável de cada etapa precisam ser legíveis de relance.
 
-This type is **parametric** — the inputs schema in §1 drives every coordinate via the formulas in §2. Two generations from the same inputs must produce visually identical SVG. The rule shapes mirror `type-data-flow.md` so color override, IN/OUT chip semantic, and reproducibility checklist read identically across types.
+Este tipo é **paramétrico** — o esquema de entradas em §1 determina todas as coordenadas por meio das fórmulas em §2. Duas gerações a partir das mesmas entradas devem produzir SVG visualmente idêntico. O formato das regras espelha `type-data-flow.md`, de modo que a sobrescrita de cor, a semântica dos chips IN/OUT e o checklist de reprodutibilidade sejam lidos de forma idêntica entre os tipos.
 
 ---
 
-## 1. Inputs — the parameter contract
+## 1. Entradas — o contrato de parâmetros
 
 ```yaml
 lanes:                              # 1..6 horizontal swimlanes (top to bottom)
@@ -47,17 +47,17 @@ arrows:                             # explicit edges; styles bind to topology (s
 dark: false
 ```
 
-**Reserved field semantics:**
-- `lanes[k].key` — the 3-letter role badge text shown inside every node in that lane.
-- `lanes[k].name` — 1 or 2 line lane label; uppercase mono.
-- `steps[j].focal: true` — exactly **one** step may declare this. Header chip renders in accent.
-- `nodes[i].focal: true` — exactly **one** node may declare this. Renders with accent border (§5).
-- `nodes[i].chips` — `{in: "<CODE>", out: "<CODE>"}` object (either side `null` to omit). Codes from §8. **Skip** the input chip on the first step's nodes, **skip** the output chip on the last step's nodes (no upstream / downstream).
-- `nodes[i].color` — optional **per-node color override**. Any valid `"#hex"` string; the §4 palette is recommended for cross-diagram consistency.
+**Semântica dos campos reservados:**
+- `lanes[k].key` — o texto de 3 letras do selo de papel exibido dentro de cada nó daquela raia.
+- `lanes[k].name` — rótulo da raia com 1 ou 2 linhas; mono em maiúsculas.
+- `steps[j].focal: true` — exatamente **uma** etapa pode declarar isto. O chip do cabeçalho é renderizado em `accent`.
+- `nodes[i].focal: true` — exatamente **um** nó pode declarar isto. Renderizado com borda `accent` (§5).
+- `nodes[i].chips` — objeto `{in: "<CODE>", out: "<CODE>"}` (qualquer um dos lados `null` para omitir). Códigos de §8. **Omita** o chip de entrada nos nós da primeira etapa e **omita** o chip de saída nos nós da última etapa (não há upstream / downstream).
+- `nodes[i].color` — **sobrescrita de cor por nó** opcional. Qualquer string `"#hex"` válida; a paleta de §4 é recomendada para consistência entre diagramas.
 
 ---
 
-## 2. Layout formulas — deterministic geometry
+## 2. Fórmulas de layout — geometria determinística
 
 ```
 label_col_w      = 140
@@ -101,17 +101,17 @@ legend_row_y     = [legend_y_top + 16, legend_y_top + 37,
                     legend_y_top + 58, legend_y_top + 79]
 ```
 
-### 2.1 Background structure
+### 2.1 Estrutura do fundo
 
-- Paper fill across full viewBox.
-- Dot pattern: 22×22 grid, `circle r=0.8`, `fill rgba(35,47,62,0.10)`. Opacity 0.55.
-- Alternating lane tints: odd-indexed lanes (0, 2, …) receive `rgba(35,47,62,0.018)` fill from `x=140` to `viewBox_w`.
-- Lane dividers: horizontal hairlines at every `lane_y_top(k)` and at `legend_y_top`; stroke `rgba(35,47,62,0.12)` width 0.8.
-- Label column right border: vertical hairline at `x = label_col_w`, stroke `rgba(35,47,62,0.20)` width 1, from `y = header_h` to `y = legend_y_top`.
+- Preenchimento `paper` em todo o viewBox.
+- Padrão de pontos: grade de 22×22, `circle r=0.8`, `fill rgba(35,47,62,0.10)`. Opacidade 0.55.
+- Tons alternados nas raias: as raias de índice ímpar (0, 2, …) recebem preenchimento `rgba(35,47,62,0.018)` de `x=140` até `viewBox_w`.
+- Divisores de raia: linhas finas (hairlines) horizontais em cada `lane_y_top(k)` e em `legend_y_top`; traço `rgba(35,47,62,0.12)` largura 0.8.
+- Borda direita da coluna de rótulos: linha fina (hairline) vertical em `x = label_col_w`, traço `rgba(35,47,62,0.20)` largura 1, de `y = header_h` até `y = legend_y_top`.
 
-### 2.2 Step header chip + label
+### 2.2 Chip + rótulo do cabeçalho da etapa
 
-Per step `j`:
+Por etapa `j`:
 
 ```
 chip_w(j)        = 20 if len(step.number) >= 2 else 16
@@ -120,28 +120,28 @@ number_anchor    = (step_cx(j), chip_y + 11)
 label_anchor     = (step_cx(j), 32)              # 8-px gap below chip
 ```
 
-**Chip** (the numbered pill at the top of each column):
-- Default fill: `rgba(35,47,62,0.12)`, number text ink.
-- Focal fill: `rgba(255,153,0,0.20)`, number text accent (§5).
-- Per-step `color` override (§4): replaces the fill with `rgba(C, 0.20)` and the number fill with `C`.
+**Chip** (a pílula numerada no topo de cada coluna):
+- Preenchimento padrão: `rgba(35,47,62,0.12)`, texto do número em `ink`.
+- Preenchimento focal: `rgba(255,153,0,0.20)`, texto do número em `accent` (§5).
+- Sobrescrita de `color` por etapa (§4): substitui o preenchimento por `rgba(C, 0.20)` e o preenchimento do número por `C`.
 
-**Label** (the uppercase mono text below the chip):
-- Renders `steps[j].label` (uppercased), anchored at `label_anchor`.
-- Font: Amazon Ember Mono 6 px, weight 500, `letter-spacing="0.12em"`, `text-anchor="middle"`.
-- Default fill: muted (`#545B64` light / `#B6BEC9` dark).
-- Focal fill: accent (`#EC7211` light / `#FF9900` dark).
-- Per-step `color` override: fill = `C` (matches the chip number color).
-- Keep labels short (≤ 9 chars). Long labels truncate; if you need more, abbreviate.
+**Rótulo** (o texto mono em maiúsculas abaixo do chip):
+- Renderiza `steps[j].label` (em maiúsculas), ancorado em `label_anchor`.
+- Fonte: Amazon Ember Mono 6 px, peso 500, `letter-spacing="0.12em"`, `text-anchor="middle"`.
+- Preenchimento padrão: `muted` (`#545B64` claro / `#B6BEC9` escuro).
+- Preenchimento focal: `accent` (`#EC7211` claro / `#FF9900` escuro).
+- Sobrescrita de `color` por etapa: fill = `C` (coincide com a cor do número no chip).
+- Mantenha os rótulos curtos (≤ 9 caracteres). Rótulos longos são truncados; se precisar de mais, abrevie.
 
-### 2.3 Lane labels
+### 2.3 Rótulos das raias
 
-One or two-line mono label, all uppercase, letter-spacing 0.08em, font-size 8, fill muted. Centered at `(lane_label_x, lane_y_mid(k))`:
-- Single-line: anchored at `(lane_label_x, lane_y_mid(k) + 4)`
-- Two-line: lines at `(lane_label_x, lane_y_mid(k) - 4)` and `(lane_label_x, lane_y_mid(k) + 4)`
+Rótulo mono de uma ou duas linhas, todo em maiúsculas, letter-spacing 0.08em, font-size 8, preenchimento `muted`. Centralizado em `(lane_label_x, lane_y_mid(k))`:
+- Linha única: ancorado em `(lane_label_x, lane_y_mid(k) + 4)`
+- Duas linhas: linhas em `(lane_label_x, lane_y_mid(k) - 4)` e `(lane_label_x, lane_y_mid(k) + 4)`
 
-Per-lane `color` override (§4): replaces the label fill with `C` and the lane stripe tint with `rgba(C, 0.04)`.
+Sobrescrita de `color` por raia (§4): substitui o preenchimento do rótulo por `C` e o tom da faixa da raia por `rgba(C, 0.04)`.
 
-### 2.4 Node content layout (inside the 100×64 rect)
+### 2.4 Layout do conteúdo do nó (dentro do rect de 100×64)
 
 ```
 role_chip          rect 14×10 at (node_x+4, node_y+4),  rx=2
@@ -154,25 +154,25 @@ data chip IN       rect 16×8 at (node_x+4,   node_y+54), rx=2      # payload en
 data chip OUT      rect 16×8 at (node_x+80,  node_y+54), rx=2      # payload leaving
 ```
 
-**Role chip text rule:** the badge inside each node renders `lanes[k].key` where `k` is the node's lane index — **not** the step number (the step number already lives in the column header chip at the top, §2.2). Showing the lane key as the node badge gives each node a self-contained "who" identifier that survives when a single node is excerpted out of context. Mirrors the same rule in `type-data-flow.md` §2.4.
+**Regra do texto do chip de papel:** o selo dentro de cada nó renderiza `lanes[k].key`, onde `k` é o índice da raia do nó — **não** o número da etapa (o número da etapa já está no chip do cabeçalho da coluna, no topo, §2.2). Mostrar a chave da raia como selo do nó dá a cada nó um identificador de "quem" autossuficiente, que se mantém quando um único nó é extraído fora de contexto. Espelha a mesma regra em `type-data-flow.md` §2.4.
 
-Empty cells (no node entry) render **nothing**. No placeholder rect, no role chip, no label.
+Células vazias (sem entrada de nó) não renderizam **nada**. Nenhum rect de placeholder, nenhum chip de papel, nenhum rótulo.
 
-**Chip-vs-tool-text collision rule:** chips sit at `node_y + 54..62`; tool text baseline is at `node_y + 52`. If a node has a two-line title (rare), increase node_h to 72 OR omit the chips for that node. Default behaviour: omit chips on collision.
+**Regra de colisão chip vs. texto da ferramenta:** os chips ficam em `node_y + 54..62`; a linha de base do texto da ferramenta está em `node_y + 52`. Se um nó tiver um título de duas linhas (raro), aumente node_h para 72 OU omita os chips desse nó. Comportamento padrão: omitir os chips em caso de colisão.
 
 ---
 
-## 3. Connector rules (mandatory)
+## 3. Regras de conectores (obrigatórias)
 
-Three styles, bound to topology. Connectors drawn **before** all node rects (z-order rule).
+Três estilos, vinculados à topologia. Os conectores são desenhados **antes** de todos os rects de nós (regra de ordem Z).
 
-| `style` | Stroke | Width | Dash | Marker | When required |
+| `style` | Traço | Largura | Tracejado | Marcador | Quando é exigido |
 |---|---|---|---|---|---|
-| `normal` | `#545B64` (muted) | 1.0 | — | `arrow` | Standard data hand-off between steps or actors. Unlabelled. |
-| `focal-in` / `focal-out` | `#EC7211` (accent) | 1.2 | — | `arrow-accent` | Every edge whose endpoint is the focal node (`focal-in`) or origin is the focal node (`focal-out`). |
-| `trigger` | `#545B64` (muted) | 1.0 | `4,3` | `arrow-sm` | Orchestration trigger (scheduler → tool, manual override → upstream step). Unlabelled. |
+| `normal` | `#545B64` (muted) | 1.0 | — | `arrow` | Transferência padrão de dados entre etapas ou atores. Sem rótulo. |
+| `focal-in` / `focal-out` | `#EC7211` (accent) | 1.2 | — | `arrow-accent` | Toda aresta cujo destino é o nó focal (`focal-in`) ou cuja origem é o nó focal (`focal-out`). |
+| `trigger` | `#545B64` (muted) | 1.0 | `4,3` | `arrow-sm` | Gatilho de orquestração (agendador → ferramenta, sobrescrita manual → etapa a montante). Sem rótulo. |
 
-**Defs block** (required, three markers):
+**Bloco defs** (obrigatório, três marcadores):
 
 ```svg
 <defs>
@@ -185,15 +185,15 @@ Three styles, bound to topology. Connectors drawn **before** all node rects (z-o
 </defs>
 ```
 
-### 3.1 Routing rules (non-negotiable)
+### 3.1 Regras de roteamento (inegociáveis)
 
-**Single-bend right-angle:** exit RIGHT → corridor → enter TOP (↓ destination below) or BOTTOM (↑ destination above).
+**Ângulo reto com uma única curva:** sai pela DIREITA → corredor → entra por CIMA (↓ destino abaixo) ou por BAIXO (↑ destino acima).
 
-- Source-side: exit at `(node_x + 100, lane_y_mid(src_lane))` — node's right edge, vertical center.
-- Destination-side: enter at `(step_cx(dst_step), node_y(dst_lane))` for downward, or `(step_cx(dst_step), node_y(dst_lane) + 64)` for upward.
-- Corner radius: 8-px Q-bezier at the bend.
-- Same-lane edges (rare — same lane, adjacent steps): horizontal `<line>` from src right to dst left.
-- **No diagonals.** **No left-side entry.** **No exit from the top/bottom of a node.**
+- Lado da origem: sai em `(node_x + 100, lane_y_mid(src_lane))` — borda direita do nó, centro vertical.
+- Lado do destino: entra em `(step_cx(dst_step), node_y(dst_lane))` para baixo, ou `(step_cx(dst_step), node_y(dst_lane) + 64)` para cima.
+- Raio do canto: Q-bezier de 8 px na curva.
+- Arestas na mesma raia (raras — mesma raia, etapas adjacentes): `<line>` horizontal da direita da origem até a esquerda do destino.
+- **Sem diagonais.** **Sem entrada pela esquerda.** **Sem saída pelo topo/base de um nó.**
 
 ```svg
 <!-- Downward (destination lane > source lane) -->
@@ -209,188 +209,188 @@ Three styles, bound to topology. Connectors drawn **before** all node rects (z-o
       stroke="…" stroke-width="…" marker-end="…"/>
 ```
 
-- **Z-order:** all `<path>` and `<line>` connectors emitted **before** any node `<rect>`.
-- **Markers:** exactly one `marker-end` per path. Never `marker-start`.
-- **Labels:** all process arrows are unlabelled by default. The step number + the actor lane carry the semantic; a label on every arrow is noise. Only label an arrow if it represents a non-step concept (re-test loop, escalation) — then use a paper-masked rect behind 6.5-px mono text.
+- **Ordem Z:** todos os conectores `<path>` e `<line>` são emitidos **antes** de qualquer `<rect>` de nó.
+- **Marcadores:** exatamente um `marker-end` por caminho. Nunca `marker-start`.
+- **Rótulos:** todas as setas de processo são sem rótulo por padrão. O número da etapa + a raia do ator carregam a semântica; um rótulo em cada seta é ruído. Só rotule uma seta se ela representar um conceito que não é uma etapa (loop de reteste, escalonamento) — nesse caso, use um rect mascarado com `paper` atrás de texto mono de 6.5 px.
 
-### 3.2 Crossings
+### 3.2 Cruzamentos
 
-Avoid. The corridor x position (8 px before destination node) is the only routing column — if two arrows would cross there, **swap step assignments** or **split into two diagrams** rather than introducing a bend-around. Crossings hide the underlying control flow.
+Evite. A posição x do corredor (8 px antes do nó de destino) é a única coluna de roteamento — se duas setas fossem se cruzar ali, **troque as atribuições de etapas** ou **divida em dois diagramas** em vez de introduzir um contorno. Cruzamentos escondem o fluxo de controle subjacente.
 
 ---
 
-## 4. Component color override
+## 4. Sobrescrita de cor de componente
 
-Any node, lane, or step accepts an optional `color: "#hex"`. Mirrors `type-data-flow.md` §4 and `type-high-level.md` §3.4 so the rule reads identically across types.
+Qualquer nó, raia ou etapa aceita um `color: "#hex"` opcional. Espelha `type-data-flow.md` §4 e `type-high-level.md` §3.4 para que a regra seja lida de forma idêntica entre os tipos.
 
-### 4.1 Per-node `color`
+### 4.1 `color` por nó
 
-Applied to:
+Aplicado a:
 
-| Element | Light | Dark |
+| Elemento | Claro | Escuro |
 |---|---|---|
-| Container fill (`rect`) | `rgba(C, 0.06)` | `rgba(C_light, 0.10)` |
-| Container stroke | `rgba(C, 0.35)` (stroke-width 1) | `rgba(C_light, 0.45)` |
-| Role chip fill | `rgba(C, 0.18)` | `rgba(C_light, 0.22)` |
-| Role chip text | `C` | `C_light` |
-| Title text | `C` | `C_light` |
-| Sub-label (in → out) | **unchanged** (muted) | **unchanged** (muted) |
-| Tool label | **unchanged** (soft) | **unchanged** (soft) |
-| Data-type chips | **unchanged** | **unchanged** |
-| Arrows touching this node | **unchanged** — topology-driven | **unchanged** |
+| Preenchimento do contêiner (`rect`) | `rgba(C, 0.06)` | `rgba(C_light, 0.10)` |
+| Traço do contêiner | `rgba(C, 0.35)` (stroke-width 1) | `rgba(C_light, 0.45)` |
+| Preenchimento do chip de papel | `rgba(C, 0.18)` | `rgba(C_light, 0.22)` |
+| Texto do chip de papel | `C` | `C_light` |
+| Texto do título | `C` | `C_light` |
+| Sub-rótulo (in → out) | **inalterado** (muted) | **inalterado** (muted) |
+| Rótulo da ferramenta | **inalterado** (soft) | **inalterado** (soft) |
+| Chips de tipo de dado | **inalterados** | **inalterados** |
+| Setas que tocam este nó | **inalteradas** — determinadas pela topologia | **inalteradas** |
 
-`C_light` = the same hex lightened ~15% for dark-mode contrast (e.g., `#b85450` → `#d97a78`).
+`C_light` = o mesmo hex clareado ~15% para contraste no modo escuro (ex.: `#b85450` → `#d97a78`).
 
-### 4.2 Per-step `color`
+### 4.2 `color` por etapa
 
-Replaces the step header chip's fill with `rgba(C, 0.20)` and the chip's number text fill with `C`. The legend's matching step entry uses the same colors.
+Substitui o preenchimento do chip do cabeçalho da etapa por `rgba(C, 0.20)` e o preenchimento do texto do número do chip por `C`. A entrada correspondente da etapa na legenda usa as mesmas cores.
 
-### 4.3 Per-lane `color`
+### 4.3 `color` por raia
 
-Replaces the lane stripe tint with `rgba(C, 0.04)` and the lane label text fill with `C`. Use sparingly — lane tints are easy to over-apply.
+Substitui o tom da faixa da raia por `rgba(C, 0.04)` e o preenchimento do texto do rótulo da raia por `C`. Use com moderação — é fácil exagerar nos tons de raia.
 
-### 4.4 Rules
+### 4.4 Regras
 
-- **Never on focal nodes / focal steps.** The accent already carries that signal. A `color` on a focal element is ignored.
-- **Never on arrows.** Arrows are topology-driven. If you want a colored edge, pick a different `style` from §3, not a color override.
-- **Cap at 3 custom-colored elements** per diagram (nodes + lanes + steps combined), in addition to the focal pair (focal node + focal step header). Above 3 the visual signal starts to fragment.
-- **Subtitle and tool labels stay muted** regardless of any component `color`.
+- **Nunca em nós focais / etapas focais.** O `accent` já carrega esse sinal. Um `color` em um elemento focal é ignorado.
+- **Nunca em setas.** As setas são determinadas pela topologia. Se você quer uma aresta colorida, escolha outro `style` de §3, não uma sobrescrita de cor.
+- **Limite de 3 elementos com cor personalizada** por diagrama (nós + raias + etapas combinados), além do par focal (nó focal + cabeçalho da etapa focal). Acima de 3, o sinal visual começa a se fragmentar.
+- **Subtítulo e rótulos de ferramenta permanecem `muted`** independentemente de qualquer `color` de componente.
 
-### 4.5 Semantic palette (recommended)
+### 4.5 Paleta semântica (recomendada)
 
-Same palette as `type-high-level.md`, `type-dp-integration.md`, `type-data-flow.md`:
+A mesma paleta de `type-high-level.md`, `type-dp-integration.md`, `type-data-flow.md`:
 
-- `#b85450` rust-red — Security / Identity / Governance (access control, training, approvals)
-- `#5a7d9a` slate-blue — Observability / Quality (data quality gates, validation, monitoring)
-- `#7a8c47` olive-green — Data Products / Publication (consumer-ready outputs, releases)
-- `#8c6d3f` warm-brown — Backup / DR / Archive
-
----
-
-## 5. Focal rule
-
-The process diagram has three focal slots, exactly one entry each:
-
-- **One focal step** (`steps[j].focal: true`) — typically the analytical or decision pivot (Test, Approve, Validate). Header chip and legend chip render in accent.
-- **One focal node** (`nodes[i].focal: true`) — the node that *receives* the critical handoff. Accent border + accent role chip + ink title (title text stays ink so it's still readable; only the border + role chip carry the accent).
-- **One focal arrow set** (`style: focal-in` and `focal-out`) — edges into and out of the focal node. Accent solid strokes.
-
-If zero or >1 of any focal slot are declared, halt and ask the user.
+- `#b85450` vermelho-ferrugem — Segurança / Identidade / Governança (controle de acesso, treinamento, aprovações)
+- `#5a7d9a` azul-ardósia — Observabilidade / Qualidade (portões de qualidade de dados, validação, monitoramento)
+- `#7a8c47` verde-oliva — Produtos de Dados / Publicação (saídas prontas para consumo, releases)
+- `#8c6d3f` marrom quente — Backup / DR / Arquivo
 
 ---
 
-## 6. Dark mode
+## 5. Regra focal
 
-| Token | Light | Dark |
+O diagrama de processo tem três slots focais, exatamente uma entrada cada:
+
+- **Uma etapa focal** (`steps[j].focal: true`) — tipicamente o pivô analítico ou de decisão (Test, Approve, Validate). O chip do cabeçalho e o chip da legenda são renderizados em `accent`.
+- **Um nó focal** (`nodes[i].focal: true`) — o nó que *recebe* a transferência crítica. Borda `accent` + chip de papel `accent` + título em `ink` (o texto do título permanece em `ink` para continuar legível; apenas a borda + o chip de papel carregam o `accent`).
+- **Um conjunto de setas focais** (`style: focal-in` e `focal-out`) — arestas que entram e saem do nó focal. Traços sólidos em `accent`.
+
+Se zero ou >1 de qualquer slot focal forem declarados, pare e pergunte ao usuário.
+
+---
+
+## 6. Modo escuro
+
+| Token | Claro | Escuro |
 |---|---|---|
 | Paper | `#ffffff` | `#161E2D` |
 | Ink | `#232F3E` | `#ffffff` |
 | Muted | `#545B64` | `#B6BEC9` |
 | Soft | `#7D8998` | `#8D99A8` |
 | Accent | `#EC7211` | `#FF9900` |
-| Dot pattern | `rgba(35,47,62,0.10)` | `rgba(255,255,255,0.10)` |
-| Lane tint | `rgba(35,47,62,0.018)` | `rgba(255,255,255,0.025)` |
-| Dividers | `rgba(35,47,62,0.12)` | `rgba(255,255,255,0.12)` |
-| Label col divider | `rgba(35,47,62,0.20)` | `rgba(255,255,255,0.22)` |
-| Default chip fill | `rgba(35,47,62,0.12)` | `rgba(255,255,255,0.12)` |
-| Focal chip fill | `rgba(255,153,0,0.20)` | `rgba(255,153,0,0.22)` |
-| Default node fill | white | `rgba(255,255,255,0.04)` |
-| Default node stroke | `rgba(35,47,62,0.25)` | `rgba(255,255,255,0.20)` |
-| Focal node fill | `rgba(255,153,0,0.08)` | `rgba(255,153,0,0.12)` |
-| Focal node stroke | `#EC7211` | `#FF9900` |
-| Custom component colors | `C` | `C_light` (lighten ~15%) |
+| Padrão de pontos | `rgba(35,47,62,0.10)` | `rgba(255,255,255,0.10)` |
+| Tom da raia | `rgba(35,47,62,0.018)` | `rgba(255,255,255,0.025)` |
+| Divisores | `rgba(35,47,62,0.12)` | `rgba(255,255,255,0.12)` |
+| Divisor da coluna de rótulos | `rgba(35,47,62,0.20)` | `rgba(255,255,255,0.22)` |
+| Preenchimento padrão do chip | `rgba(35,47,62,0.12)` | `rgba(255,255,255,0.12)` |
+| Preenchimento do chip focal | `rgba(255,153,0,0.20)` | `rgba(255,153,0,0.22)` |
+| Preenchimento padrão do nó | branco | `rgba(255,255,255,0.04)` |
+| Traço padrão do nó | `rgba(35,47,62,0.25)` | `rgba(255,255,255,0.20)` |
+| Preenchimento do nó focal | `rgba(255,153,0,0.08)` | `rgba(255,153,0,0.12)` |
+| Traço do nó focal | `#EC7211` | `#FF9900` |
+| Cores personalizadas de componentes | `C` | `C_light` (clarear ~15%) |
 
 ---
 
-## 7. Reproducibility checklist (taste gate)
+## 7. Checklist de reprodutibilidade (*taste gate*)
 
-Before emitting SVG, verify **every** item:
+Antes de emitir o SVG, verifique **cada** item:
 
-1. `viewBox = "0 0 {viewBox_w} {viewBox_h}"` derived via §2.
-2. Header strip at `y=0..36`; legend strip at `y=legend_y_top..viewBox_h` (`legend_y_top = 36 + n_lanes * 80`).
-3. Every node at `(step_cx(j) - 50, lane_y_top(k) + 8)` size `100×64`.
-4. Empty cells render nothing — no placeholder rect, no text.
-5. Exactly **one** focal step (`steps[j].focal: true`).
-6. Exactly **one** focal node (`nodes[i].focal: true`).
-7. Focal-touching arrows use `style: focal-in` / `focal-out` (accent).
-8. All other arrows `style: normal` (muted solid) or `style: trigger` (muted dashed). Unlabelled by default.
-9. All arrows emitted before any node rect (z-order rule).
-10. Single-bend right-angle routing only — exit right, enter top/bottom. No diagonals. Q-bezier `r=8` at each bend.
-11. Custom component colors ≤ 3 (in addition to the focal pair). Arrows never recolored by component `color`.
-12. Subtitle and tool labels stay muted regardless of any component `color`. Input chip skipped on first step's nodes, output chip skipped on last step's nodes.
+1. `viewBox = "0 0 {viewBox_w} {viewBox_h}"` derivado via §2.
+2. Faixa do cabeçalho em `y=0..36`; faixa da legenda em `y=legend_y_top..viewBox_h` (`legend_y_top = 36 + n_lanes * 80`).
+3. Todo nó em `(step_cx(j) - 50, lane_y_top(k) + 8)` com tamanho `100×64`.
+4. Células vazias não renderizam nada — nenhum rect de placeholder, nenhum texto.
+5. Exatamente **uma** etapa focal (`steps[j].focal: true`).
+6. Exatamente **um** nó focal (`nodes[i].focal: true`).
+7. Setas que tocam o focal usam `style: focal-in` / `focal-out` (`accent`).
+8. Todas as outras setas usam `style: normal` (muted sólido) ou `style: trigger` (muted tracejado). Sem rótulo por padrão.
+9. Todas as setas emitidas antes de qualquer rect de nó (regra de ordem Z).
+10. Somente roteamento em ângulo reto com uma única curva — sai pela direita, entra por cima/por baixo. Sem diagonais. Q-bezier `r=8` em cada curva.
+11. Cores personalizadas de componentes ≤ 3 (além do par focal). Setas nunca recoloridas pelo `color` do componente.
+12. Subtítulo e rótulos de ferramenta permanecem `muted` independentemente de qualquer `color` de componente. Chip de entrada omitido nos nós da primeira etapa, chip de saída omitido nos nós da última etapa.
 
 ---
 
-## 8. Data-type chips reference (input + output)
+## 8. Referência dos chips de tipo de dado (entrada + saída)
 
-Same catalog as `type-data-flow.md` §8.
+Mesmo catálogo de `type-data-flow.md` §8.
 
-- **Input chip** at `(node_x+4, node_y+54)` — bottom-**left**. Payload entering the node.
-- **Output chip** at `(node_x+80, node_y+54)` — bottom-**right**. Payload leaving the node.
-- Either chip may be omitted (first/last step, unknown payload).
+- **Chip de entrada** em `(node_x+4, node_y+54)` — canto inferior **esquerdo**. Payload que entra no nó.
+- **Chip de saída** em `(node_x+80, node_y+54)` — canto inferior **direito**. Payload que sai do nó.
+- Qualquer um dos chips pode ser omitido (primeira/última etapa, payload desconhecido).
 
-### Chip codes
+### Códigos dos chips
 
-| Code | Color (light) | Color (dark) | Meaning |
+| Código | Cor (claro) | Cor (escuro) | Significado |
 |------|---------------|--------------|---------|
-| `LS` | `#7c8f6f` sage | `#9caf8f` | List / assignment / task |
-| `DB` | `#5e7a9b` dusty-blue | `#82a0c0` | Dataset / tabular records |
-| `TB` | `#b8915a` mustard | `#d3ad7a` | Table (analysis-ready) |
-| `FL` | `#9c6b50` rust-brown | `#b88670` | File / document / report |
-| `WB` | `#6e6479` slate | `#8d8298` | Web / press / public release |
-| N/A | omit chip entirely | — | Unknown or not applicable |
+| `LS` | `#7c8f6f` sálvia | `#9caf8f` | Lista / atribuição / tarefa |
+| `DB` | `#5e7a9b` azul-empoeirado | `#82a0c0` | Dataset / registros tabulares |
+| `TB` | `#b8915a` mostarda | `#d3ad7a` | Tabela (pronta para análise) |
+| `FL` | `#9c6b50` marrom-ferrugem | `#b88670` | Arquivo / documento / relatório |
+| `WB` | `#6e6479` ardósia | `#8d8298` | Web / imprensa / publicação pública |
+| N/A | omitir o chip completamente | — | Desconhecido ou não aplicável |
 
-Text inside chip: white, font-size 5, weight 700, mono.
+Texto dentro do chip: branco, font-size 5, peso 700, mono.
 
-Data-type chip colors are a **separate semantic axis** from the per-node color override (§4). Chip colors describe *payload format*; node color describes *concern type*. A node can have both an `out: TB` mustard chip and a rust-red border simultaneously.
-
----
-
-## 9. Legend (3- or 4-row strip)
-
-Each row introduced by a category label at `x = label_col_w + 4` (= 144). The default legend has **3 rows** (`STEPS` / `DATA TYPE` / `FLOW`); when one or more nodes carry a `color` override (§4), add a 4th `CONCERN` row and grow `legend_h` to 100.
-
-- **Row 1 — `STEPS`** at `y = legend_y_top + 16`: repeat the header chips with their labels. Focal step keeps accent fill.
-- **Row 2 — `DATA TYPE`** at `y = legend_y_top + 37`: one swatch per chip type actually used in the diagram. Append a small sub-hint in muted mono: `left chip = input · right chip = output`.
-- **Row 3 — `CONCERN`** (only when color overrides are present) at `y = legend_y_top + 58`: one mini-rect per custom color used, with its semantic label.
-- **Row 4 — `FLOW`** (position depends on whether `CONCERN` row exists): one segment per arrow style actually used, with marker + label.
+As cores dos chips de tipo de dado são um **eixo semântico separado** da sobrescrita de cor por nó (§4). As cores dos chips descrevem o *formato do payload*; a cor do nó descreve o *tipo de preocupação*. Um nó pode ter, ao mesmo tempo, um chip mostarda `out: TB` e uma borda vermelho-ferrugem.
 
 ---
 
-## 10. Complexity budget
+## 9. Legenda (faixa de 3 ou 4 linhas)
 
-| Dimension | Max |
+Cada linha é introduzida por um rótulo de categoria em `x = label_col_w + 4` (= 144). A legenda padrão tem **3 linhas** (`STEPS` / `DATA TYPE` / `FLOW`); quando um ou mais nós têm uma sobrescrita de `color` (§4), adicione uma 4ª linha `CONCERN` e aumente `legend_h` para 100.
+
+- **Linha 1 — `STEPS`** em `y = legend_y_top + 16`: repita os chips do cabeçalho com seus rótulos. A etapa focal mantém o preenchimento `accent`.
+- **Linha 2 — `DATA TYPE`** em `y = legend_y_top + 37`: uma amostra por tipo de chip realmente usado no diagrama. Acrescente uma pequena dica em mono `muted`: `left chip = input · right chip = output`.
+- **Linha 3 — `CONCERN`** (apenas quando há sobrescritas de cor) em `y = legend_y_top + 58`: um mini-rect por cor personalizada usada, com seu rótulo semântico.
+- **Linha 4 — `FLOW`** (a posição depende da existência da linha `CONCERN`): um segmento por estilo de seta realmente usado, com marcador + rótulo.
+
+---
+
+## 10. Orçamento de complexidade (limite)
+
+| Dimensão | Máx. |
 |---|---|
-| Lanes (actors) | 6 |
-| Steps | 12 |
-| Nodes per lane | Nodes = active steps only — empty cells are invisible |
-| Labelled arrows | 0 by default (label only for non-step concepts) |
-| Data-type chips per node | 2 (input + output) |
-| Custom-colored elements (§4) | 3 (in addition to focal node + focal step) |
+| Raias (atores) | 6 |
+| Etapas | 12 |
+| Nós por raia | Nós = apenas etapas ativas — células vazias são invisíveis |
+| Setas rotuladas | 0 por padrão (rotule apenas conceitos que não são etapas) |
+| Chips de tipo de dado por nó | 2 (entrada + saída) |
+| Elementos com cor personalizada (§4) | 3 (além do nó focal + etapa focal) |
 
-Above 6 lanes or 12 steps: split into two diagrams (overview + detail).
-
----
-
-## 11. Anti-patterns
-
-- **Placeholder empty cells** — if an actor doesn't participate in a step, leave the cell empty (no box, no text).
-- **Diagonal arrows** — every connector must have exactly one right-angle bend. No direct straight lines between nodes in different lanes.
-- **Left/right port entry on a vertical-dominant arrow** — always exit right, enter top or bottom.
-- **More than one focal step / focal node** — pick the single most critical operation.
-- **Unlabelled lanes** — every swimlane must identify its actor.
-- **All arrows the same style** — orchestration triggers must be dashed to distinguish them from data-flow connectors.
-- **`color` override on a focal element** — ignored. Accent always wins.
-- **Custom-colored arrows** — connectors are topology-driven; `color` on a node never spreads to its edges.
-- **Lane tints over-applied** — a tint on every lane reads as decoration, not signal. Apply to ≤1 lane.
-- **Data-type chips in a double-line-name node** — skip the chips or shorten the name to one line.
-- **More than 12 steps without splitting** — use an overview + detail pair.
+Acima de 6 raias ou 12 etapas: divida em dois diagramas (visão geral + detalhe).
 
 ---
 
-## 12. Worked example — full YAML for `example-process-extended.html`
+## 11. Antipadrões
 
-The extended example diagram is fully described by the following inputs. Every coordinate in the rendered SVG is derivable from this block via §2 + §3 + §4. This is the canonical proof that the parametric contract works end-to-end.
+- **Células vazias com placeholder** — se um ator não participa de uma etapa, deixe a célula vazia (sem caixa, sem texto).
+- **Setas diagonais** — todo conector deve ter exatamente uma curva em ângulo reto. Nada de linhas retas diretas entre nós em raias diferentes.
+- **Entrada por porta esquerda/direita em uma seta predominantemente vertical** — sempre saia pela direita e entre por cima ou por baixo.
+- **Mais de uma etapa focal / nó focal** — escolha a única operação mais crítica.
+- **Raias sem rótulo** — toda swimlane deve identificar seu ator.
+- **Todas as setas com o mesmo estilo** — gatilhos de orquestração devem ser tracejados para distingui-los dos conectores de fluxo de dados.
+- **Sobrescrita de `color` em um elemento focal** — ignorada. `accent` sempre prevalece.
+- **Setas com cor personalizada** — conectores são determinados pela topologia; o `color` de um nó nunca se propaga para suas arestas.
+- **Tons de raia em excesso** — um tom em cada raia é lido como decoração, não como sinal. Aplique em ≤1 raia.
+- **Chips de tipo de dado em um nó com nome de duas linhas** — omita os chips ou encurte o nome para uma linha.
+- **Mais de 12 etapas sem dividir** — use um par visão geral + detalhe.
+
+---
+
+## 12. Exemplo trabalhado — YAML completo para `example-process-extended.html`
+
+O diagrama de exemplo estendido é totalmente descrito pelas entradas a seguir. Toda coordenada no SVG renderizado pode ser derivada deste bloco via §2 + §3 + §4. Esta é a prova canônica de que o contrato paramétrico funciona de ponta a ponta.
 
 ```yaml
 # Quarterly survey — end-to-end workflow (extended variant)
@@ -456,40 +456,40 @@ arrows:
 dark: false
 ```
 
-### 12.1 What this YAML proves
+### 12.1 O que este YAML comprova
 
-Run §2 of this reference with these inputs:
+Execute §2 desta referência com estas entradas:
 
-- `n_lanes = 6`, `n_steps = 11`, `has_color_row = true` (3 nodes carry `color`).
-- `viewBox_w = 140 + 11 * 112 + 28 = 1400`. ✓ matches rendered SVG.
+- `n_lanes = 6`, `n_steps = 11`, `has_color_row = true` (3 nós têm `color`).
+- `viewBox_w = 140 + 11 * 112 + 28 = 1400`. ✓ coincide com o SVG renderizado.
 - `legend_h = 100`, `viewBox_h = 36 + 6 * 80 + 100 = 616`. ✓
-- Lane y_top = [36, 116, 196, 276, 356, 436]; lane mid = [76, 156, 236, 316, 396, 476]. ✓
-- Step cx = [198, 310, 422, 534, 646, 758, 870, 982, 1094, 1208, 1320] (the 8-px content-area gutter shifts every value by 8 from `140 + j*112 + 50`). ✓
-- Node 4 (HQ Review): step=3, lane="SVY" (k=3) → x = 534-50 = 484, y = 276+8 = 284. ✓
-- Node 5 (Error Checks): step=4, lane="IT" (k=1) → x = 646-50 = 596, y = 116+8 = 124. ✓
-- Node 10 (Public Release): step=9, lane="CMM" (k=5) → x = 1208-50 = 1158, y = 436+8 = 444. ✓ *(Rendered uses x=1156 — 2-px tolerance from chip-width rounding on the step "10" label.)*
+- y_top das raias = [36, 116, 196, 276, 356, 436]; meio das raias = [76, 156, 236, 316, 396, 476]. ✓
+- cx das etapas = [198, 310, 422, 534, 646, 758, 870, 982, 1094, 1208, 1320] (a margem interna de 8 px da área de conteúdo desloca cada valor em 8 em relação a `140 + j*112 + 50`). ✓
+- Nó 4 (HQ Review): step=3, lane="SVY" (k=3) → x = 534-50 = 484, y = 276+8 = 284. ✓
+- Nó 5 (Error Checks): step=4, lane="IT" (k=1) → x = 646-50 = 596, y = 116+8 = 124. ✓
+- Nó 10 (Public Release): step=9, lane="CMM" (k=5) → x = 1208-50 = 1158, y = 436+8 = 444. ✓ *(O renderizado usa x=1156 — tolerância de 2 px por arredondamento da largura do chip no rótulo da etapa "10".)*
 
-The two coord drifts on the rightmost two nodes (chip width=20 for two-digit step numbers shifts the chip but not the node center math) are an artifact of the existing hand-tuned example, not a formula failure — a fresh generation from this YAML would produce x=1158 and the diagram would be visually indistinguishable from the shipped version.
+Os dois desvios de coordenadas nos dois nós mais à direita (a largura de chip = 20 para números de etapa com dois dígitos desloca o chip, mas não o cálculo do centro do nó) são um artefato do exemplo existente ajustado à mão, não uma falha da fórmula — uma geração nova a partir deste YAML produziria x=1158 e o diagrama seria visualmente indistinguível da versão distribuída.
 
-### 12.2 Adapting this YAML to a different process
+### 12.2 Adaptando este YAML a um processo diferente
 
-To document a different process, change only the value of these inputs:
+Para documentar um processo diferente, altere apenas o valor destas entradas:
 
-- **Lanes**: rename `lanes[k].name` to your team names; update each `nodes[i].lane` to match. Up to 6 lanes.
-- **Steps**: rename `steps[j].label`, move `focal: true` to the step that defines the diagram's central claim. Up to 12 steps.
-- **Nodes**: write one entry per `(lane, step)` cell that has work. Leave cells empty (no entry) to render nothing.
-- **Colors**: choose `color: "#hex"` on at most 3 nodes (§4 cap). Stick to the recommended palette unless brand demands otherwise.
-- **Arrows**: declare every edge explicitly with `style: normal | focal-in | focal-out | trigger`. The routing rule (§3.1) fills in the geometry.
+- **Raias**: renomeie `lanes[k].name` para os nomes das suas equipes; atualize cada `nodes[i].lane` para corresponder. Até 6 raias.
+- **Etapas**: renomeie `steps[j].label` e mova `focal: true` para a etapa que define a afirmação central do diagrama. Até 12 etapas.
+- **Nós**: escreva uma entrada por célula `(lane, step)` que tenha trabalho. Deixe as células vazias (sem entrada) para não renderizar nada.
+- **Cores**: escolha `color: "#hex"` em no máximo 3 nós (limite de §4). Fique na paleta recomendada, a menos que a marca exija outra coisa.
+- **Setas**: declare cada aresta explicitamente com `style: normal | focal-in | focal-out | trigger`. A regra de roteamento (§3.1) preenche a geometria.
 
-Everything else — viewBox sizing, chip positions, legend layout, dark-mode token swap — is derivable. The YAML is the **source of truth**; the SVG is one of many possible renderings of it (light/dark/full all derive from the same inputs with different style tokens).
+Todo o resto — dimensionamento do viewBox, posições dos chips, layout da legenda, troca de tokens do modo escuro — pode ser derivado. O YAML é a **fonte da verdade**; o SVG é uma das muitas renderizações possíveis dele (claro/escuro/full derivam todos das mesmas entradas com tokens de estilo diferentes).
 
 ---
 
-## 13. Examples
+## 13. Exemplos
 
-- `assets/example-process.html` — minimal light (quarterly survey: 11 steps, 6 divisions, data-type chips). Gallery default.
-- `assets/example-process-dark.html` — same, dark skin.
-- `assets/example-process-full.html` — same, editorial-card frame.
-- `assets/example-process-extended.html` — exercises §4 color override: Build app in slate-blue (data quality), Train enumerators in rust-red (governance), Publish results in olive-green (data products). Focal accent on Pilot test step + node unchanged.
-- `assets/example-process-extended-dark.html` — extended pattern, dark skin.
-- `assets/example-process-extended-full.html` — extended pattern, editorial-card frame.
+- `assets/example-process.html` — mínimo claro (pesquisa trimestral: 11 etapas, 6 divisões, chips de tipo de dado). Padrão da galeria.
+- `assets/example-process-dark.html` — o mesmo, skin (tema) escura.
+- `assets/example-process-full.html` — o mesmo, moldura de cartão editorial.
+- `assets/example-process-extended.html` — exercita a sobrescrita de cor de §4: Build app em azul-ardósia (qualidade de dados), Train enumerators em vermelho-ferrugem (governança), Publish results em verde-oliva (produtos de dados). O destaque focal na etapa + nó Pilot test permanece inalterado.
+- `assets/example-process-extended-dark.html` — padrão estendido, skin (tema) escura.
+- `assets/example-process-extended-full.html` — padrão estendido, moldura de cartão editorial.

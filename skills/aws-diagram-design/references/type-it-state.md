@@ -1,14 +1,14 @@
-# IT current-state
+# Estado atual de TI (IT current-state)
 
-**Best for:** documenting the *before* picture of a modernization proposal — the legacy IT landscape grouped by phase or department (Collection → Processing → Dissemination, or Frontend / Backend / Storage, or Survey → Analysts → Reports), with pain-points flagged, file-based hand-offs labelled (CSV / Excel / Email / Copy), and pre-platform tooling visible. The companion to `type-dp-integration.md`: this type shows the gap that a data-platform proposal is going to close.
+**Ideal para:** documentar o retrato do *antes* de uma proposta de modernização — o panorama legado de TI agrupado por fase ou departamento (Collection → Processing → Dissemination, ou Frontend / Backend / Storage, ou Survey → Analysts → Reports), com pontos de dor sinalizados, transferências baseadas em arquivos rotuladas (CSV / Excel / Email / Copy) e as ferramentas anteriores à plataforma visíveis. É o complemento de `type-dp-integration.md`: este tipo mostra a lacuna que uma proposta de plataforma de dados vai fechar.
 
-Use when stakeholders need to see the friction in the current setup — siloed scripts, manual file shuffles, missing version control, single-points-of-failure — and the path from those to a target platform topology.
+Use quando os stakeholders precisam enxergar o atrito na configuração atual — scripts isolados, movimentação manual de arquivos, ausência de controle de versão, pontos únicos de falha — e o caminho deles até uma topologia de plataforma-alvo.
 
-This type is **parametric** — the inputs schema in §1 drives every coordinate via the formulas in §2. The rule shape mirrors `type-dp-integration.md` (zones + cross-cutting footer bars), `type-process.md` (rounded right-angle connectors), and `type-medallion.md` (per-element `color` override) so the focal rule, color override, dark mode, and reproducibility checklist read identically across types.
+Este tipo é **paramétrico** — o esquema de entradas em §1 determina todas as coordenadas por meio das fórmulas em §2. O formato das regras espelha `type-dp-integration.md` (zonas + barras de rodapé transversais), `type-process.md` (conectores em ângulo reto arredondados) e `type-medallion.md` (sobrescrita de `color` por elemento), de modo que a regra focal, a sobrescrita de cor, o modo escuro e o checklist de reprodutibilidade sejam lidos de forma idêntica entre os tipos.
 
 ---
 
-## 1. Inputs — the parameter contract
+## 1. Entradas — o contrato de parâmetros
 
 ```yaml
 title:    "Current IT Landscape"
@@ -61,27 +61,27 @@ legend:                       # auto-generated from styles used; user can overri
 dark: false
 ```
 
-**Reserved field semantics:**
+**Semântica dos campos reservados:**
 
-- `orientation` — `horizontal` (zones run L→R, components stack vertically inside each zone) or `vertical` (zones stack T→B, components run L→R inside each zone).
-- `zones[i].name` — uppercase short label (≤ 14 chars). Rendered at the top-left of the zone box in the `eyebrow` role with letter-spacing 0.14em, on a paper-masked break in the zone border.
-- `components[i][k].id` — globally unique slug; referenced by `connectors[].from/to`.
-- `components[i][k].name` — `node-name` role (the human-readable label).
-- `components[i][k].sub` — `sublabel` role at 10px in muted (the technical sub-label; up to 2 lines via auto-wrap when component height grows to 72).
-- `components[i][k].icon` — any id from `references/primitive-icons.md`. If missing → no icon, the name shifts left. (Catalog has 41 icons; `mail` is currently missing — use `icon: file` as fallback for email hand-offs.)
-- `components[i][k].kind` — `standard | focal | external`. `focal` triggers the accent palette (§5); `external` switches to a 4-2 dashed stroke and muted ink to signal "this is outside our scope."
-- `components[i][k].color` — optional per-component color override (§4). Ignored on `kind: focal` (accent wins).
-- `connectors[k].from` / `connectors[k].to` — refer to a component `id`. Cross-zone, cross-row, same-zone vertical, and same-zone horizontal all legal; routing chosen by §3.
-- `connectors[k].label` — uppercase short text (≤ 8 chars). `arrow-label` role at 9px, weight 600.
-- `connectors[k].icon` — optional inline icon to the left of the text. Same catalog as component icons.
-- `connectors[k].style` — `neutral | link | accent`. Drives stroke color + marker.
+- `orientation` — `horizontal` (as zonas correm da esquerda para a direita, os componentes se empilham verticalmente dentro de cada zona) ou `vertical` (as zonas se empilham de cima para baixo, os componentes correm da esquerda para a direita dentro de cada zona).
+- `zones[i].name` — rótulo curto em maiúsculas (≤ 14 caracteres). Renderizado no canto superior esquerdo da caixa da zona no papel `eyebrow` com letter-spacing de 0.14em, sobre uma interrupção mascarada com `paper` na borda da zona.
+- `components[i][k].id` — slug globalmente único; referenciado por `connectors[].from/to`.
+- `components[i][k].name` — papel `node-name` (o rótulo legível por humanos).
+- `components[i][k].sub` — papel `sublabel` em 10px com cor `muted` (o sub-rótulo técnico; até 2 linhas via quebra automática quando a altura do componente cresce para 72).
+- `components[i][k].icon` — qualquer id de `references/primitive-icons.md`. Se ausente → sem ícone, e o nome se desloca para a esquerda. (O catálogo tem 41 ícones; `mail` está ausente no momento — use `icon: file` como fallback para transferências por e-mail.)
+- `components[i][k].kind` — `standard | focal | external`. `focal` aciona a paleta de destaque (§5); `external` muda para um traço tracejado 4-2 e tinta `muted` para sinalizar "isto está fora do nosso escopo."
+- `components[i][k].color` — sobrescrita de cor opcional por componente (§4). Ignorada em `kind: focal` (`accent` prevalece).
+- `connectors[k].from` / `connectors[k].to` — referem-se a um `id` de componente. Entre zonas, entre linhas, vertical na mesma zona e horizontal na mesma zona são todos válidos; o roteamento é escolhido por §3.
+- `connectors[k].label` — texto curto em maiúsculas (≤ 8 caracteres). Papel `arrow-label` em 9px, peso 600.
+- `connectors[k].icon` — ícone inline opcional à esquerda do texto. Mesmo catálogo dos ícones de componentes.
+- `connectors[k].style` — `neutral | link | accent`. Determina a cor do traço + o marcador.
 - `connectors[k].dashed` — `true | false`.
-- `footer[k]` — optional cross-cutting bar. Spans full canvas width minus margins. No connectors drawn from a footer.
-- `legend[k].swatch` — `link | accent | dashed | focal | neutral`. Auto-curated based on what the diagram actually uses; user can re-order or rename.
+- `footer[k]` — barra transversal opcional. Ocupa toda a largura do canvas menos as margens. Nenhum conector é desenhado a partir de um rodapé.
+- `legend[k].swatch` — `link | accent | dashed | focal | neutral`. Curadoria automática com base no que o diagrama realmente usa; o usuário pode reordenar ou renomear.
 
 ---
 
-## 2. Layout formulas — deterministic geometry
+## 2. Fórmulas de layout — geometria determinística
 
 ```
 # Horizontal orientation (default)
@@ -123,9 +123,9 @@ content_bottom  = N_footer > 0 ? footer_bottom : zone_y + zone_h
 viewBox_h       = content_bottom + legend_block_h + 24
 ```
 
-### 2.1 Background and zone frame
+### 2.1 Fundo e moldura da zona
 
-Solid paper fill across `viewBox`. No dot pattern. Each zone box:
+Preenchimento sólido `paper` em todo o `viewBox`. Sem padrão de pontos. Cada caixa de zona:
 
 ```svg
 <rect x="zone_x(i)" y="zone_y" width="zone_w(i)" height="zone_h"
@@ -136,17 +136,17 @@ Solid paper fill across `viewBox`. No dot pattern. Each zone box:
       font-family="{eyebrow}" letter-spacing="0.14em">{name}</text>
 ```
 
-### 2.2 Component box
+### 2.2 Caixa do componente
 
-Three visual kinds:
+Três tipos visuais:
 
-| `kind` | Fill | Stroke | Stroke width | Stroke dash | Name ink | Sub ink |
+| `kind` | Preenchimento | Traço | Largura do traço | Tracejado | Tinta do nome | Tinta do sub |
 | --- | --- | --- | --- | --- | --- | --- |
 | `standard` | `#FFFFFF` | `ink` | 1 | — | `ink` | `muted` |
-| `focal` | `accent @ 0.07` | `accent` | 1.4 | — | `ink` | `accent` (line 1) + `muted` (line 2) |
+| `focal` | `accent @ 0.07` | `accent` | 1.4 | — | `ink` | `accent` (linha 1) + `muted` (linha 2) |
 | `external` | `#FFFFFF` | `muted` | 1 | `4,3` | `ink` | `muted` |
 
-**Icon placement** (24×24, monochrome via `currentColor` — see `references/primitive-icons.md`):
+**Posicionamento do ícone** (24×24, monocromático via `currentColor` — veja `references/primitive-icons.md`):
 
 ```svg
 <g transform="translate(comp_x + 12, comp_y + (comp_h - 24)/2)" color="{ink_for_kind}">
@@ -154,9 +154,9 @@ Three visual kinds:
 </g>
 ```
 
-Icon takes 24 × 24 → 36-px total horizontal footprint with the 12-px left pad. Name and sub-label baseline shifts right by 40 px.
+O ícone ocupa 24 × 24 → pegada horizontal total de 36 px com o padding esquerdo de 12 px. A linha de base do nome e do sub-rótulo se desloca 40 px para a direita.
 
-**Name + sub baselines** (left-aligned, with icon to the left):
+**Linhas de base do nome + sub** (alinhadas à esquerda, com o ícone à esquerda):
 
 ```
 name_x = comp_x + 44
@@ -164,7 +164,7 @@ name_y = comp_y + (comp_h/2) - 2
 sub_y  = comp_y + (comp_h/2) + 14
 ```
 
-### 2.3 Connector geometry (§3 holds the routing rules)
+### 2.3 Geometria dos conectores (§3 contém as regras de roteamento)
 
 ```
 src_right  = comp_x(i_src) + comp_w(i_src)
@@ -184,7 +184,7 @@ dst_cy     = dst_top + comp_h_dst/2
 corridor_x = dst_cx                            # land arrow on dst horizontal center, enter via top/bot
 ```
 
-### 2.4 Footer bar
+### 2.4 Barra de rodapé
 
 ```svg
 <rect x="left_pad" y="footer_y(k)" width="viewBox_w - 2*left_pad" height="footer_bar_h"
@@ -196,19 +196,19 @@ corridor_x = dst_cx                            # land arrow on dst horizontal ce
 <text x="left_pad + 56" y="footer_y(k) + 40" font-family="{sublabel}" font-size="12" fill="{muted}">{sub}</text>
 ```
 
-Footer bars are layer-wide services. **No connectors emerge from them.** They sit visually below the zones and let the reader see the cross-cutting concerns at a glance.
+As barras de rodapé são serviços de toda a camada. **Nenhum conector sai delas.** Elas ficam visualmente abaixo das zonas e permitem que o leitor veja as preocupações transversais de relance.
 
-### 2.5 Legend strip
+### 2.5 Faixa da legenda
 
-Hairline divider at `y = content_bottom + 16`, then a row of swatches + labels at `y = content_bottom + 36`. Only the styles actually used by `connectors[]` (plus `focal` and `external` if those component kinds are present) appear in the legend.
+Divisor de linha fina (hairline) em `y = content_bottom + 16`, depois uma linha de amostras + rótulos em `y = content_bottom + 36`. Apenas os estilos realmente usados por `connectors[]` (mais `focal` e `external`, se esses tipos de componente estiverem presentes) aparecem na legenda.
 
 ---
 
-## 3. Connector rules (mandatory)
+## 3. Regras de conectores (obrigatórias)
 
-### 3.1 Path shape — rounded right-angle Q-bezier, r = 8
+### 3.1 Formato do caminho — Q-bezier em ângulo reto arredondado, r = 8
 
-Reused verbatim from `type-process.md` §3.1. No diagonals — ever.
+Reutilizado literalmente de `type-process.md` §3.1. Sem diagonais — nunca.
 
 ```svg
 <!-- Same zone, adjacent component (same vertical column): single vertical line -->
@@ -220,35 +220,35 @@ Reused verbatim from `type-process.md` §3.1. No diagonals — ever.
       fill="none" stroke="…" stroke-width="…" marker-end="…"/>
 ```
 
-- Use `{src_cy + 8}` and `V {dst_top}` when destination lies BELOW source.
-- Use `{src_cy − 8}` and `V {dst_bottom}` when destination lies ABOVE source.
+- Use `{src_cy + 8}` e `V {dst_top}` quando o destino estiver ABAIXO da origem.
+- Use `{src_cy − 8}` e `V {dst_bottom}` quando o destino estiver ACIMA da origem.
 
-### 3.2 Exit / entry sides (configurable; defaults below)
+### 3.2 Lados de saída / entrada (configuráveis; padrões abaixo)
 
-| Topology | Default exit side of source | Default entry side of destination |
+| Topologia | Lado de saída padrão da origem | Lado de entrada padrão do destino |
 | --- | --- | --- |
-| Same zone, dst below | bottom | top |
-| Same zone, dst above | top | bottom |
-| Cross-zone, horizontal flow | right | top (or bottom, whichever is closer to src_cy) |
-| Vertical-orientation diagram | bottom | top |
+| Mesma zona, destino abaixo | inferior | superior |
+| Mesma zona, destino acima | superior | inferior |
+| Entre zonas, fluxo horizontal | direito | superior (ou inferior, o que estiver mais próximo de src_cy) |
+| Diagrama de orientação vertical | inferior | superior |
 
-A connector can override via `connectors[k].from_side` / `connectors[k].to_side` (`top | right | bottom | left`). **Backward references** (right→left in horizontal orientation, up in vertical orientation) are permitted only when at least one endpoint has `kind: external`, and must be `dashed: true`.
+Um conector pode sobrescrever via `connectors[k].from_side` / `connectors[k].to_side` (`top | right | bottom | left`). **Referências para trás** (da direita para a esquerda na orientação horizontal, para cima na orientação vertical) só são permitidas quando pelo menos uma extremidade tem `kind: external`, e devem ser `dashed: true`.
 
-### 3.3 Markers MUST touch the destination rectangle
+### 3.3 Os marcadores DEVEM tocar o retângulo de destino
 
-The path's last command ends at the destination's rectangle edge (`V {dst_top}` or `H {dst_left}`), **not** at the centroid. After applying `refX=7` on the marker, the triangle sits flush against the border. Stopping the line short of the edge — or sending it to the centroid and burying the arrowhead inside the rect — is a hard fail.
+O último comando do caminho termina na borda do retângulo de destino (`V {dst_top}` ou `H {dst_left}`), **não** no centroide. Após aplicar `refX=7` no marcador, o triângulo fica rente à borda. Parar a linha antes da borda — ou levá-la até o centroide e enterrar a ponta da seta dentro do retângulo — é uma falha grave.
 
-### 3.4 Style → stroke + marker
+### 3.4 Estilo → traço + marcador
 
-| `style` | Stroke color | Stroke width | Marker |
+| `style` | Cor do traço | Largura do traço | Marcador |
 | --- | --- | --- | --- |
 | `neutral` | `muted` | 1.0 | `url(#arrow)` |
 | `link` | `link` | 1.2 | `url(#arrow-link)` |
 | `accent` | `accent` | 1.4 | `url(#arrow-accent)` |
 
-Add `stroke-dasharray="4 3"` when `dashed: true`.
+Adicione `stroke-dasharray="4 3"` quando `dashed: true`.
 
-**Defs block** (always emit all three):
+**Bloco defs** (sempre emita os três):
 
 ```svg
 <defs>
@@ -258,9 +258,9 @@ Add `stroke-dasharray="4 3"` when `dashed: true`.
 </defs>
 ```
 
-### 3.5 Connector label = inline icon + text, placed at the START of the connector with a perpendicular margin
+### 3.5 Rótulo do conector = ícone inline + texto, posicionado no INÍCIO do conector com uma margem perpendicular
 
-The label sits **near the source end** of the connector (not at the mid-segment) and is **offset perpendicular to the line** so it never overlaps the stroke. Icon (when `icon:` is set) sits inside the label's paper-fill mask, to the left of the text.
+O rótulo fica **perto da extremidade de origem** do conector (não no meio do segmento) e é **deslocado perpendicularmente à linha** para nunca se sobrepor ao traço. O ícone (quando `icon:` está definido) fica dentro da máscara com preenchimento `paper` do rótulo, à esquerda do texto.
 
 ```svg
 <g transform="translate({label_cx}, {label_cy})">
@@ -272,138 +272,138 @@ The label sits **near the source end** of the connector (not at the mid-segment)
 </g>
 ```
 
-**Placement formulas** (label box is 18px tall × `w` wide; centered on `{label_cx, label_cy}`):
+**Fórmulas de posicionamento** (a caixa do rótulo tem 18px de altura × `w` de largura; centralizada em `{label_cx, label_cy}`):
 
-| Segment exiting source | `label_cx` | `label_cy` | Effect |
+| Segmento saindo da origem | `label_cx` | `label_cy` | Efeito |
 | --- | --- | --- | --- |
-| Horizontal (right exit) | `src_right + 6 + w/2` | `src_cy − 14` | Label sits 6 px past the source, 5 px above the line |
-| Horizontal (left exit, backward) | `src_left − 6 − w/2` | `src_cy − 14` | Label sits 6 px before the source, 5 px above the line |
-| Vertical (bottom exit) | `src_cx + 6 + w/2` | `src_bot + 14` | Label sits 6 px right of the line, 5 px below the source edge |
-| Vertical (top exit, backward) | `src_cx + 6 + w/2` | `src_top − 14` | Label sits 6 px right of the line, 5 px above the source edge |
+| Horizontal (saída à direita) | `src_right + 6 + w/2` | `src_cy − 14` | O rótulo fica 6 px depois da origem, 5 px acima da linha |
+| Horizontal (saída à esquerda, para trás) | `src_left − 6 − w/2` | `src_cy − 14` | O rótulo fica 6 px antes da origem, 5 px acima da linha |
+| Vertical (saída inferior) | `src_cx + 6 + w/2` | `src_bot + 14` | O rótulo fica 6 px à direita da linha, 5 px abaixo da borda da origem |
+| Vertical (saída superior, para trás) | `src_cx + 6 + w/2` | `src_top − 14` | O rótulo fica 6 px à direita da linha, 5 px acima da borda da origem |
 
-For cross-zone H+Q+V routes the label binds to the **horizontal** segment, since that segment is anchored at the source. Place the label early on that horizontal run — never on the Q-bend or the vertical tail.
+Para rotas H+Q+V entre zonas, o rótulo se vincula ao segmento **horizontal**, já que esse segmento está ancorado na origem. Posicione o rótulo no início desse trecho horizontal — nunca na curva Q nem na cauda vertical.
 
-- `w = text_w + (icon ? 30 : 12)` — auto-fit.
-- Mask `fill` resolves to `paper` in light mode and `ink` in dark mode. The mask is kept as a safety pad — even though the label no longer sits on the line, it can graze zone backgrounds and component fills, and the mask preserves contrast.
-- `stroke_color` follows §3.4 (text + icon inherit the connector's accent / link / neutral color).
+- `w = text_w + (icon ? 30 : 12)` — ajuste automático.
+- O `fill` da máscara resolve para `paper` no modo claro e `ink` no modo escuro. A máscara é mantida como um respiro de segurança — mesmo que o rótulo não fique mais sobre a linha, ele pode tocar fundos de zona e preenchimentos de componentes, e a máscara preserva o contraste.
+- `stroke_color` segue §3.4 (texto + ícone herdam a cor `accent` / `link` / neutral do conector).
 
-### 3.6 Z-order
+### 3.6 Ordem Z
 
-All connectors (paths + lines + labels) emit BEFORE any component rect, so node fills mask the line ends. The connector label is the exception — it draws AFTER its line so the mask sits on top.
+Todos os conectores (paths + lines + rótulos) são emitidos ANTES de qualquer rect de componente, para que os preenchimentos dos nós mascarem as pontas das linhas. O rótulo do conector é a exceção — ele é desenhado DEPOIS de sua linha para que a máscara fique por cima.
 
 ---
 
-## 4. Component color override (per-component `color: "#hex"`)
+## 4. Sobrescrita de cor de componente (por componente `color: "#hex"`)
 
-Per-component, same shape as every other parametric type in this skill.
+Por componente, mesmo formato de todos os outros tipos paramétricos desta skill.
 
-| Element | Light | Dark |
+| Elemento | Claro | Escuro |
 | --- | --- | --- |
-| Container fill | `rgba(C, 0.06)` | `rgba(C_light, 0.10)` |
-| Container stroke | `rgba(C, 0.45)` (width 1) | `rgba(C_light, 0.55)` |
-| Component name text | `C` | `C_light` |
-| Icon glyph | inherits ink via `currentColor` (unchanged) | inherits ink (unchanged) |
-| Sub-label | muted (unchanged) | muted (unchanged) |
-| Connectors touching this component | **unchanged** — topology-driven | **unchanged** |
+| Preenchimento do contêiner | `rgba(C, 0.06)` | `rgba(C_light, 0.10)` |
+| Traço do contêiner | `rgba(C, 0.45)` (largura 1) | `rgba(C_light, 0.55)` |
+| Texto do nome do componente | `C` | `C_light` |
+| Glifo do ícone | herda `ink` via `currentColor` (inalterado) | herda `ink` (inalterado) |
+| Sub-rótulo | `muted` (inalterado) | `muted` (inalterado) |
+| Conectores que tocam este componente | **inalterados** — determinados pela topologia | **inalterados** |
 
-`C_light` = the same hex lightened ~15 % for dark-mode contrast (e.g., `#7a8c47` → `#9aac67`, `#b85450` → `#d97a78`).
+`C_light` = o mesmo hex clareado ~15 % para contraste no modo escuro (ex.: `#7a8c47` → `#9aac67`, `#b85450` → `#d97a78`).
 
-**Rules:**
-- **Never on focal components.** `kind: focal` always renders accent; `color` is silently ignored.
-- **Never on connectors.** Connector style is topology-driven; if you want a colored edge, pick `style: accent` / `link` / `neutral`, not a component color.
-- **Cap: ≤ 3 custom-colored components per diagram** (in addition to focal components). Above 3 the visual signal fragments.
+**Regras:**
+- **Nunca em componentes focais.** `kind: focal` sempre renderiza em `accent`; `color` é ignorado silenciosamente.
+- **Nunca em conectores.** O estilo do conector é determinado pela topologia; se você quer uma aresta colorida, escolha `style: accent` / `link` / `neutral`, não uma cor de componente.
+- **Limite: ≤ 3 componentes com cor personalizada por diagrama** (além dos componentes focais). Acima de 3, o sinal visual se fragmenta.
 
-**Recommended cross-type palette** (same as `type-medallion.md` / `type-process.md` / `type-dp-integration.md` / `type-dp-security-matrix.md`):
+**Paleta recomendada entre tipos** (a mesma de `type-medallion.md` / `type-process.md` / `type-dp-integration.md` / `type-dp-security-matrix.md`):
 
-- `#b85450` rust-red — security / governance / pain-point that isn't focal
-- `#5a7d9a` slate-blue — observability / quality / monitoring gate
-- `#7a8c47` olive-green — survivor system (the one tool the new platform keeps)
-- `#c9a23a` warm yellow — sandbox / dev / scratch
-- `#8c6d3f` warm-brown — archive / cold / DR
-
----
-
-## 5. Focal rule
-
-- `kind: focal` components: **≤ 2 per diagram** (zero is also valid for diagrams without a single dominant pain-point).
-- Auto-styling: accent stroke 1.4, accent-tinted fill 7 %, ink-bold `node-name`, accent line-1 `sublabel`.
-- Any connector with a focal endpoint automatically renders in `style: accent`; the YAML `style:` is ignored.
-- Custom `color: "#hex"` on a focal component is silently ignored — accent always wins.
-
-If your diagram needs more than 2 focal components, you've collapsed two narratives. Split: one "collection pain-points" diagram + one "dissemination pain-points" diagram.
+- `#b85450` vermelho-ferrugem — segurança / governança / ponto de dor que não é focal
+- `#5a7d9a` azul-ardósia — observabilidade / qualidade / portão de monitoramento
+- `#7a8c47` verde-oliva — sistema sobrevivente (a única ferramenta que a nova plataforma mantém)
+- `#c9a23a` amarelo quente — sandbox / dev / rascunho
+- `#8c6d3f` marrom quente — arquivo / frio / DR
 
 ---
 
-## 6. Dark mode
+## 5. Regra focal
 
-| Role | Light | Dark |
+- Componentes `kind: focal`: **≤ 2 por diagrama** (zero também é válido para diagramas sem um único ponto de dor dominante).
+- Estilização automática: traço `accent` 1.4, preenchimento tingido de `accent` a 7 %, `node-name` em `ink` negrito, `sublabel` da linha 1 em `accent`.
+- Qualquer conector com uma extremidade focal é renderizado automaticamente em `style: accent`; o `style:` do YAML é ignorado.
+- `color: "#hex"` personalizado em um componente focal é ignorado silenciosamente — `accent` sempre prevalece.
+
+Se o seu diagrama precisa de mais de 2 componentes focais, você juntou duas narrativas. Divida: um diagrama de "pontos de dor da coleta" + um diagrama de "pontos de dor da disseminação".
+
+---
+
+## 6. Modo escuro
+
+| Papel | Claro | Escuro |
 | --- | --- | --- |
 | paper | `paper` | `ink` |
 | ink | `ink` | `paper` |
 | muted | `muted` | `muted` |
 | accent | `accent` | `accent` |
 | link | `link` | `link` |
-| zone background | `ink @ 0.02` | `paper @ 0.04` |
-| zone border | `ink @ 0.10` | `paper @ 0.14` |
-| standard component fill | `#FFFFFF` | `paper @ 0.04` |
-| standard component stroke | `ink` | `paper @ 0.32` |
-| focal fill | `accent @ 0.07` | `accent @ 0.12` |
-| focal stroke | `accent` | `accent` |
-| external stroke | `muted` (dashed) | `muted` (dashed) |
-| footer fill | `ink @ 0.03` | `paper @ 0.05` |
-| footer stroke | `ink @ 0.18` | `paper @ 0.20` |
-| label mask fill | `paper` | `ink` |
-| custom-color components | `C` | `C_light` (≈ +15 %) |
+| fundo da zona | `ink @ 0.02` | `paper @ 0.04` |
+| borda da zona | `ink @ 0.10` | `paper @ 0.14` |
+| preenchimento do componente padrão | `#FFFFFF` | `paper @ 0.04` |
+| traço do componente padrão | `ink` | `paper @ 0.32` |
+| preenchimento focal | `accent @ 0.07` | `accent @ 0.12` |
+| traço focal | `accent` | `accent` |
+| traço externo | `muted` (tracejado) | `muted` (tracejado) |
+| preenchimento do rodapé | `ink @ 0.03` | `paper @ 0.05` |
+| traço do rodapé | `ink @ 0.18` | `paper @ 0.20` |
+| preenchimento da máscara do rótulo | `paper` | `ink` |
+| componentes com cor personalizada | `C` | `C_light` (≈ +15 %) |
 
 ---
 
-## 7. Reproducibility checklist (taste gate)
+## 7. Checklist de reprodutibilidade (*taste gate*)
 
-Before emitting SVG, verify **every** item:
+Antes de emitir o SVG, verifique **cada** item:
 
-1. Eyebrow + title + subtitle present at canonical y-positions (24 / 36 / 52); body padding 32 px.
-2. 2..4 zones; each has its uppercase label at the top-left of its zone box, on a paper-masked break in the border.
-3. Every component has `id`, `name`. `sub`, `icon`, `kind`, `color` are optional.
-4. ≤ 2 components with `kind: focal`; focal styling auto-applied (accent fill 7 %, accent stroke 1.4, italic line-1 sub).
-5. Every connector exits the right (or bottom) of source and enters the top (or left) of destination; rounded right-angle Q-bezier `r=8` at every bend; marker triangle visibly touches the destination rectangle edge.
-6. Connector labels sit at the **start** of the connector (not mid-segment) and are offset **perpendicular** to the line (5 px gap above for horizontal segments, 6 px gap to the right for vertical segments) — never overlapping the stroke. Paper-fill mask kept behind text; icon (when `icon:` is set) sits left of text inside the same mask.
-7. ≤ 3 custom-colored components; none on focal.
-8. ≤ 3 footer bars; each spans `viewBox_w − 2*left_pad`; no connectors emerge from any footer.
-9. Legend at bottom: hairline separator + one swatch per style actually used.
-10. `arrow-label` for connector labels, `eyebrow` for the page eyebrow and zone labels, `title` for the page title, `node-name` for the subtitle and component names, and `sublabel` for technical sub-labels.
-11. Markers `#arrow` / `#arrow-link` / `#arrow-accent` defined once in `<defs>`; no inline marker definitions.
-12. Dark variant: resolve every semantic token through its dark-mode value; custom colors are lightened ~15 %.
-
----
-
-## 8. Anti-patterns
-
-- **Diagonal arrows.** The NatStat replication has one (analyst → LegacyPortal). The new type forbids it — always rounded right-angle Q-bezier.
-- **Marker not touching the target.** Path ends at the centroid or stops short of the border.
-- **Inline `text` connector labels without a mask rect.** The connector line can bleed through the text and it becomes unreadable.
-- **Labels sitting on top of the connector line, mid-segment.** Labels belong at the *start* of the connector with a perpendicular margin (see §3.5) — burying them in the middle of the line hides the source-to-destination direction and forces the reader's eye to fight the mask.
-- **Tiny text badges as icons.** The source uses 7-px `DB` / `APP` / `EXT` badges; this type uses real 24-px catalog icons. Text badges are only acceptable as the label text, not as the component "icon."
-- **Custom color on a focal component.** Focal always wins; user-set `color` silently ignored on `kind: focal`.
-- **Footer bar wired to one component.** Footer = cross-cutting layer-wide concern; a connector from a footer to a specific component is a category error (use `type-dp-integration.md`'s AUTH-line pattern only when the footer service truly authenticates *all* components, and even then the line lands at the zone bottom edge, not at a specific tool).
-- **> 16 total components or > 5 per zone.** Density cap; split into two diagrams.
-- **Mixing orientations within one diagram.** Pick one — `horizontal` or `vertical` — and apply it to every zone.
-- **Using `kind: focal` to flag every painful thing.** Focal exists for ≤ 2 narrative pain-points; for "this is bad but not headline-bad", use `color: "#b85450"` rust-red instead.
+1. Eyebrow + título + subtítulo presentes nas posições y canônicas (24 / 36 / 52); padding do corpo de 32 px.
+2. 2..4 zonas; cada uma tem seu rótulo em maiúsculas no canto superior esquerdo da caixa da zona, sobre uma interrupção mascarada com `paper` na borda.
+3. Todo componente tem `id`, `name`. `sub`, `icon`, `kind`, `color` são opcionais.
+4. ≤ 2 componentes com `kind: focal`; estilização focal aplicada automaticamente (preenchimento `accent` a 7 %, traço `accent` 1.4, sub da linha 1 em itálico).
+5. Todo conector sai pela direita (ou por baixo) da origem e entra por cima (ou pela esquerda) do destino; Q-bezier em ângulo reto arredondado `r=8` em toda curva; o triângulo do marcador toca visivelmente a borda do retângulo de destino.
+6. Os rótulos dos conectores ficam no **início** do conector (não no meio do segmento) e são deslocados **perpendicularmente** à linha (vão de 5 px acima para segmentos horizontais, vão de 6 px à direita para segmentos verticais) — nunca sobrepondo o traço. Máscara com preenchimento `paper` mantida atrás do texto; o ícone (quando `icon:` está definido) fica à esquerda do texto dentro da mesma máscara.
+7. ≤ 3 componentes com cor personalizada; nenhum em focal.
+8. ≤ 3 barras de rodapé; cada uma ocupa `viewBox_w − 2*left_pad`; nenhum conector sai de nenhum rodapé.
+9. Legenda na parte inferior: separador de linha fina (hairline) + uma amostra por estilo realmente usado.
+10. `arrow-label` para rótulos de conectores, `eyebrow` para o eyebrow da página e rótulos de zona, `title` para o título da página, `node-name` para o subtítulo e os nomes dos componentes, e `sublabel` para os sub-rótulos técnicos.
+11. Marcadores `#arrow` / `#arrow-link` / `#arrow-accent` definidos uma única vez em `<defs>`; nenhuma definição de marcador inline.
+12. Variante escura: resolva cada token semântico por meio de seu valor no modo escuro; as cores personalizadas são clareadas ~15 %.
 
 ---
 
-## 9. Examples
+## 8. Antipadrões
 
-- `assets/example-it-state.html` — minimal light (NatStat canonical: 3 zones, 9 components, 8 connectors, 0 footer bars, SQL Server tinted olive). Gallery default.
-- `assets/example-it-state-dark.html` — same, dark skin.
-- `assets/example-it-state-full.html` — same, editorial-card frame with summary cards.
-- `assets/example-it-state-extended.html` — exercises §4 color override + footer bars: 2 footer bars (Identity Manager + Observability) below the zones, third custom color on Analyst Machines (slate-blue, data-quality concern).
-- `assets/example-it-state-extended-dark.html` — extended pattern, dark skin.
+- **Setas diagonais.** A replicação do NatStat tem uma (analyst → LegacyPortal). O novo tipo a proíbe — sempre Q-bezier em ângulo reto arredondado.
+- **Marcador sem tocar o alvo.** O caminho termina no centroide ou para antes da borda.
+- **Rótulos de conector com `text` inline sem um rect de máscara.** A linha do conector pode vazar através do texto, que se torna ilegível.
+- **Rótulos sobre a linha do conector, no meio do segmento.** Os rótulos pertencem ao *início* do conector com uma margem perpendicular (veja §3.5) — enterrá-los no meio da linha esconde a direção da origem ao destino e força o olho do leitor a brigar com a máscara.
+- **Pequenos selos de texto como ícones.** A fonte usa selos de 7 px `DB` / `APP` / `EXT`; este tipo usa ícones reais de 24 px do catálogo. Selos de texto só são aceitáveis como texto do rótulo, não como "ícone" do componente.
+- **Cor personalizada em um componente focal.** Focal sempre prevalece; o `color` definido pelo usuário é ignorado silenciosamente em `kind: focal`.
+- **Barra de rodapé ligada a um único componente.** Rodapé = preocupação transversal de toda a camada; um conector de um rodapé para um componente específico é um erro de categoria (use o padrão de linha AUTH de `type-dp-integration.md` somente quando o serviço do rodapé realmente autentica *todos* os componentes, e mesmo assim a linha chega à borda inferior da zona, não a uma ferramenta específica).
+- **> 16 componentes no total ou > 5 por zona.** Limite de densidade; divida em dois diagramas.
+- **Misturar orientações em um mesmo diagrama.** Escolha uma — `horizontal` ou `vertical` — e aplique-a a todas as zonas.
+- **Usar `kind: focal` para sinalizar tudo o que é problemático.** Focal existe para ≤ 2 pontos de dor narrativos; para "isto é ruim, mas não é ruim de manchete", use `color: "#b85450"` vermelho-ferrugem.
 
 ---
 
-## 10. Worked YAML — full inputs for `example-it-state.html`
+## 9. Exemplos
 
-The complete inputs that map to the shipped canonical example. Every coordinate in that SVG is derivable from §2 applied to these inputs.
+- `assets/example-it-state.html` — mínimo claro (canônico NatStat: 3 zonas, 9 componentes, 8 conectores, 0 barras de rodapé, SQL Server tingido de oliva). Padrão da galeria.
+- `assets/example-it-state-dark.html` — o mesmo, skin (tema) escura.
+- `assets/example-it-state-full.html` — o mesmo, moldura de cartão editorial com cartões de resumo.
+- `assets/example-it-state-extended.html` — exercita a sobrescrita de cor de §4 + barras de rodapé: 2 barras de rodapé (Identity Manager + Observability) abaixo das zonas, terceira cor personalizada em Analyst Machines (azul-ardósia, preocupação com qualidade de dados).
+- `assets/example-it-state-extended-dark.html` — padrão estendido, skin (tema) escura.
+
+---
+
+## 10. YAML trabalhado — entradas completas para `example-it-state.html`
+
+As entradas completas que mapeiam para o exemplo canônico distribuído. Toda coordenada naquele SVG pode ser derivada aplicando §2 a estas entradas.
 
 ```yaml
 title:    "Current IT Landscape"
@@ -442,29 +442,29 @@ connectors:
 dark: false
 ```
 
-### 10.1 What this YAML proves
+### 10.1 O que este YAML comprova
 
-- `n_zones = 3`, components per zone `= [3, 3, 3]`, custom color count = 1 (SQL Server), focal count = 2 (Shared Drive, LegacyPortal), external count = 2 (Civil Registry, Ministry Partners).
-- Zone widths in canonical: 256 / 360 / 272 ⇒ `viewBox_w = 16 + 256 + 20 + 360 + 20 + 272 + 16 = 960` ✓
-- `viewBox_h = 52 + 360 + 40 + 24 = 500` (no footer bars) ✓
-- Shared Drive (focal) at zone 2, row 0: `x = 340, y = 80, w = 264, h = 68` (focal stretches to 68 to fit 2-line sub) ✓
-- LegacyPortal (focal) at zone 3, row 0: `x = 704, y = 80, w = 208, h = 60` ✓
-- SQL Server (custom olive) at zone 2, row 2: container fill `rgba(122,140,71,0.06)`, stroke `rgba(122,140,71,0.45)`, name text `#7a8c47` ✓
-- Connectors 4, 5 (within zone 2) and 7, 8 (within zone 3) are simple vertical `<line>` elements. Cross-zone connectors take rule-compliant routes (see SKILL.md §6 rules 4 & 5):
-  - **All three Survey-side → Shared Drive connectors (C1 / C2 / C3) enter Shared Drive's LEFT edge.** A top-edge entry would push the marker body (7 px back along travel, given `refX = 7`) *inside* the destination box, where the box's paper-fill mask hides it — only a 1-pixel tip would peek above the stroke. Entering the left edge with a right-going path keeps the body outside the box and the arrow visible (~7 px shown to the left of the box edge). The three left-edge attach points are fanned at **y = 108 / 124 / 140** (16-px spacing, well above the 12 px rule-4 minimum).
-  - **C1** (Survey → Shared Drive) source y matches landing y: single horizontal `M 252,108 H 340`. No bends needed.
-  - **C2** (ASP.NET → Shared Drive) detours up through zone-2 background — vertical at `x = 316` (clear of Shared Drive's left edge at `x = 340`): `H 308 Q 316,196 316,188 V 132 Q 316,124 324,124 H 340`. Lands at `(340, 124)`.
-  - **C3** (Civil Registry → Shared Drive) detours up through zone-2 background — vertical at `x = 332` (clear of Analyst Machines, which starts at `x = 340`): `H 324 Q 332,284 332,276 V 148 Q 332,140 340,140`. Lands at `(340, 140)` via a final Q-bend (no trailing H needed).
-  - **C6** (Analyst Machines → LegacyPortal) cannot use a direct H+Q+V into LegacyPortal's left edge — Analyst Machines and LegacyPortal are in different rows, and the direct horizontal at `y = 268` would cross NatStat Website. It detours through the zone gap and **over** LegacyPortal: `H 654 Q 662,268 662,260 V 72 Q 662,64 670,64 H 800 Q 808,64 808,72 V 80` — vertical at `x = 662` (in zone gap), horizontal at `y = 64` (above LegacyPortal top), then down into LegacyPortal's top center. The path enters LegacyPortal from **above** going down, so the arrow body lives above the box (visible) and only the 1-px tip enters the box.
+- `n_zones = 3`, componentes por zona `= [3, 3, 3]`, quantidade de cores personalizadas = 1 (SQL Server), quantidade de focais = 2 (Shared Drive, LegacyPortal), quantidade de externos = 2 (Civil Registry, Ministry Partners).
+- Larguras das zonas no canônico: 256 / 360 / 272 ⇒ `viewBox_w = 16 + 256 + 20 + 360 + 20 + 272 + 16 = 960` ✓
+- `viewBox_h = 52 + 360 + 40 + 24 = 500` (sem barras de rodapé) ✓
+- Shared Drive (focal) na zona 2, linha 0: `x = 340, y = 80, w = 264, h = 68` (o focal se estende para 68 para caber o sub de 2 linhas) ✓
+- LegacyPortal (focal) na zona 3, linha 0: `x = 704, y = 80, w = 208, h = 60` ✓
+- SQL Server (oliva personalizado) na zona 2, linha 2: preenchimento do contêiner `rgba(122,140,71,0.06)`, traço `rgba(122,140,71,0.45)`, texto do nome `#7a8c47` ✓
+- Os conectores 4, 5 (dentro da zona 2) e 7, 8 (dentro da zona 3) são elementos `<line>` verticais simples. Os conectores entre zonas seguem rotas compatíveis com as regras (veja SKILL.md §6 regras 4 e 5):
+  - **Os três conectores do lado Survey → Shared Drive (C1 / C2 / C3) entram pela borda ESQUERDA do Shared Drive.** Uma entrada pela borda superior empurraria o corpo do marcador (7 px para trás ao longo do percurso, dado `refX = 7`) para *dentro* da caixa de destino, onde a máscara de preenchimento `paper` da caixa o esconde — apenas uma ponta de 1 pixel apareceria acima do traço. Entrar pela borda esquerda com um caminho indo para a direita mantém o corpo fora da caixa e a seta visível (~7 px mostrados à esquerda da borda da caixa). Os três pontos de conexão na borda esquerda são distribuídos (fan-out) em **y = 108 / 124 / 140** (espaçamento de 16 px, bem acima do mínimo de 12 px da regra 4).
+  - **C1** (Survey → Shared Drive): o y de origem coincide com o y de chegada: um único horizontal `M 252,108 H 340`. Nenhuma curva necessária.
+  - **C2** (ASP.NET → Shared Drive) desvia para cima pelo fundo da zona 2 — vertical em `x = 316` (afastado da borda esquerda do Shared Drive em `x = 340`): `H 308 Q 316,196 316,188 V 132 Q 316,124 324,124 H 340`. Chega em `(340, 124)`.
+  - **C3** (Civil Registry → Shared Drive) desvia para cima pelo fundo da zona 2 — vertical em `x = 332` (afastado de Analyst Machines, que começa em `x = 340`): `H 324 Q 332,284 332,276 V 148 Q 332,140 340,140`. Chega em `(340, 140)` por meio de uma curva Q final (nenhum H final necessário).
+  - **C6** (Analyst Machines → LegacyPortal) não pode usar um H+Q+V direto para a borda esquerda do LegacyPortal — Analyst Machines e LegacyPortal estão em linhas diferentes, e o horizontal direto em `y = 268` cruzaria NatStat Website. Ele desvia pelo vão entre zonas e passa **por cima** do LegacyPortal: `H 654 Q 662,268 662,260 V 72 Q 662,64 670,64 H 800 Q 808,64 808,72 V 80` — vertical em `x = 662` (no vão entre zonas), horizontal em `y = 64` (acima do topo do LegacyPortal), depois descendo até o centro superior do LegacyPortal. O caminho entra no LegacyPortal **por cima** descendo, então o corpo da seta fica acima da caixa (visível) e apenas a ponta de 1 px entra na caixa.
 
-**Marker-visibility rule of thumb:** with the standard arrow marker (`markerWidth = 8`, `refX = 7`), the arrow body extends 7 px *backwards* along the path direction from the endpoint. For the arrow to remain visible, that 7-px tail must sit *outside* the destination box. Translation:
-- Entering a **TOP edge going UP** (path direction up, box below) → body inside box, **only 1 px visible. Avoid this.**
-- Entering a **TOP edge going DOWN** (path direction down, box below) → body above box, ~7 px visible. ✓
-- Entering a **LEFT edge going RIGHT** → body to the left of box, ~7 px visible. ✓
-- Entering a **RIGHT edge going LEFT** → body to the right of box, ~7 px visible. ✓
-- Entering a **BOTTOM edge going DOWN** (box above) → body inside box, **only 1 px visible. Avoid this.**
-- Entering a **BOTTOM edge going UP** (box above) → body below box, ~7 px visible. ✓
+**Regra prática de visibilidade do marcador:** com o marcador de seta padrão (`markerWidth = 8`, `refX = 7`), o corpo da seta se estende 7 px *para trás* ao longo da direção do caminho a partir do ponto final. Para que a seta permaneça visível, essa cauda de 7 px precisa ficar *fora* da caixa de destino. Tradução:
+- Entrar por uma **borda SUPERIOR SUBINDO** (direção do caminho para cima, caixa abaixo) → corpo dentro da caixa, **apenas 1 px visível. Evite isto.**
+- Entrar por uma **borda SUPERIOR DESCENDO** (direção do caminho para baixo, caixa abaixo) → corpo acima da caixa, ~7 px visíveis. ✓
+- Entrar por uma **borda ESQUERDA indo para a DIREITA** → corpo à esquerda da caixa, ~7 px visíveis. ✓
+- Entrar por uma **borda DIREITA indo para a ESQUERDA** → corpo à direita da caixa, ~7 px visíveis. ✓
+- Entrar por uma **borda INFERIOR DESCENDO** (caixa acima) → corpo dentro da caixa, **apenas 1 px visível. Evite isto.**
+- Entrar por uma **borda INFERIOR SUBINDO** (caixa acima) → corpo abaixo da caixa, ~7 px visíveis. ✓
 
-When the source row matches the destination row's y range (e.g., Survey at y=108 with Shared Drive at y=80–148), prefer **side-edge** entry — a single horizontal path with a fully visible arrow. When the source row is offset, detour through the destination's nearest zone background to enter a side edge rather than approaching a top/bottom edge from the wrong side.
+Quando a linha de origem coincide com a faixa de y da linha de destino (ex.: Survey em y=108 com Shared Drive em y=80–148), prefira a entrada pela **borda lateral** — um único caminho horizontal com uma seta totalmente visível. Quando a linha de origem está deslocada, desvie pelo fundo da zona mais próxima do destino para entrar por uma borda lateral em vez de se aproximar de uma borda superior/inferior pelo lado errado.
 
-The extended example (§9 line 4) demonstrates footer bars + a third custom color and proves `viewBox_h` grows correctly when `N_footer > 0`.
+O exemplo estendido (§9 linha 4) demonstra barras de rodapé + uma terceira cor personalizada e comprova que `viewBox_h` cresce corretamente quando `N_footer > 0`.

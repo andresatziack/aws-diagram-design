@@ -1,22 +1,22 @@
-# Nested Containment
+# Contenção aninhada (Nested Containment)
 
-**Best for:** hierarchy through containment — scope boundaries, CLAUDE.md cascade, trust zones, folder nesting, blast radius. Outer = broader, inner = more specific.
+**Ideal para:** hierarquia por contenção — fronteiras de escopo, cascata do CLAUDE.md, zonas de confiança, aninhamento de pastas, raio de impacto (blast radius). Externo = mais amplo, interno = mais específico.
 
-## Layout conventions
-- 3–5 rounded rectangles (`rx=8`), nested with consistent inset padding (24–32px horizontal, 32–36px vertical recommended).
-- Each level labeled at the top-left in Amazon Ember Mono eyebrow style (7–8px, letter-spacing 0.14em). Labels sit on a paper-colored mask rect over the ring's top border.
-- Stroke hierarchy: outer rings faint (`rgba(..,0.30–0.45)`), progressing to muted, to ink, to coral at the innermost focal.
-- Fills step up in opacity from outer to inner: `rgba(..,0.015)` → `rgba(..,0.025)` → accent-tint on the innermost.
-- Optional file-icon glyph (folded-corner rect) inside each level hints at scope content.
-- Italic Amazon Ember callouts (see `references/primitive-annotation.md`) — 1–2 max.
+## Convenções de layout
+- 3–5 retângulos arredondados (`rx=8`), aninhados com padding interno consistente (24–32px na horizontal, 32–36px na vertical, recomendados).
+- Cada nível é rotulado no canto superior esquerdo no estilo eyebrow em Amazon Ember Mono (7–8px, letter-spacing 0.14em). Os rótulos ficam sobre um retângulo de máscara da cor do paper sobre a borda superior do anel.
+- Hierarquia de traços: anéis externos tênues (`rgba(..,0.30–0.45)`), progredindo para muted, depois ink, até coral no focal mais interno.
+- Os preenchimentos aumentam de opacidade de fora para dentro: `rgba(..,0.015)` → `rgba(..,0.025)` → accent-tint no mais interno.
+- Um glifo opcional de ícone de arquivo (retângulo com canto dobrado) dentro de cada nível sugere o conteúdo do escopo.
+- Callouts em Amazon Ember itálico (veja `references/primitive-annotation.md`) — no máximo 1–2.
 
-## Anti-patterns
-- More than 6 levels (information disappears inward).
-- Irregular padding between levels — unaligned nesting looks accidental.
-- Content inside rings that isn't part of the hierarchy — use a sibling diagram.
-- Coral on multiple levels — hierarchy collapses.
+## Antipadrões
+- Mais de 6 níveis (a informação desaparece para dentro).
+- Padding irregular entre níveis — aninhamento desalinhado parece acidental.
+- Conteúdo dentro dos anéis que não faz parte da hierarquia — use um diagrama irmão.
+- Coral em múltiplos níveis — a hierarquia desmorona.
 
-## Examples
-- `assets/example-nested.html` — minimal light
-- `assets/example-nested-dark.html` — minimal dark
-- `assets/example-nested-full.html` — full editorial
+## Exemplos
+- `assets/example-nested.html` — minimal claro
+- `assets/example-nested-dark.html` — minimal escuro
+- `assets/example-nested-full.html` — editorial completo
